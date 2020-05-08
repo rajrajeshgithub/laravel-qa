@@ -1,8 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="8da382d0-1b40-4acf-ba66-8eeb7363155e" name="Default Changelist" comment="&quot;commit&quot;">
+    <list default="true" id="8da382d0-1b40-4acf-ba66-8eeb7363155e" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Question.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Question.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/User.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/User.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/migrations/2020_05_08_113039_create_questions_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2020_05_08_113039_create_questions_table.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/seeds/DatabaseSeeder.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/seeds/DatabaseSeeder.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -187,6 +191,10 @@
     <option name="LAST_COMMIT_MESSAGE" value="&quot;commit&quot;" />
   </component>
   <component name="WindowStateProjectService">
+    <state x="1006" y="215" width="524" height="484" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog" timestamp="1588961698061">
+      <screen x="67" y="27" width="1533" height="873" />
+    </state>
+    <state x="1006" y="215" width="524" height="484" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/67.27.1533.873@67.27.1533.873" timestamp="1588961698061" />
     <state x="398" y="39" width="860" height="847" key="CommitChangelistDialog2" timestamp="1588937068307">
       <screen x="67" y="27" width="1533" height="873" />
     </state>
@@ -199,9 +207,13 @@
       <screen x="67" y="27" width="1533" height="873" />
     </state>
     <state x="489" y="290" key="com.intellij.ide.util.TipDialog/67.27.1533.873@67.27.1533.873" timestamp="1588240854616" />
-    <state x="496" y="212" width="672" height="678" key="search.everywhere.popup" timestamp="1588942618574">
+    <state x="891" y="196" width="709" height="522" key="find.popup" timestamp="1588961678251">
       <screen x="67" y="27" width="1533" height="873" />
     </state>
-    <state x="496" y="212" width="672" height="678" key="search.everywhere.popup/67.27.1533.873@67.27.1533.873" timestamp="1588942618574" />
+    <state x="891" y="196" width="709" height="522" key="find.popup/67.27.1533.873@67.27.1533.873" timestamp="1588961678251" />
+    <state x="496" y="212" width="672" height="678" key="search.everywhere.popup" timestamp="1588961405147">
+      <screen x="67" y="27" width="1533" height="873" />
+    </state>
+    <state x="496" y="212" width="672" height="678" key="search.everywhere.popup/67.27.1533.873@67.27.1533.873" timestamp="1588961405147" />
   </component>
 </project>
