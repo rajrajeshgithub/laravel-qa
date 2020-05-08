@@ -156,8 +156,16 @@
       <workItem from="1588179034765" duration="4023000" />
       <workItem from="1588240856899" duration="48000" />
       <workItem from="1588427901237" duration="476000" />
-      <workItem from="1588933741064" duration="2462000" />
+      <workItem from="1588933741064" duration="2765000" />
     </task>
+    <task id="LOCAL-00001" summary="&quot;commit&quot;">
+      <created>1588936959749</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1588936959749</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -174,11 +182,15 @@
       </map>
     </option>
   </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="&quot;commit&quot;" />
+    <option name="LAST_COMMIT_MESSAGE" value="&quot;commit&quot;" />
+  </component>
   <component name="WindowStateProjectService">
-    <state x="398" y="39" width="860" height="847" key="CommitChangelistDialog2" timestamp="1588936419485">
+    <state x="398" y="39" width="860" height="847" key="CommitChangelistDialog2" timestamp="1588937068307">
       <screen x="67" y="27" width="1533" height="873" />
     </state>
-    <state x="398" y="39" width="860" height="847" key="CommitChangelistDialog2/67.27.1533.873@67.27.1533.873" timestamp="1588936419485" />
+    <state x="398" y="39" width="860" height="847" key="CommitChangelistDialog2/67.27.1533.873@67.27.1533.873" timestamp="1588937068307" />
     <state x="616" y="220" width="424" height="484" key="FileChooserDialogImpl" timestamp="1588428377554">
       <screen x="67" y="27" width="1533" height="873" />
     </state>
