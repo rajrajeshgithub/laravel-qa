@@ -49935,8 +49935,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /home/rajesh/public_html/todolist.net/resources/js/app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! /home/rajesh/public_html/todolist.net/resources/sass/app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! /home/rajesh/public_html/laravel-qa/resources/js/app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! /home/rajesh/public_html/laravel-qa/resources/sass/app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

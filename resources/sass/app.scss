@@ -9,3 +9,37 @@
 
 //custom
 @import "custom";
+
+.counters{
+    margin-right:30px;
+    font-size:10px;
+    text-align: center;
+
+    .vote, .answer {
+        width: 60px;
+        height: 60px;
+    }
+    strong{
+        display: block;
+        font-size: 2em;
+        margin-top: 5px;
+    }
+    .status{
+        &.unanswered {
+            border:none;
+        }
+        &.answered {
+            border: 1px solid $green;
+            color: $green;
+        }
+        &.answered-accepted {
+            background-color: $green;
+            color:$white;
+        }
+    }
+}
+.view{
+    margin-top:5px;
+}
+
+
