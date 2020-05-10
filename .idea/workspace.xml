@@ -2,11 +2,15 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="8da382d0-1b40-4acf-ba66-8eeb7363155e" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/php.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/php.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/todolist.net.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/todolist.net.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Question.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Question.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/User.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/User.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/migrations/2020_05_08_113039_create_questions_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2020_05_08_113039_create_questions_table.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/seeds/DatabaseSeeder.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/seeds/DatabaseSeeder.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/composer.json" beforeDir="false" afterPath="$PROJECT_DIR$/composer.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/composer.lock" beforeDir="false" afterPath="$PROJECT_DIR$/composer.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/question/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/question/index.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/web.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -118,6 +122,9 @@
       <path value="$PROJECT_DIR$/vendor/facade/flare-client-php" />
       <path value="$PROJECT_DIR$/vendor/opis/closure" />
       <path value="$PROJECT_DIR$/vendor/laravel/ui" />
+      <path value="$PROJECT_DIR$/vendor/maximebf/debugbar" />
+      <path value="$PROJECT_DIR$/vendor/symfony/debug" />
+      <path value="$PROJECT_DIR$/vendor/barryvdh/laravel-debugbar" />
     </include_path>
   </component>
   <component name="ProjectId" id="1b061Pp7E1GPNdjvI6niTzdaFKn" />
@@ -161,6 +168,8 @@
       <workItem from="1588240856899" duration="48000" />
       <workItem from="1588427901237" duration="476000" />
       <workItem from="1588933741064" duration="7100000" />
+      <workItem from="1589007670385" duration="32000" />
+      <workItem from="1589136134330" duration="4932000" />
     </task>
     <task id="LOCAL-00001" summary="&quot;commit&quot;">
       <created>1588936959749</created>
@@ -180,7 +189,9 @@
       <map>
         <entry key="MAIN">
           <value>
-            <State />
+            <State>
+              <option name="COLUMN_ORDER" />
+            </State>
           </value>
         </entry>
       </map>
@@ -199,21 +210,21 @@
       <screen x="67" y="27" width="1533" height="873" />
     </state>
     <state x="398" y="39" width="860" height="847" key="CommitChangelistDialog2/67.27.1533.873@67.27.1533.873" timestamp="1588937068307" />
-    <state x="616" y="220" width="424" height="484" key="FileChooserDialogImpl" timestamp="1588428377554">
+    <state x="616" y="220" width="424" height="484" key="FileChooserDialogImpl" timestamp="1589007711578">
       <screen x="67" y="27" width="1533" height="873" />
     </state>
-    <state x="616" y="220" width="424" height="484" key="FileChooserDialogImpl/67.27.1533.873@67.27.1533.873" timestamp="1588428377554" />
-    <state x="489" y="290" key="com.intellij.ide.util.TipDialog" timestamp="1588240854616">
+    <state x="616" y="220" width="424" height="484" key="FileChooserDialogImpl/67.27.1533.873@67.27.1533.873" timestamp="1589007711578" />
+    <state x="489" y="290" key="com.intellij.ide.util.TipDialog" timestamp="1589007668749">
       <screen x="67" y="27" width="1533" height="873" />
     </state>
-    <state x="489" y="290" key="com.intellij.ide.util.TipDialog/67.27.1533.873@67.27.1533.873" timestamp="1588240854616" />
+    <state x="489" y="290" key="com.intellij.ide.util.TipDialog/67.27.1533.873@67.27.1533.873" timestamp="1589007668749" />
     <state x="891" y="196" width="709" height="522" key="find.popup" timestamp="1588961678251">
       <screen x="67" y="27" width="1533" height="873" />
     </state>
     <state x="891" y="196" width="709" height="522" key="find.popup/67.27.1533.873@67.27.1533.873" timestamp="1588961678251" />
-    <state x="496" y="212" width="672" height="678" key="search.everywhere.popup" timestamp="1588961405147">
+    <state x="496" y="212" width="672" height="678" key="search.everywhere.popup" timestamp="1589139956834">
       <screen x="67" y="27" width="1533" height="873" />
     </state>
-    <state x="496" y="212" width="672" height="678" key="search.everywhere.popup/67.27.1533.873@67.27.1533.873" timestamp="1588961405147" />
+    <state x="496" y="212" width="672" height="678" key="search.everywhere.popup/67.27.1533.873@67.27.1533.873" timestamp="1589139956834" />
   </component>
 </project>
