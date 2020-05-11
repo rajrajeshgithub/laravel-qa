@@ -1,6 +1,6 @@
 @if(session('success'))
         <div class="alert alert-success">
-            {{ session('success') }}
+            <strong>Success!</strong>{{ session('success') }}
         </div>
     @endif
     @if ($errors->any())
