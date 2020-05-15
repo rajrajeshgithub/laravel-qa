@@ -1,0 +1,21 @@
+/* login popup css */
+.popup-section{font-family:'latobold',sans-serif; font-size:26px; background:#FFF; padding:20px 15px; color:#666666;}
+.popup-section .form-control{height:58px; font-size:26px;}
+.popup-section .checkbox{font-size:18px; color:#666666;}
+.popup-section label.checkbox{min-height:38px; padding-left:40px; line-height:38px;}
+.popup-section .checkbox input + i:after{font-size:30px; font-weight:normal; top:0px; left:0px;}
+.popup-section .checkbox i{width:30px; height:30px;}
+.popup-fb-btn{font-size:26px; background:#4074c3; color:#fff; text-decoration:none; padding:15px 10px; display:block; line-height:1.6; text-align:center; border:1px solid #b3c7e7;}
+.popup-fb-btn i{font-size:41px;}
+.popup-fb-btn:hover{text-decoration:none;}
+.popup-section .link-btn{font-size:18px; color:#666666; margin-right:5px;}
+.terms-text{font-size:14px;}
+.terms-text a{color:#666666;}
+.popup-bottom .terms-text{background: #0d2946; margin: 15px -10px -10px -10px; font-size: 15px; padding: 10px 0px;}
+.popup-bottom .terms-text a{color:#abc340;}
+.popup-section .button-1{font-size:30px; font-family: 'quicksandbold',sans-serif; padding:10px 30px;}
+.or-text{color:#cccccc; padding:10px;}
+.popup-bottom{background:#666666; text-align:center; padding:10px; margin:10px -15px -20px -15px;  color:#FFF; border-top:2px solid rgba(255,255,255,0.5);}
+#forget-password-section .row .form-group{margin-bottom:16px !important;}
+.forget-password-email{padding:20px 0px 60px 0px; overflow:hidden;}
+.popup-section .cms-section ol li{font-family: 'latoregular',sans-serif; font-size:16px; color:#333333; margin-bottom:10px;}

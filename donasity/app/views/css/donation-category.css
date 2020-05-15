@@ -1,0 +1,7 @@
+/* CSS Document */
+section.donation-category{background:url(../images/static-banner.jpg) no-repeat;background-size:cover;background-position:center bottom;}
+.donation-categories{background:#e5e5e5;}
+.section-padding.make-donation-head{padding:25px 0px;}
+.donation-category .page-heading{padding-top:64px;}
+.make-donation-head .heading-1{margin-bottom:0px; line-height:40px;}
+.section-padding.donation-categories{padding:25px 0px 110px 0px;}

@@ -1,0 +1,20 @@
+@charset "utf-8";
+/* CSS Document */
+.loginbody{background:#729fe2;}
+.login-panel{max-width: 400px; margin:0px auto; box-shadow:0 0 20px rgba(0,0,0,.3);}
+.login-header{display:block; padding:20px 30px; border-bottom:1px solid rgba(0,0,0,.1); background:rgba(248,248,248,.9); font-size:25px; font-weight:300;  color: #232323;}
+.login-footer{text-align:center; display:block; padding:15px 30px 25px; border-top:1px solid rgba(0,0,0,.1); background:rgba(248,248,248,.9);}
+#password-recovery-form{display:none;}
+.logo-section{text-align:center; padding:15px 0px; margin-bottom:25px;}
+fieldset{margin:0px;}
+.message{padding:5px;}
+.login-panel fieldset{padding:15px 20px 0px 20px;}
+
+/*----admin user add/edit form------*/
+#rightsSection .checkbox{margin-left:15px;}
+#rightsSection .RightsHeader{background-color:#474544;width:100px;width:400px;padding:10px 10px 10px 0px;list-style:none;}
+#rightsSection .RightsHeader .checkbox{margin-left:15px;}
+
+
+.RightsHeader .Label{color:#FFF;}
+/*----------------------------------*/

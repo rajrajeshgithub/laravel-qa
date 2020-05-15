@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style type="text/css">
+body{font-family:Verdana, Geneva, sans-serif;margin:0;padding:0;}
+.container{width:1200px;height:1500px;/*background-image:url("{#RESOURCES#}images/certificate.jpg#");background-repeat:repeat;*/margin:auto;page-break:always;}
+</style>
+</head>
+<body id="body">
+<div class="container">
+<table width="1200px" border="0" style="font-size:20px;">
+	<tr>
+    	<td colspan="2" style="text-align:left"><img src='{#PHYPATH#}app/views/images/certificate_header.jpg'></td>        
+    </tr>    
+	<tr>
+		<th colspan="2" style="padding:20px; font-size:25px;text-decoration:underline;">
+			Transaction Receipt
+		</th>
+	</tr>
+	<tr>
+		<td>
+			<table>
+				<tr>
+					<td style="font-weight:bold">
+						Date Time					
+					</td>
+					<td>
+						: {$arrSaleTransDetails.SSPT_CreatedDate|formatDate:'m/d/y h:ia'}
+					</td>
+				</tr>
+				<tr>
+					<td style="font-weight:bold">
+						Ref#					
+					</td>
+					<td style="color:#ABC340;font-weight:bold;">
+						: {$arrSaleTransDetails.SSPT_PaymentGatewayTransactionID}
+					</td>
+				</tr>				
+				<tr>
+					<td style="font-weight:bold">
+						Customer#					
+					</td>
+					<td>
+						: {$arrSaleTransDetails.SS_PaySimpleCustomerID}
+					</td>
+				</tr>
+				<tr>
+					<td style="font-weight:bold">
+						Order#					
+					</td>
+					<td>
+						: {$arrSaleTransDetails.SS_RefNumber}
+					</td>
+				</tr>
+				<tr>
+					<td colspan="2">
+						<strong>Billing Details :</strong><br>
+						<span style="color:#ABC340;font-weight:bold;">{$arrSaleTransDetails.SS_FirstName} {$arrSaleTransDetails.SS_LastName}</span><br>
+                        <strong>{$arrSaleTransDetails.SS_EmailAddress}</strong><br>
+			            {$arrSaleTransDetails.SS_StreetAddress1}{if="$arrSaleTransDetails.SS_StreetAddress1!=NULL"}<br>{/if}
+			            {$arrSaleTransDetails.SS_StreetAddress2}{if="$arrSaleTransDetails.SS_StreetAddress2!=NULL"}<br>{/if}
+			            {$arrSaleTransDetails.SS_City}{if="$arrSaleTransDetails.SS_City!=NULL"},{/if}{$arrSaleTransDetails.SS_State} {$arrSaleTransDetails.SS_Zipcode} {$arrSaleTransDetails.SS_Country}
+					</td>
+				</tr>
+                
+			</table>
+		</td>
+		<td>
+			<table>
+            	<tr>
+					<td style="font-weight:bold">
+						Payment Status
+					</td>
+                    <td>
+						: <span {if="$arrSaleTransDetails.SSPT_Status==1"} style="color:#ABC340;font-weight:bold;" {else} style="color:#F00;font-weight:bold;" {/if}>{if="$arrSaleTransDetails.SSPT_Status==1"}Approved{else}Declined{/if}</span><br>
+                        {if="$arrSaleTransDetails.SSPT_Status!=1"}<span style="color:#F00;font-size:14px;">{$arrSaleTransDetails.SSPT_PaymentStatus_Notes}</span>{/if}
+					</td>
+				</tr>
+				<tr>
+                	<td style="font-weight:bold">
+						Payment Mode					
+					</td>
+					<td>
+						: {if="$arrSaleTransDetails.SSPT_PaymentType=='RC'"}Recurring Charge - {$arrSaleTransDetails.SS_Schedule|ucwords}{elseif="$arrSaleTransDetails.SSPT_PaymentType=='MNL'"}Manual Charge{else}One Time Charge{/if}
+					</td>
+				</tr>
+				<tr>
+					<td style="font-weight:bold">
+						Charge Amount					
+					</td>
+					<td>
+						: ${$arrSaleTransDetails.SSPT_PaymentAmount}
+					</td>
+				</tr>				
+			</table>
+		</td>
+	</tr>
+    <tr>
+    	<td colspan="2">
+        	<table width="100%" cellpadding="3" >
+            	<tr>
+                	<th colspan="3" style="padding:20px; font-size:25px;">Payment For</th>
+                </tr>
+            	<tr>
+                	<th width="20%" style="background-color:#ABC340; font-weight:bold;color:#FFF;">
+                    	Date
+                    </th>
+                    <th width="50%" style="background-color:#ABC340; font-weight:bold;color:#FFF;">
+                    	Service
+                    </th>
+                    <th style="background-color:#ABC340; font-weight:bold;color:#FFF;">
+                    	Charge Details
+                    </th>
+                </tr>
+                <tr>
+                	<td>
+                    	{$arrSaleTransDetails.SSPT_CreatedDate|formatDate:'m/d/y h:ia'}
+                    </td>
+                    <td>
+                    	{$arrSaleTransDetails.SS_ItemName} - {$arrSaleTransDetails.SS_ItemCode}                        
+                    </td>
+                    <td align="right">
+                    	Charge Amount : {$arrSaleTransDetails.SSPT_PaymentAmount}<br>
+                    	Status : <span {if="$arrSaleTransDetails.SSPT_Status==1"} style="color:#ABC340;font-weight:bold;" {else} style="color:#F00;font-weight:bold;" {/if}>{if="$arrSaleTransDetails.SSPT_Status==1"}Approved{else}Declined{/if}</span><br>
+                    	                    	          	
+                    </td>
+                </tr>
+                <tr>
+                	<td colspan="3" style="font-weight:bold; border-top:1px solid #000;" align="right">
+                    	Total Amount Collected : {if="$arrSaleTransDetails.SSPT_Status==1"}{$arrSaleTransDetails.SSPT_PaymentAmount}{else}0.00{/if}
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>
+</div>
+</body>
+</html>

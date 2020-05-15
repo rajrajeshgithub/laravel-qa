@@ -2,11 +2,16 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="8da382d0-1b40-4acf-ba66-8eeb7363155e" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/resources/views/question/show.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Controllers/QuestionController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/QuestionController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/css/app.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/css/app.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/sass/app.scss" beforeDir="false" afterPath="$PROJECT_DIR$/resources/sass/app.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/question/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/question/index.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Middleware/VerifyCsrfToken.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Middleware/VerifyCsrfToken.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Providers/RouteServiceProvider.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Providers/RouteServiceProvider.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Question.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Question.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/layouts/app.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/layouts/app.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/question/_form.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/question/_form.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/question/create.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/question/create.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/web.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -167,6 +172,11 @@
       <workItem from="1589007670385" duration="32000" />
       <workItem from="1589136134330" duration="11584000" />
       <workItem from="1589199224240" duration="9338000" />
+      <workItem from="1589282395280" duration="21000" />
+      <workItem from="1589291259679" duration="3806000" />
+      <workItem from="1589355872608" duration="2595000" />
+      <workItem from="1589364996821" duration="20000" />
+      <workItem from="1589569793122" duration="3168000" />
     </task>
     <task id="LOCAL-00001" summary="&quot;commit&quot;">
       <created>1588936959749</created>
@@ -207,21 +217,21 @@
       <screen x="67" y="27" width="1533" height="873" />
     </state>
     <state x="398" y="39" width="860" height="847" key="CommitChangelistDialog2/67.27.1533.873@67.27.1533.873" timestamp="1588937068307" />
-    <state x="616" y="220" width="424" height="484" key="FileChooserDialogImpl" timestamp="1589194102779">
+    <state x="616" y="220" width="424" height="484" key="FileChooserDialogImpl" timestamp="1589365017239">
       <screen x="67" y="27" width="1533" height="873" />
     </state>
-    <state x="616" y="220" width="424" height="484" key="FileChooserDialogImpl/67.27.1533.873@67.27.1533.873" timestamp="1589194102779" />
-    <state x="489" y="290" key="com.intellij.ide.util.TipDialog" timestamp="1589007668749">
+    <state x="616" y="220" width="424" height="484" key="FileChooserDialogImpl/67.27.1533.873@67.27.1533.873" timestamp="1589365017239" />
+    <state x="489" y="290" key="com.intellij.ide.util.TipDialog" timestamp="1589365000304">
       <screen x="67" y="27" width="1533" height="873" />
     </state>
-    <state x="489" y="290" key="com.intellij.ide.util.TipDialog/67.27.1533.873@67.27.1533.873" timestamp="1589007668749" />
+    <state x="489" y="290" key="com.intellij.ide.util.TipDialog/67.27.1533.873@67.27.1533.873" timestamp="1589365000304" />
     <state x="891" y="196" width="709" height="522" key="find.popup" timestamp="1588961678251">
       <screen x="67" y="27" width="1533" height="873" />
     </state>
     <state x="891" y="196" width="709" height="522" key="find.popup/67.27.1533.873@67.27.1533.873" timestamp="1588961678251" />
-    <state x="496" y="212" width="672" height="678" key="search.everywhere.popup" timestamp="1589202581169">
+    <state x="496" y="212" width="672" height="678" key="search.everywhere.popup" timestamp="1589572515135">
       <screen x="67" y="27" width="1533" height="873" />
     </state>
-    <state x="496" y="212" width="672" height="678" key="search.everywhere.popup/67.27.1533.873@67.27.1533.873" timestamp="1589202581169" />
+    <state x="496" y="212" width="672" height="678" key="search.everywhere.popup/67.27.1533.873@67.27.1533.873" timestamp="1589572515135" />
   </component>
 </project>

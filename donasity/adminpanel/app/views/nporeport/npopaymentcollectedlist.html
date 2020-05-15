@@ -1,0 +1,126 @@
+<link type="text/css" rel="stylesheet" href='{#RESOURCES#}css/bootstrap-datepicker.css'>
+<script type="text/javascript" src='{#RESOURCES#}js/bootstrap-datepicker.js'></script>
+<script type="text/javascript">
+	$(function() {	
+		$('#StartDate').datepicker();
+		$('#StartDate').datepicker().on('changeDate', function (ev) {
+			if(ev.viewMode == "days") {
+				$('#StartDate').datepicker('hide');
+				maxDate: jQuery('#StartDate').datepicker("getDate");
+			}
+		});
+		
+		$('#EndDate').datepicker();
+		$('#EndDate').datepicker().on('changeDate', function (ev) {
+			if(ev.viewMode == "days") {
+				$('#EndDate').datepicker('hide');
+				maxDate: jQuery('#EndDate').datepicker("getDate");
+			}
+		});
+	});
+</script>
+<ul class="breadcrumb">
+    <li title="Dashboard"><a href='{#URL#}home/'>Dashboard</a></li>
+    <li title="NPO Summary"><a href='{#URL#}nporeport'>NPO Summary</a></li>
+    <li title="NPO Payment Collected List">NPO Payment Collected  - List</li>
+</ul>
+{include="common/message"}
+<div class="oh">
+    <div class="col col-6">
+        <h1 class="heading-1">NPO Payment Collected - List</h1>
+    </div>
+</div>
+<div id="content-box" class="igs-form">
+    <form id="formSection" name="formSection" method="get" autocomplete="off" action="">
+        <input type="hidden" name="pageNumber" id="pageNumber" value="1">
+        <div class="section-heading">Filter Result <a href='javascript://' class="form-toggle-icon"><i class="fa fa-minus-square-o"></i></a></div>
+        <div class="content-section">
+            <fieldset>
+                <div class="row">
+                    <section class="col col-2 ">
+                        <label class="label">Date Form</label>
+                        <div class="input-append date" id="StartDate" data-date="" data-date-format="mm/dd/yyyy">
+                            <label class="input"> <i class="icon-append fa fa-calendar add-on"></i>
+                                <input type="text" class="datepickerInput" name="FromDate" id="FromDate" value="{$fromDate}" readonly="">
+                            </label>
+                        </div>
+                    </section>
+                    <section class="col col-2 ">
+                        <label class="label">Date to</label>
+                        <div class="input-append date" id="EndDate" data-date="" data-date-format="mm/dd/yyyy">
+                            <label class="input"> <i class="icon-append fa fa-calendar add-on"></i>
+                                <input type="text" class="datepickerInput" name="ToDate" id="ToDate" value="{$toDate}" readonly="">
+                            </label>
+                        </div>
+                    </section>
+                    <!--<section class="col col-4">
+                        <label class="label">Payment Processor</label>
+                        <label class="select">
+                            <select name="PaymentProcessor" id="searchFields">
+                                <option value="">Both</option>
+                                <option value="1">Stripe</option>
+                                <option value="2">Pay Simple</option>
+                            </select>
+                            <i></i> 
+                         </label>
+                    </section>
+                    <section class="col col-4">
+                        <label class="label">Transaction Type</label>
+                        <label class="select">
+                            <select name="TransactionType" id="searchFields">
+                                <option value="">Both</option>
+                                <option value="1">Donation</option>
+                                <option value="2">Purchase</option>
+                            </select>
+                            <i></i> </label>
+                    </section>-->
+                </div>
+            </fieldset>
+            <div class="form-footer">
+                <button type="submit" name="" value="" id="filter_donation" class="button-1"><i class="fa fa-search"></i>&nbsp;Show Result</button> &nbsp; 
+                <a href="nporeport/index/npopaymentcollectedlist" class="button-2"><i class="fa fa-refresh"></i>&nbsp;Reset</a> &nbsp; 
+                <a href="javascript://" id="export" class="button-2" onclick="ExportData()"><i class="fa fa-search"></i>&nbsp;Export Result</a>
+            </div>
+        </div>
+    </form>
+    <div class="row">
+        <section class="col col-12">
+        	<div class="record-found pull-left">Showing 1-1 of 1 records</div>
+              <table border="0" id="igs-table" class="pull-left">
+                <tbody><tr>
+                    <th width="12%">Date</th>
+                    <th width="12%">NPO Name</th>
+                    <th width="12%">NPO Category</th>
+                    <th width="12%">NPO State</th>
+                    <th width="10%">Donation Amount</th>
+                    <th width="12%">Donation type</th>
+                    <th width="15%">Recurring Indicator</th>
+                    <th width="15%">Recurring number</th>                    
+                </tr>
+                <tr>
+                    <td data-title="Date">12/12/2015</td>
+                    <td data-title="NPO Name">Test</td>
+                    <td data-title="NPO Category">Stripe</td>
+                    <td data-title="NPO State">Test</td>
+                    <td data-title="Donation Amount">314</td>
+                    <td data-title="Donation type">test</td>
+                    <td data-title="Recurring Indicator">300.00</td>
+                    <td data-title="Recurring number">12</td>
+                    <td data-title=""></td>
+                </tr>
+                <tr>
+                    <td data-title="Date">12/12/2015</td>
+                    <td data-title="NPO Name">Test</td>
+                    <td data-title="NPO Category">Stripe</td>
+                    <td data-title="NPO State">Test</td>
+                    <td data-title="Donation Amount">314</td>
+                    <td data-title="Donation type">test</td>
+                    <td data-title="Recurring Indicator">300.00</td>
+                    <td data-title="Recurring number">12</td>
+                    <td data-title=""></td>
+                </tr>
+             </tbody>
+          </table>
+        </section>
+    </div>
+</div>

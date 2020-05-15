@@ -1,0 +1,521 @@
+<link type="text/css" rel="stylesheet" href='{#RESOURCES#}css/bootstrap-datepicker.css'>
+<script type="text/javascript" src='{#RESOURCES#}js/validatecampaign.js'></script>
+<link href='{#RESOURCES#}css/jquery.colorbox.css' type="text/css" rel="stylesheet" />
+<script type="text/javascript" src='{#RESOURCES#}js/colorbox-video.js'></script>
+<script type="text/javascript" src='{#RESOURCES#}js/jquery.colorbox.js'></script>
+<script type="text/javascript" src='{#RESOURCES#}js/bootstrap.js'></script>
+<script type="text/javascript" src='{#RESOURCES#}js/bootstrap-multiselect.js'></script>
+<script type="text/javascript" language="javascript" src='{#URL#}app/tinymce/tinymce.min.js'></script>
+<script type="text/javascript" src='{#RESOURCES#}js/includeEditor.js'></script>
+<script type="text/javascript" src='{#RESOURCES#}js/bootstrap-datepicker.js'></script>
+
+
+<script type="text/javascript">
+    $(document).ready(function() {
+       
+	   $(".youtube").colorbox({iframe:true, innerWidth:640, innerHeight:390});
+		
+		/*$('#nposubsectionname').multiselect(
+		{
+			nonSelectedText: 'Select Categories'
+		});*/
+		
+		
+		$('#country').change(function(){
+			$.ajax(
+			{
+				type:'POST',
+				dataType:'json',
+				cache :false,
+				async:true,
+				data:{CountryAB:$(this).val()},
+				url:SITEURL+'campaign/getstateajax',
+				success:function(data)
+				{
+					$('#state option').remove();
+					for(obj in data)
+					{
+						var Caption 		= data[obj].State_Name;
+						var Captionvalue	= data[obj].State_Value;	
+						$('#state').append($('<option>', { 
+							value: Captionvalue,
+							text : Caption 
+						}));
+						
+					}		
+				}
+			});	
+		});
+		
+		$('#dpEndDate').datepicker();
+		$('#dpStartDate').datepicker();
+		$('.input-append.date').datepicker().on('changeDate', function (ev)
+		{
+			if(ev.viewMode == "days")
+			{
+				$('.input-append.date').datepicker('hide');
+			}
+		});
+		
+		/*//add datepicker start
+		$('#startdate').datepicker({
+			dateFormat: 'mm/dd/yy',
+			prevText: '<i class="icon-chevron-left"></i>',
+			nextText: '<i class="icon-chevron-right"></i>',
+			onSelect: function( selectedDate )
+			{
+				$('#enddate').datepicker('option', 'minDate', selectedDate);
+			}
+		});
+		$('#enddate').datepicker({
+			dateFormat: 'mm/dd/yy',
+			prevText: '<i class="icon-chevron-left"></i>',
+			nextText: '<i class="icon-chevron-right"></i>',
+			onSelect: function( selectedDate )
+			{
+				$('#startdate').datepicker('option', 'maxDate', selectedDate);
+			}
+		});
+		//add datepicker end*/
+    });
+
+function DeleteCampaign(CampID)
+{
+	if(confirm("Are you sure, you want to delete this campaign ?"))
+	{
+		location.href=SITEURL+"campaign/index/delete/"+CampID;	
+	}	
+}
+</script>
+{include="common/message"}
+<form class="igs-form" id="addcampaign" name="addcampaign"  method="post" action='{#URL#}campaign/index/update' autocomplete="off">
+ <input type="hidden" name="campaignid" id="campaignid" value="{$CampaignDetail.Camp_ID}"/>
+<div class="oh">
+   <div class="col col-5">
+        <h1 class="heading-1">&nbsp;Campaign - Edit </h1>
+    </div>
+    
+    <div class="col col-7 text-right mt-15 pull-right">
+           <button type="submit" class="button-1" title="Update Campaign" value="Save Changes">
+          <i class="fa fa-save"></i>&nbsp;Save Changes</button>
+          
+    </div>
+</div>
+<div id="content-box" >
+	<h3 class="heading-1">{$CampaignDetail.Camp_Title} ({$CampaignDetail.Camp_ID})</h3>
+	<div class="section-heading text-left">	
+        <li class="fa fa-fw fa-file-text iColor"></li>&nbsp;Campaign General Details<a href='javascript://' class="form-toggle-icon"><i class="fa fa-minus-square-o"></i></a>
+    </div>
+          <div class="content-section">
+                <fieldset>
+                    <div class="row">
+                        <section class="col col-6">
+                            <label class="label">Title</label>
+                            <label class="input">
+                                <input type="text" id="title" name="title"  value="{$CampaignDetail.Camp_Title}"/>
+                            </label>
+                        </section>
+                        <section class="col col-6">
+                            <label class="label dib">User Friendly Name</label>
+                            <label class="GenerateUrl"><a href='javascript://' class="link"><li class="fa fa-magic">&nbsp;</li>Generate</a></label>
+                            <label class="input">
+                                <input type="text" id="userfriendlyname" name="userfriendlyname"  value="{$CampaignDetail.Camp_UrlFriendlyName}"/>
+                            </label>
+                        </section>
+                        
+                        <section class="col col-12">
+                            <label class="label">Short Description</label>
+                            <label class="input">
+                                <input type="text" id="shortdesc" name="shortdesc"  value="{$CampaignDetail.Camp_ShortDescription}" />
+                            </label>
+                        </section>
+                        
+                        <section class="col col-12">
+                            <label class="label">Long Description HTML</label>
+                            <label class="textarea">
+                                <textarea rows="3" name="longdeschtml" id="longdeschtml">{$CampaignDetail.Camp_DescriptionHTML}</textarea>
+                            </label>
+                        </section>
+                        
+                        
+                        <section class="col col-6">
+                            <label class="label">Donation Goal</label>
+                            <label class="input">
+                                <input type="text" id="donationgoal" name="donationgoal" value="{$CampaignDetail.Camp_DonationGoal}"  />
+                            </label>
+                        </section>
+                        <section class="col col-6">
+                            <label class="label">Donation Received</label>
+                            <label class="input">
+                                <input type="text" id="donationrecd" name="donationrecd"  value="{$CampaignDetail.Camp_DonationReceived}"/>
+                            </label>
+                        </section>
+                        
+                        <section class="col col-6">
+                            <label class="label">Minimum Donation Amount</label>
+                            <label class="input">
+                                <input type="text" id="minimumdonationamt" name="minimumdonationamt" value="{$CampaignDetail.Camp_MinimumDonationAmount}"/>
+                            </label>
+                        </section>
+                        <section class="col col-6">
+                           <label class="label">Campaign Level</label>
+                            <label class="select">
+                                <select name="level" id="level">
+                                    <option value="">Level</option>
+                                    {loop="level"}
+                                    {if="$value.Camp_Level_Name!=''"}
+                                    <option value="{$value.Camp_Level_ID}" {if="$CampaignDetail.Camp_Level_ID==$value.Camp_Level_ID"}selected="selected"{/if}>{$value.Camp_Level_Name}</option>
+                                    {/if}
+                                    {/loop}
+                                </select>
+                                <i></i>
+                            </label>
+                        </section>
+                        
+                        <section class="col col-6">
+                            <label class="label">Start Date</label>
+                            <div class="input-append date" id="dpStartDate" data-date="" data-date-format="mm/dd/yyyy" data-date-viewmode="years">
+                                <label class="input">
+                                    <i class="icon-append fa fa-calendar add-on"></i>
+                                    <input type="text" class="datepickerInput" name="startdate" id="startdate" placeholder="Select start date" value="{$CampaignDetail.Camp_StartDate|formatDate:'m/d/Y'}">
+                                </label>
+                             </div>
+                            <!--<label class="input">
+                                <i class="icon-append icon-calendar"></i>
+                                <input type="text" id="startdate" name="startdate" value="{$CampaignDetail.Camp_StartDate|formatDate:'m/d/Y'}" />
+                            </label>-->
+                        </section>
+                        <section class="col col-6">
+                            <label class="label">End Date</label>
+                             <div class="input-append date" id="dpEndDate" data-date="" data-date-format="mm/dd/yyyy" data-date-viewmode="years">
+                                <label class="input">
+                                    <i class="icon-append fa fa-calendar add-on"></i>
+                                    <input type="text" class="datepickerInput" name="enddate" id="enddate" placeholder="Select end date" value="{$CampaignDetail.Camp_EndDate|formatDate:'m/d/Y'}">
+                                </label>
+                            </div>  
+                           <!-- <label class="input">
+                                <i class="icon-append icon-calendar"></i>
+                                <input type="text" id="enddate" name="enddate" value="{$CampaignDetail.Camp_EndDate|formatDate:'m/d/Y'}"  />
+                            </label>-->
+                        </section>
+                    
+                    </div>
+                </fieldset>
+          </div>             
+</div>
+    <div id="content-box" >
+        <div class="section-heading text-left">	
+            <li class="fa fa-fw fa-file-text iColor"></li>&nbsp;Contact Person Details<a href='javascript://' class="form-toggle-icon"><i class="fa fa-minus-square-o"></i></a>
+        </div>
+  		<div class="content-section">
+  		<fieldset>
+                <div class="row">
+                	<section class="col col-6">
+                            <label class="label">First Name</label>
+                            <label class="input">
+                                <input type="text" id="firstname" name="firstname" value="{$CampaignDetail.Camp_CP_FirstName}"/>
+                            </label>
+                        </section>
+                        <section class="col col-6">
+                            <label class="label">Last Name</label>
+                            <label class="input">
+                                <input type="text" id="lastname" name="lastname" value="{$CampaignDetail.Camp_CP_LastName}"  />
+                            </label>
+                        </section>
+                        
+                        
+                        <section class="col col-6">
+                            <label class="label">Address 1</label>
+                            <label class="input">
+                                <input type="text" id="address1" name="address1" value="{$CampaignDetail.Camp_CP_Address1}"/>
+                            </label>
+                        </section>
+                        <section class="col col-6">
+                            <label class="label">Address 2</label>
+                            <label class="input">
+                                <input type="text" id="address2" name="address2" value="{$CampaignDetail.Camp_CP_Address2}"/>
+                            </label>
+                        </section>
+                        
+                        <section class="col col-3">
+                            <label class="label">Country</label>
+                            <label class="select">
+                                <select name="country" id="country">
+                                    <option value="">Country</option>
+                                    {loop="country"}
+                                    {if="$value.Country_Title!=''"}
+                                    <option value="{$value.Country_Abbrivation}" {if="$CampaignDetail.Camp_CP_Country==$value.Country_Abbrivation"}selected="selected"{/if}>
+                                    {$value.Country_Title}
+                                    </option>
+                                    {/if}
+                                    {/loop}
+                                </select>
+                                <i></i>
+                            </label>
+                        </section>
+                         <section class="col col-3">
+                            <label class="label">State</label>
+                            <label class="select">
+                                <select name="state" id="state">
+                                    <option value="">State</option>
+                                    {loop="state"}
+                                    {if="$value.State_Name!=''"}
+                                    <option value="{$value.State_Value}" {if="$CampaignDetail.Camp_CP_State==$value.State_Value"}selected="selected"{/if}>{$value.State_Name}</option>
+                                    {/if}
+                                    {/loop}
+                                </select>
+                                <i></i>
+                            </label>
+                        </section>
+                        <section class="col col-3">
+                            <label class="label">City</label>
+                            <label class="input">
+                                <input type="text" id="city" name="city"  value="{$CampaignDetail.Camp_CP_City}"/>
+                            </label>
+                        </section>
+                       
+                        
+                        <section class="col col-3">
+                            <label class="label">Zip</label>
+                            <label class="input">
+                                <input type="text" id="zip" name="zip"  value="{$CampaignDetail.Camp_CP_ZipCode}"/>
+                            </label>
+                        </section>
+                        
+                        
+                        
+                        <section class="col col-6">
+                            <label class="label">Email Address</label>
+                            <label class="input">
+                                <input type="text" id="email" name="email"  value="{$CampaignDetail.Camp_CP_Email}"/>
+                            </label>
+                        </section>
+                        <section class="col col-6">
+                            <label class="label">Phone Number</label>
+                            <label class="input">
+                                <input type="text" id="phone" name="phone"  value="{$CampaignDetail.Camp_CP_Phone}"/>
+                            </label>
+                        </section>
+                        
+                        
+                        <section class="ml-15 mr-15">
+                            <label class="label">User Bio</label>
+                            <label class="textarea">
+                                <textarea rows="3" name="userbio" id="userbio">{$CampaignDetail.Camp_UserBio}</textarea>
+                            </label>
+                        </section>
+                </div>
+        </fieldset>        
+  </div>   
+</div>        
+
+<div id="content-box" >
+    <div class="section-heading text-left">	
+        <li class="fa fa-fw fa-file-text iColor"></li>&nbsp;Bank Details<a href='javascript://' class="form-toggle-icon"><i class="fa fa-minus-square-o"></i></a>
+    </div>
+    <div class="content-section">
+  		<fieldset>
+                <div class="row">
+                	<section class="col col-6">
+                            <label class="label">Bank Name</label>
+                            <label class="input">
+                                <input type="text" id="bankname" name="bankname" value="{$CampaignDetail.Camp_BankName}"/>
+                            </label>
+                        </section>
+                        <section class="col col-6">
+                            <label class="label">Bank Address</label>
+                            <label class="input">
+                                <input type="text" id="bankaddress" name="bankaddress" value="{$CampaignDetail.Camp_BankAddress}"/>
+                            </label>
+                        </section>
+                        
+                        
+                        <section class="col col-6">
+                            <label class="label">Account Type</label>
+                            <label class="input">
+                                <input type="text" id="accounttype" name="accounttype" value="{$CampaignDetail.Camp_AccountType}"/>
+                            </label>
+                        </section>
+                        <section class="col col-6">
+                            <label class="label">Account Name</label>
+                            <label class="input">
+                                <input type="text" id="accountname" name="accountname" value="{$CampaignDetail.Camp_AccountName}"/>
+                            </label>
+                        </section>
+                       
+                        
+                        <section class="col col-6">
+                            <label class="label">Account Number</label>
+                            <label class="input">
+                                <input type="text" id="accountnumber" name="accountnumber" value="{$CampaignDetail.Camp_AccountNumber}"/>
+                            </label>
+                        </section>
+                        <section class="col col-6">
+                            <label class="label">Preferred Payment Mode</label>
+                            <label class="select">
+                                <select name="preferedpaymentmode" id="preferedpaymentmode">
+                                    <option value="">Mode</option>
+                                    {loop="paymentmode"}
+                                    <option value="{$key}" {if="$CampaignDetail.Camp_PreferredPaymentMode==$key"}selected="selected"{/if}>{$value}</option>
+                                    {/loop}
+                                </select>
+                                <i></i>
+                            </label>
+                        </section>
+                        
+                        
+                        <section class="col col-6">
+                            <label class="label">Bank Email</label>
+                            <label class="input">
+                                <input type="text" id="bankemail" name="bankemail"  value="{$CampaignDetail.Camp_BankEmail}"/>
+                            </label>
+                        </section>
+                        <section class="col col-6">
+                            <label class="label">Bank Phone</label>
+                            <label class="input">
+                                <input type="text" id="bankphone" name="bankphone"  value="{$CampaignDetail.Camp_BankPhone}"/>
+                            </label>
+                        </section>
+                </div>
+        </fieldset>
+    </div>            
+
+</div>
+<div id="content-box" >
+    <div class="section-heading text-left">	
+        <li class="fa fa-fw fa-file-text iColor"></li>&nbsp;Other Details<a href='javascript://' class="form-toggle-icon"><i class="fa fa-minus-square-o"></i></a>
+    </div>
+    <div class="content-section">
+        	<fieldset>
+                <div class="row">
+                	<section class="col col-12">
+                            <label class="label">Search Tags</label>
+                            <label class="textarea">
+                                <textarea rows="3" name="searchtags" id="searchtags">{$CampaignDetail.Camp_SearchTags}</textarea>
+                            </label>
+                        </section>
+                        
+                        
+                        <section class="col col-6">
+                            <label class="label">Styling Details</label>
+                            <label class="input">
+                                <input type="text" id="stylingdetails" name="stylingdetails" value="{$CampaignDetail.Camp_StylingDetails}"/>
+                            </label>
+                        </section>
+                        <section class="col col-6">
+                            <label class="label">Styling Template Name</label>
+                            <label class="input">
+                                <input type="text" id="stylingtemplatename" name="stylingtemplatename" value="{$CampaignDetail.Camp_StylingTemplateName}"/>
+                            </label>
+                        </section>
+                        
+                        <section class="col col-12">
+                            <label class="label">Web Master Comment</label>
+                            <label class="textarea">
+                                <textarea rows="3" name="webmastercomment" id="webmastercomment">{$CampaignDetail.Camp_WebMasterComment}</textarea>
+                            </label>
+                        </section>
+                        
+                        
+                        <section class="col col-6">
+                            <label class="label">NPO EIN</label>
+                            <label class="input">
+                                <input type="text" id="npoein" name="npoein" value="{$CampaignDetail.Camp_NPO_EIN}"/>
+                            </label>
+                        </section>
+                        <section class="col col-6">
+                            <label class="label">Social Media URL</label>
+                            <label class="input">
+                                <input type="text" id="socialmediaurl" name="socialmediaurl"  value="{$CampaignDetail.Camp_SocialMediaUrl}"/>
+                            </label>
+                        </section>
+                        
+                        
+                        <section class="col col-6">
+                            <label class="label">Sales Force ID</label>
+                            <label class="input">
+                                <input type="text" id="salesforceid" name="salesforceid"  value="{$CampaignDetail.Camp_SalesForceID}"/>
+                            </label>
+                        </section>
+                        
+                        
+                        
+                        <section class="col col-6">
+                            <label class="label">Status</label>
+                            <label class="select">
+                                <select name="status" id="status">
+                                    <option value="1" {if="$CampaignDetail.Camp_Status=='1'"}selected="selected"{/if} >Approved</option>
+                                    <option value="0" {if="$CampaignDetail.Camp_Status=='0'"}selected="selected"{/if} >Pending</option>
+                                </select>
+                                <i></i>
+                            </label>
+						</section>
+                        <section class="col col-6">
+                        	<label class="label">Category</label>
+                            <label class="select">
+                            <select name="category" id="category">
+                            	<option value="">Select</option>
+								{loop="category"}
+                                <option value="{$value.NPOCat_ID}"  {if="$CampaignDetail.Camp_Cat_ID==$value.NPOCat_ID"}selected="selected"{/if} >
+                                	{$value.space} {$value.NPOCat_DisplayName_EN}
+                                </option>
+                                {/loop}
+                            </select>
+                            <i></i>
+                            </label>
+                        </section>
+                        <section class="col col-6">
+                        	<label class="label">&nbsp;</label>
+                            <label class="checkbox">
+                            	<input type="checkbox" id="privatecampaign" name="privatecampaign" value="1" {if="$CampaignDetail.Camp_IsPrivate=='1'"}checked="checked"{/if}/>
+                                <i></i>Private Campaign
+                            </label>
+                            <!--<label class="select">PRIVATE CAMPAIGN</label>
+                            <label class="select">
+                                <select name="privatecampaign" id="privatecampaign">
+                                    <option value="1" {if="$CampaignDetail.Camp_IsPrivate=='1'"}selected="selected"{/if}>Yes</option>
+                                    <option value="0" {if="$CampaignDetail.Camp_IsPrivate=='0'"}selected="selected"{/if}>No</option>
+                                </select>
+                                <i></i>
+                            </label>-->
+                        </section>
+                </div>
+          </fieldset>
+    </div>            
+</div>    
+<div id="content-box" >
+    	<div class="section-heading text-left">	
+        	<li class="fa fa-fw fa-file-text iColor"></li>&nbsp;Log Details<a href='javascript://' class="form-toggle-icon"><i class="fa fa-minus-square-o"></i></a>
+        </div>
+         <div class="content-section">
+        	<fieldset>
+                <div class="row">
+                	<section class="col col-4">
+                    	<label class="label">Created Date</label>
+                            <label class="label text-bold">{$CampaignDetail.Camp_CreatedDate|formatDate:'n/j/Y h:ia'}</label>
+                    </section>
+                    
+                    <section class="col col-4">
+                    	<label class="label">Last Update Date</label>
+                        <label class="label text-bold">{$CampaignDetail.Camp_LastUpdatedDate|formatDate:'n/j/Y h:ia'}</label>
+                    </section>
+                    
+                    <section class="col col-4">
+                    	<label class="label">Last Updated IP</label>
+                        <label class="label text-bold">{$CampaignDetail.Camp_LastUpdatedUserIP}</label>
+                    </section>
+                </div>
+            </fieldset>
+         </div>       
+</div>        
+<div class="content-section">
+    <fieldset>
+        <div class="row mr-10 mb-10 pull-right">
+                     <button type="button" class="button-warning" title="Delete Campaign" value="Delete"
+                     onclick="DeleteCampaign('{$CampaignDetail.Camp_ID|keyEncrypt}')">
+                      <i class="fa fa-trash-o"></i>&nbsp;Delete</button>&nbsp;
+                      <button type="submit" class="button-1" title="Update Campaign" value="Save Changes"><i class="fa fa-save"></i>&nbsp;Save Changes</button>
+        </div>
+    </fieldset>
+</div>
+</form>

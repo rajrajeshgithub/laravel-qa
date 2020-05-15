@@ -1,0 +1,176 @@
+<script type="text/javascript" language="javascript" src='{#URL#}app/tinymce/tinymce.min.js'></script>
+<script type="text/javascript" src='{#RESOURCES#}js/includeEditor.js'></script>
+<script type="text/javascript" src='{#RESOURCES#}js/validateEmailTemplate.js'></script>
+<div id="rightSection">
+      <div class="rightPannel">
+            <div class="breadcrumb">
+              <ul>
+                <li title="Dashboard"><a href='{#URL#}home/'><img src='{#RESOURCES#}img/dashboard_thumb.png'/>Dashboard</a></li>
+                <li>&nbsp;»&nbsp;</li>
+                <li title="cms">CMS</li>
+                <li>&nbsp;»&nbsp;</li>
+                 <li title="Email Template"><a href='{#URL#}emailtemplate'>Email Templates</a></li>
+                <li>&nbsp;»&nbsp;</li>
+                <li title="Edit">Edit</li>
+              </ul>
+            </div>
+            <div class="contentSection">
+                <form id="formSection" name="formSection" class="sky-form"  method="post" action='{#URL#}emailtemplate/index/{$action}' >
+                  <div class="pageHeader text-left"><li class="fa fa-fw fa-file-text iColor"></li>&nbsp;Email Template - View / Edit
+                       <div class="pull-right margin-right-10">
+                                <button type="submit" name="Save" value="Save Changes" class="btn btn-primary pull-right margin-left-5" ><i class="fa fa-save"></i> Save Changes</button>
+                                <a href='{#URL#}emailtemplate' class="btn btn-secondary pull-right" title="Email Template Listing" ><i class="fa fa-list-ul"></i> Listing</a>
+                       </div>    
+                  </div>
+              {include="common/message"}           
+                  <div class="">                    
+                      <input type="hidden" name="tplId" id="tplId" value="{$arrTplDetail.ID}"/>
+                          <fieldset>
+                            <div class="row">
+                                <div class="sky-form-headingsection psTitle">
+                                    <div class="sky-form-heading pull-left">Basic Template Detail</div>
+                                    <div class="viewmoreBtn pull-right margin-right-10">
+                                        <i class="fa fa-minus"></i>
+                                     </div>
+                                </div>
+                                
+                                <div class="viewmorSection">
+                                    <section class="display-block margin-left-15 margin-right-15">
+                                            <label class="label">Template Name</label>
+                                            <label class="input">
+                                                <input type="text"  id="templateName" name="templateName" value="{$arrTplDetail.tplName}"  placeholder="Template Name" >
+                                            </label>
+                                    </section>
+                                    
+                                   <!-- <section class="col col-6">
+                                                <label class="label">Keyword</label>
+                                                <label class="input">
+                                                    <input type="text"  id="keyword" name="keyword" value="{$arrTplDetail.keyword}"  placeholder="Template Name" readonly="readonly">
+                                                </label>
+                                    </section>-->
+                                    
+                                    <section class="col col-6">
+                                            <label class="label">Receiver</label>
+                                            <label class="input">
+                                               <input type="text" id="receiver" value="{$arrTplDetail.mailTo}" name="receiver" placeholder="Email Receiver" >
+                                            </label>
+                                    </section>
+                                     
+                                    <section class="col col-6">
+                                            <label class="label">Receiver CC</label>
+                                            <label class="input">
+                                                <input type="text" id="receiverCc" name="receiverCc" value="{$arrTplDetail.mailToCc}" placeholder="Receiver CC" >
+                                            </label>
+                                     </section>
+                                    
+                                    <section class="col col-6">
+                                                <label class="label">Receiver BCC</label>
+                                                <label class="input">
+                                                    <input type="text" id="receiverBcc" name="receiverBcc" value="{$arrTplDetail.mailToBcc}" placeholder="Receiver BCC" >
+                                                </label>
+                                    </section>
+                                    
+                                    <section class="col col-6">
+                                            <label class="label">Sender</label>
+                                            <label class="input">
+                                                <input type="text" id="sender" name="sender" value="{$arrTplDetail.mailFrom}" placeholder="Sender" >
+                                            </label>
+                                     </section>
+                                    
+                                    <section class="col col-6">
+                                            <label class="label">Subject English</label>
+                                            <label class="input">
+                                                <input type="text" id="subject" name="subject" value="{$arrTplDetail.Subject_EN}" placeholder="Subject" >
+                                            </label>
+                                     </section>
+                                    
+                                    <section class="col col-6">
+                                                <label class="label">Subject Spanish</label>
+                                                <label class="input">
+                                                    <input type="text" id="subjectSpanish" name="subjectSpanish" value="{$arrTplDetail.Subject_ES}" placeholder="Subject Spanish" >
+                                                </label>
+                                    </section>
+                                   
+                                    <section class="display-block margin-left-15 margin-right-15">
+                                            <label class="label">Description</label>
+                                            <label class="textarea">
+                                                <textarea id="description" name="description"  placeholder="add description" >{$arrTplDetail.description}</textarea>
+                                            </label>
+                                    </section>
+                                    
+                                    <section class="display-block margin-left-15 margin-right-15">
+                                                <label class="label pull-left">Tags For Template&nbsp;: </label>
+                                                <label class="label pull-left text-bold">&nbsp;{$arrTplDetail.TagDesc}</label>
+                                                
+                                    </section>
+                                    
+                                    <section class="col col-6 clear-both">
+                                                <label class="checkbox">
+                                                 <input type="checkbox" name="isactive" id="isactive" class="inline-checkbox" value="1" {if="$arrTplDetail.Status==1"} checked="checked" {/if}/><i></i>Is Active  
+                                                </label>
+                                    </section>
+                                    
+                                </div>       
+                           </div> 
+                          </fieldset>
+                        
+                          <fieldset>
+                            <div class="row">
+                                <div class="sky-form-headingsection psTitle">
+                                        <div class="sky-form-heading pull-left">Template Prefrences</div>
+                                        <div class="viewmoreBtn pull-right margin-right-10">
+                                           <i class="fa fa-minus"></i>
+                                        </div>
+                                    </div>
+                                
+                                
+                                <div class="viewmorSection">
+                                     <div class="tabContainer">
+                                        <section>
+                                            <div class="tabSection margin-bottom-15 margin-left-20">
+                                                 <div class="pull-left margin-top-5"><button type="button" name="buttonenglish"  id="buttonenglish" class="tabs activeTab" title="Click to add more additional page meta details"><i class="fa"></i>English</button></div>
+                                                 <div class="pull-left padding-left-10 margin-top-5"><button type="button" name="buttonspanish"  id="buttonspanish" class="tabs" title="Click to add more additional page meta details"><i class="fa"></i>Spanish</button></div>
+                                            </div>
+                                        </section>
+                                     
+                                        <div id="english" class="buttonenglishSection tabBox">
+                                             <section>
+                                                    <label class="label">Enter your English HTML code here</label>
+                                                    <label class="textarea">
+                                                        <textarea id="mailBody" name="mailBody" placeholder="add Tags For Template" >{$arrTplDetail.Body}</textarea>
+                                                    </label>
+                                             </section>
+                                         </div>
+                                         
+                                        <div id="spanish" class="display-none buttonspanishSection tabBox">
+                                            <section>
+                                                    <label class="label">Enter your Spanish HTML code here </label>
+                                                    <label class="textarea">
+                                                        <textarea id="mailBodySpanish" name="mailBodySpanish" placeholder="add Tags For Template" >{$arrTplDetail.BodySpanish}</textarea>
+                                                    </label>
+                                             </section>
+                                         </div> 
+                                      </div>
+                                </div>
+                            </div>
+                        </fieldset>
+                     
+                          <fieldset>
+                                 <section>
+                                    <div class="pull-right margin-bottom-10">
+                                          <button type="submit" name="Save" value="Save Changes" class="btn btn-primary"><i class="fa fa-save"></i> Save Changes</button>
+                                    </div>      
+                                 </section>
+                            </fieldset>
+                    
+                        <!--<div class="overflow-hidden clear-both">
+                            <div class="pull-right margin-bottom-10">
+                                <button type="submit" name="save" value="save" id="saveBtn" class="btn btn-primary saveBtn"><i class="fa fa-save"></i> Save Changes</button>
+                            </div>
+                        </div>-->
+                    
+                  </div>
+              </form>
+            </div>
+      </div>
+</div>

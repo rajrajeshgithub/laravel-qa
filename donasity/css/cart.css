@@ -1,0 +1,44 @@
+/* CSS Document */
+.overlay{background-color:#000;height:100%;width:100%;z-index:99999;display:none;background-image:url(../images/ajax-loader.gif);background-repeat:no-repeat;background-position:center;background-color: rgba(1, 1, 1, 0.7);bottom: 0;left: 0;position: fixed;right: 0;top: 0;}
+.cart-section{font-family: 'latoregular',sans-serif; color:#666666;}
+.selection-row{border-bottom:1px solid #b1b1b1; overflow:hidden; font-size:18px; margin-bottom:15px;}
+.selection-row .heading-2{margin-bottom:0px;}
+.selection-row .dib{line-height:28px;}
+.selection-row .fundraiser-box, .selection-row .npo-box, .selection-row .heading-2 , .selection-row .learn-more{display:inline-block;}
+.fundraiser-box, .npo-box, .learn-more{margin-left:25px;}
+.fundraiser-box span{border:1px solid #000; background:#abc340; width:15px; height:15px; display:inline-block; margin-right:5px;}
+.npo-box span{border:1px solid #000; background:#D0719B; width:15px; height:15px; display:inline-block; margin-right:5px;}
+.link-btn{text-decoration:underline;}
+.link-btn:hover{text-decoration:none;}
+.selection-row .checkbox{margin-bottom:0px;}
+.learn-more{font-size:15px; line-height:28px;}
+.donors-details{padding:10px 0px;}
+.donors-details .heading-3{font-family:'latoregular',sans-serif; color:#666666; font-size:14px;}
+.npo-organization-name.heading-2{color:#D0719B;}
+.remove-donation-btn{text-align:center;}
+.remove-donation-btn a, .remove-donation-btn span{display:block; color:#666666; font-size:11px;}
+.remove-donation-btn i.fa{font-size:20px;}
+.amount-box label{font-size:12px; padding-top:5px; margin-bottom:0px; white-space:normal;}
+.reoccurring-box{border:1px solid #b1b1b1; padding:10px; margin-top:15px; display:none;}
+.reoccurring-box label.checkbox{display:inline-block; margin-right:15px;}
+.set-time-numbers{font-size:18px; font-weight:bold;}
+.set-time-numbers span{color:#000; width:25px; height:25px; border:1px solid #b1b1b1; text-align:center; display:inline-block; vertical-align:middle;}
+.set-time-numbers a{color:#000; display:block;}
+.set-time-numbers a{text-decoration:none;}
+.set-time{width:35px !important;}
+.set-time input[type="text"]{width:100%; border:none; background:transparent; outline:none; text-align:center; line-height:20px;}
+.amount-box .form-control{padding:5px; color:#002f5b; font-weight:bold; text-align:right;}
+.registered-fundraiser, .nonRegistered-fundraiser{border-bottom:1px solid #b1b1b1;}
+.sub-total{padding:10px 0px; font-size:16px; color:#002f5b; font-weight:bold;}
+.nonRegistered-head-bar{padding:10px 15px; font-size:16px; background:#F1F0EF; color:#666666; margin:15px 0px;}
+.total-amount-section{font-size:18px; color:#002f5b; font-weight:bold; margin-top:10px; border-top:1px solid #b1b1b1; padding-top:15px;}
+.total-amount{text-align:right;}
+.total-amount .row{padding-top:10px; padding-bottom:10px;}
+.total-amount .row:last-child{font-size:22px;}
+.total-amount label.checkbox{font-size:12px; margin-bottom:0px;}
+/*.continue-donate-btn{font-size:18px;}*/
+.tax-exempted-btn i.fa{background:#666666; color:#fff; width:18px; height:18px; border-radius:50%; text-align:center; padding-top:4px;}
+.reoccurring-btn i.fa{background:#666666; color:#fff; width:18px; height:18px; border-radius:50%; text-align:center; padding-top:5px; font-size:9px;}
+.donors-details .heading-3 i.fa{margin-right:5px;}
+.total-amount label.checkbox a{font-size:12px;}
+.remove-donation-btn i.fa-times-circle{color:#C50000;}

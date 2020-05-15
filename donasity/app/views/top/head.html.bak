@@ -1,0 +1,36 @@
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<title>{$MetaTitle}</title>
+<meta http-equiv="keywords" content="Donasity" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<link rel="shortcut icon" href='{#RESOURCES#}images/favicon.ico'/>
+<meta name="keywords" content="{$MetaKeyword}">
+<meta name="Description" content="{$MetaDesc}">
+<link href='' rel="apple-touch-icon" sizes="60x60" />
+<link href='' rel="apple-touch-icon" sizes="76x76" />
+<link href='' rel="apple-touch-icon" sizes="120x120" />
+<link href='' rel="apple-touch-icon" sizes="152x152" />
+<link type="text/css" rel="stylesheet" href='{#RESOURCES#}css/donasity.css' />
+<link type="text/css" rel="stylesheet" href='{#RESOURCES#}css/font-awesome.min.css' />
+<link type="text/css" rel="stylesheet" href='{#RESOURCES#}css/font-iconmoon.min.css' />
+<link type="text/css" rel="stylesheet" href='{#RESOURCES#}css/magnific-popup.css' />
+<link type="text/css" rel="stylesheet" href='{#RESOURCES#}css/common.css' />
+<link type="text/css" rel="stylesheet" href='{#RESOURCES#}css/pageCommon.css' />
+<link type="text/css" rel="stylesheet" href='{#RESOURCES#}css/npo-registration.css' />
+
+
+<!--<link type="text/css" rel="stylesheet" href='{#RESOURCES#}css/responsive.css' />-->
+<!--[if lt IE 9]>
+		<link type="text/css" rel="stylesheet" href='{#RESOURCES#}css/ieStyle.css' />
+		<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+<![endif]-->
+<script type="text/javascript" src='{#RESOURCES#}js/jquery.js'></script>
+<script type="text/javascript" src='{#RESOURCES#}js/donasity.min.js'></script>
+<script type="text/javascript" src='{#RESOURCES#}js/jquery.validate.min.js'></script>
+<script type="text/javascript" src='{#RESOURCES#}js/jquery.magnific-popup.js'></script>
+<script type="text/javascript" src='{#RESOURCES#}js/common.js'></script>
+<script type="text/javascript">
+	var SITEURL = '{#URL#}';
+	var RESOURCES ='{#RESOURCES#}';
+</script>

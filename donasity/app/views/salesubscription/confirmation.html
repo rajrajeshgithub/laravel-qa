@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+{include="top/head"}
+</head>
+<body id="body">
+<div class="gray-fix-nav"> {include="top/top"}</div>
+<section class="fix-first-section fundraiser-page"> </section>
+<section class="section-padding">
+  <div class="container">
+    <div>
+      <div class="row">
+        <div class="col-md-12 col-sm-12 col-xs-12">
+          <h2 class="heading-1">{$pageheading}</h2>
+        </div>
+      </div>
+      <div class="row ambassador-form">
+        <div class="col-md-12 col-md-12 col-xs-12">
+        	{$msgValues=NULL}
+			{function="getMessage($msgValues)"}            
+			{if="$msgValues!=NULL"} 	
+                {if="$msgValues.msgCode=='E90009'"}
+					{$error_link_expired}                                
+                {elseif="$msgValues.msgCode=='E26007'"}
+                	{$error_not_authorised_to_process}
+                {elseif="$msgValues.msgCode=='C90001'"}
+                	{$notifiy_already_added_payment_details}
+                {elseif="$msgValues.msgCode=='C90002'"}
+                	{$success_submitted_details}
+                {/if}
+			{/if}
+		</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{include="bottom/bottom"}
+</body>
+</html>

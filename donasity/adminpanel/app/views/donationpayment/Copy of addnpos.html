@@ -1,0 +1,662 @@
+<script type="text/javascript" src='{#RESOURCES#}js/bootstrap.js'></script>
+<script type="text/javascript" src='{#RESOURCES#}js/validatenpo.js'></script>
+<script type="text/javascript" src='{#RESOURCES#}js/bootstrap-multiselect.js'></script>
+<script type="text/javascript">
+    $(document).ready(function() {
+        $('#nposubsectionname').multiselect(
+		{
+			nonSelectedText: 'Select Categories'
+		});
+    });
+
+</script>
+<ul class="breadcrumb">
+        <li title="Dashboard"><a href='{#URL#}home/'>Dashboard</a></li>
+        <li title="NPOs">Non-Profit organization</li>
+        <li title="NPOs List"><a href='{#URL#}npos'>List</a></li>
+        <li title="NPOs - Add">Add New</li>
+   </ul>
+{include="common/message"}
+<form id="formSection" name="formSection" class="igs-form"  method="post" action='{#URL#}programmedpages/index/{$action}' >
+	<div class="oh">
+           <div class="col col-6">
+                <h1 class="heading-1">Non-Profit organization - Add</h1>
+            </div>
+            <div class="col col-6 text-right mt15">
+                  <button type="submit" class="button-1" title="Insert NPO" value="Save">
+                  <i class="fa fa-save"></i>&nbsp;Save</button>
+                  <a href='{#URL}npos' class="button-2" title="View Donation"><i class="fa fa-list-ul"></i>&nbsp;View List</a>
+            </div>
+        </div>
+     <div id="content-box" >  
+     	<div class="section-heading text-left">	
+            <li class="fa fa-fw fa-file-text iColor"></li>&nbsp;NPO Basic Details<a href='javascript://' class="form-toggle-icon"><i class="fa fa-plus-square-o"></i></a>
+          </div>
+          <div class="content-section">
+          	 <fieldset>
+                    <div class="row">
+                    	<section class="col col-6">
+                            <label class="label">EIN<span class="red">*</span></label>
+                            <label class="input">
+                                <input type="text" id="npoein" name="npoein"  />
+                            </label>
+                        </section>
+                        <section class="col col-6">
+                            <label class="label">Name<span class="red">*</span></label>
+                            <label class="input">
+                                <input type="text" id="nponame" name="nponame"  />
+                            </label>
+                        </section>
+                        
+                        <section class="col col-6">
+                            <label class="label">ICO</label>
+                            <label class="input">
+                                <input type="text" id="npoico" name="npoico"   />
+                            </label>
+                        </section>
+                        <section class="col col-6">
+                            <label class="label">Street Address<span class="red">*</span></label>
+                            <label class="input">
+                                <input type="text" id="npostreet" name="npostreet"   />
+                            </label>
+                        </section>
+                        
+                        <section class="col col-4">
+                            <label class="label">City</label>
+                            <label class="input">
+                                <input type="text" id="npocity" name="npocity"  />
+                            </label>
+                        </section>
+                        <section class="col col-4 ">
+                            <label class="label">State</label>
+                            <label class="select">
+                                <select name="npostate" id="npostate">
+                                    <option value="">State</option>
+                                    {loop="state"}
+                                    {if="$value.State_Name!=''"}
+                                    <option value="{$value.State_Value}">{$value.State_Name}</option>
+                                    {/if}
+                                    {/loop}
+                                </select>
+                                <i></i>
+                            </label>
+                        </section>
+                        <section class="col col-4">
+                            <label class="label">Zip Code</label>
+                            <label class="input">
+                                <input type="text" id="npozip" name="npozip"   />
+                            </label>
+                        </section>
+                        
+                        <section class="col col-6">
+                            <label class="label">Subsection Name (Category) <span class="red">*</span></label>
+                                <select multiple="multiple" name="nposubsectionname[]" id="nposubsectionname"  >
+                                    {loop="category"}
+                                    	<option value="{$value.NPOCat_CodeName}" >{$value.space}{$value.NPOCat_DisplayName_EN}</option>
+                                    {/loop}
+                                </select>
+                                <span class="metaNote">If you dont see the category in list.Then <a href='{#URL#}npocategory' class='page-link'>create it.</a></span>
+                                <i></i>
+                            
+                        </section>
+                        <section class="col col-6">
+                            <label class="label">Subsection Description</label>
+                            <label class="input">
+                                <input type="text" id="nposubsectiondescription" name="nposubsectiondescription" />
+                                <span class="metaNote">&nbsp;</span>
+                            </label>
+                        </section>
+                        
+                       	<section class="col col-4">
+                            <label class="label">NTEE CD</label>
+                            <label class="input">
+                                <input type="text" id="npocd" name="npocd"  />
+                            </label>
+                        </section>
+                        <section class="col col-4">
+                            <label class="label">Category</label>
+                            <label class="input">
+                                <input type="text" id="npocategory" name="npocategory" />
+                            </label>
+                        </section>
+                        <section class="col col-4">
+                            <label class="label">IRS NTEE CODE2 Description</label>
+                            <label class="input">
+                                <input type="text" id="npoirsnteecode2" name="npoirsnteecode2" />
+                            </label>
+                        </section>
+                        
+                        <section class="col col-4">
+                            <label class="label">Affiliation</label>
+                            <label class="input">
+                                <input type="text" id="npoaffiliation" name="npaffiliation" />
+                            </label>
+                        </section>
+                        <section class="col col-4">
+                            <label class="label">Aff Type</label>
+                            <label class="input">
+                                <input type="text" id="npoafftype" name="npoafftype" />
+                            </label>
+                        </section>
+                        <section class="col col-4">
+                            <label class="label">IRS_Affiliation Codes Description</label>
+                            <label class="input">
+                                <input type="text" id="npoaffiliationcodesdesc" name="npoaffiliationcodesdesc" />
+                            </label>
+                        </section>
+                        
+                        <section class="col col-4">
+                            <label class="label">Ded Code<span class="red">*</span></label>
+                            <label class="input">
+                                <input type="text" id="npodedcode" name="npodedcode" />
+                                <span class="metaNote">2 If Donation is tax exempted</span>
+                            </label>
+                        </section>
+                        <section class="col col-4">
+                            <label class="label">Ded Description</label>
+                            <label class="input">
+                                <input type="text" id="npodeddesc" name="npodeddesc" />
+                                <span class="metaNote">&nbsp;</span>
+                            </label>
+                        </section>
+                        <section class="col col-4">
+                            <label class="label">Foundation Code</label>
+                            <label class="input">
+                                <input type="text" id="npofoundationcode" name="npofoundationcode" />
+                                <span class="metaNote">&nbsp;</span>
+                            </label>
+                        </section>
+                        
+                        <section class="col col-6">
+                            <label class="label">Foundation Description</label>
+                            <label class="input">
+                                <input type="text" id="npofoundationdescription" name="npofoundationdescription" />
+                            </label>
+                        </section>
+                        <section class="col col-6">
+                            <label class="label">Org Description</label>
+                            <label class="input">
+                                <input type="text" id="npoorgdesc" name="npoorgdesc" />
+                            </label>
+                        </section>
+                        
+                        <section class="col col-4">
+                            <label class="label">Org Code</label>
+                            <label class="input">
+                                <input type="text" id="npoorgcode" name="npoorgcode" />
+                            </label>
+                        </section>
+                        <section class="col col-4">
+                            <label class="label">EO Status Code</label>
+                            <label class="input">
+                                <input type="text" id="npoeostatuscode" name="npoeostatuscode" />
+                            </label>
+                        </section>
+                        <section class="col col-4">
+                            <label class="label">EO Description</label>
+                            <label class="input">
+                                <input type="text" id="npoeodesc" name="npoeodesc" />
+                            </label>
+                        </section>
+                        
+                        <section class="col col-4">
+                            <label class="label">Asset Income Code</label>
+                            <label class="input">
+                                <input type="text" id="npoassetincomecode" name="npoassetincomecode" />
+                            </label>
+                        </section>
+                        <section class="col col-4">
+                            <label class="label">Filing Code</label>
+                            <label class="input">
+                                <input type="text" id="npofilingcode" name="npofilingcode" />
+                            </label>
+                        </section>
+                        <section class="col col-4">
+                            <label class="label">PF Filing Code</label>
+                            <label class="input">
+                                <input type="text" id="npopffilingcode" name="npopffilingcode" />
+                            </label>
+                        </section>
+                        
+                        <section class="col col-6">
+                            <label class="label">IRS Asset Income Codes Description</label>
+                            <label class="input">
+                                <input type="text" id="npoirsassetincomecodesdesc" name="npoirsassetincomecodesdesc" />
+                            </label>
+                        </section>
+                        <section class="col col-6">
+                            <label class="label">IRS Filing Code Description</label>
+                            <label class="input">
+                                <input type="text" id="npoirsfilingcodedesc" name="npoirsfilingcodedesc" />
+                            </label>
+                        </section>
+                        
+                        <section class="col col-6">
+                            <label class="label">IRS PF Filing Codes Description</label>
+                            <label class="input">
+                                <input type="text" id="npoirspffilingcodedesc" name="npoirspffilingcodedesc" />
+                            </label>
+                        </section>
+                        <section class="col col-6">
+                            <label class="label">Asset Amount</label>
+                            <label class="input">
+                                <input type="text" id="npoassetamt" name="npoassetamt" />
+                            </label>
+                        </section>
+                        
+                        <section class="col col-6">
+                            <label class="label">Income Amount</label>
+                            <label class="input">
+                                <input type="text" id="npoincomeamt" name="npoincomeamt" />
+                            </label>
+                        </section>
+                        <section class="col col-6">
+                            <label class="label">Revenue Amount</label>
+                            <label class="input">
+                                <input type="text" id="revenueamt" name="revenueamt" />
+                            </label>
+                        </section>
+                    </div>
+             </fieldset>       
+          </div>
+     </div>
+      <div id="content-box" >  
+          <div class="section-heading text-left">	
+                <li class="fa fa-fw fa-file-text iColor"></li>&nbsp;NPO Basic Details<a href='javascript://' class="form-toggle-icon"><i class="fa fa-plus-square-o"></i></a>
+              </div>
+          <div class="content-section">
+          	 <fieldset>
+                    <div class="row">
+                    	<section class="col col-4">
+                            <label class="select">Show on Website</label>
+                            <label class="select">
+                                <select name="nposhowonweb" id="nposhowonweb">
+                                    <option value="1" >Yes</option>
+                                    <option value="0" >No</option>
+                                </select>
+                                <i></i>
+                            </label>
+                        </section>
+                        <section class="col col-6">
+                            <label class="select">Status</label>
+                            <label class="select">
+                                <select name="npostatus" id="npostatus">
+                                    <option value="1" >Approved</option>
+                                    <option value="0" >Pending</option>
+                                </select>
+                                <i></i>
+                            </label>
+						</section>
+                    </div>
+             </fieldset>
+          </div> 
+      </div>             
+       <div class="content-section">
+       		<fieldset>
+                <div class="row">
+                	<button type="submit" class="button-1  pull-right" title="Insert NPO" value="Save"><i class="fa fa-save"></i>&nbsp;Save</button>
+                </div>
+            </fieldset>
+      </div>      
+</form>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div id="rightSection">
+  <div class="rightPannel">
+    <div class="breadcrumb">
+      <ul>
+        <li title="Dashboard"><a href='{#URL#}home/'><img src='{#RESOURCES#}img/dashboard_thumb.png'/>Dashboard</a></li>
+        <li>&nbsp;»&nbsp;</li>
+        <li title="NPOs">Non-Profit organization</li>
+        <li>&nbsp;»&nbsp;</li>
+        <li title="NPOs List"><a href='{#URL#}npos'>List</a></li>
+        <li>&nbsp;»&nbsp;</li>
+        <li title="NPOs - Add">Add New</li>
+      </ul>
+    </div>
+    <div class="contentSection">
+    <form class="sky-form" id="nposform" name="nposform"  method="post" action='{#URL#}npos/index/insert-npos' autocomplete="off">
+      <div class="pageHeader text-left">
+      <li class="fa fa-fw fa-file-text iColor"></li>&nbsp;Non-Profit organization - Add
+      <div class="pull-right margin-right-20">
+          <a href='{#URL}npos' class="btn btn-secondary" title="View Donation"><i class="fa fa-list-ul"></i>&nbsp;View List</a>
+          <button type="submit" class="btn btn-primary" title="Insert NPO" value="Save">
+          <i class="fa fa-save"></i>&nbsp;Save</button>
+      </div>
+      </div>
+     {include="common/message"}
+       
+      <div class="">
+          		<fieldset>
+				<div class="row">
+					<div class="sky-form-headingsection  psTitle">
+						<div class="sky-form-heading pull-left">NPO Basic Details</div>
+						<div class="viewmoreBtn pull-right">
+							<i class="fa fa-minus"></i>
+						 </div>
+					</div>
+					<div class="viewmorSection" >
+						<!--<div class="sky-form-subheading">Sub Heading</div>-->
+                        <section class="col col-6">
+                            <label class="label">EIN<span class="red">*</span></label>
+                            <label class="input">
+                                <input type="text" id="npoein" name="npoein"  />
+                            </label>
+                        </section>
+                        <section class="col col-6">
+                            <label class="label">Name<span class="red">*</span></label>
+                            <label class="input">
+                                <input type="text" id="nponame" name="nponame"  />
+                            </label>
+                        </section>
+                        
+                        <section class="col col-6">
+                            <label class="label">ICO</label>
+                            <label class="input">
+                                <input type="text" id="npoico" name="npoico"   />
+                            </label>
+                        </section>
+                        <section class="col col-6">
+                            <label class="label">Street Address<span class="red">*</span></label>
+                            <label class="input">
+                                <input type="text" id="npostreet" name="npostreet"   />
+                            </label>
+                        </section>
+                        
+                        <section class="col col-4">
+                            <label class="label">City</label>
+                            <label class="input">
+                                <input type="text" id="npocity" name="npocity"  />
+                            </label>
+                        </section>
+                        <section class="col col-4 ">
+                            <label class="label">State</label>
+                            <label class="select">
+                                <select name="npostate" id="npostate">
+                                    <option value="">State</option>
+                                    {loop="state"}
+                                    {if="$value.State_Name!=''"}
+                                    <option value="{$value.State_Value}">{$value.State_Name}</option>
+                                    {/if}
+                                    {/loop}
+                                </select>
+                                <i></i>
+                            </label>
+                        </section>
+                        <section class="col col-4">
+                            <label class="label">Zip Code</label>
+                            <label class="input">
+                                <input type="text" id="npozip" name="npozip"   />
+                            </label>
+                        </section>
+                        
+                        <section class="col col-6">
+                            <label class="label">Subsection Name (Category) <span class="red">*</span></label>
+                                <select multiple="multiple" name="nposubsectionname[]" id="nposubsectionname"  >
+                                    {loop="category"}
+                                    	<option value="{$value.NPOCat_CodeName}" >{$value.space}{$value.NPOCat_DisplayName_EN}</option>
+                                    {/loop}
+                                </select>
+                                <span class="metaNote">If you dont see the category in list.Then <a href='{#URL#}npocategory' class='page-link'>create it.</a></span>
+                                <i></i>
+                            
+                        </section>
+                        <section class="col col-6">
+                            <label class="label">Subsection Description</label>
+                            <label class="input">
+                                <input type="text" id="nposubsectiondescription" name="nposubsectiondescription" />
+                                <span class="metaNote">&nbsp;</span>
+                            </label>
+                        </section>
+                        
+                       	<section class="col col-4">
+                            <label class="label">NTEE CD</label>
+                            <label class="input">
+                                <input type="text" id="npocd" name="npocd"  />
+                            </label>
+                        </section>
+                        <section class="col col-4">
+                            <label class="label">Category</label>
+                            <label class="input">
+                                <input type="text" id="npocategory" name="npocategory" />
+                            </label>
+                        </section>
+                        <section class="col col-4">
+                            <label class="label">IRS NTEE CODE2 Description</label>
+                            <label class="input">
+                                <input type="text" id="npoirsnteecode2" name="npoirsnteecode2" />
+                            </label>
+                        </section>
+                        
+                        <section class="col col-4">
+                            <label class="label">Affiliation</label>
+                            <label class="input">
+                                <input type="text" id="npoaffiliation" name="npaffiliation" />
+                            </label>
+                        </section>
+                        <section class="col col-4">
+                            <label class="label">Aff Type</label>
+                            <label class="input">
+                                <input type="text" id="npoafftype" name="npoafftype" />
+                            </label>
+                        </section>
+                        <section class="col col-4">
+                            <label class="label">IRS_Affiliation Codes Description</label>
+                            <label class="input">
+                                <input type="text" id="npoaffiliationcodesdesc" name="npoaffiliationcodesdesc" />
+                            </label>
+                        </section>
+                        
+                        <section class="col col-4">
+                            <label class="label">Ded Code<span class="red">*</span></label>
+                            <label class="input">
+                                <input type="text" id="npodedcode" name="npodedcode" />
+                                <span class="metaNote">2 If Donation is tax exempted</span>
+                            </label>
+                        </section>
+                        <section class="col col-4">
+                            <label class="label">Ded Description</label>
+                            <label class="input">
+                                <input type="text" id="npodeddesc" name="npodeddesc" />
+                                <span class="metaNote">&nbsp;</span>
+                            </label>
+                        </section>
+                        <section class="col col-4">
+                            <label class="label">Foundation Code</label>
+                            <label class="input">
+                                <input type="text" id="npofoundationcode" name="npofoundationcode" />
+                                <span class="metaNote">&nbsp;</span>
+                            </label>
+                        </section>
+                        
+                        <section class="col col-6">
+                            <label class="label">Foundation Description</label>
+                            <label class="input">
+                                <input type="text" id="npofoundationdescription" name="npofoundationdescription" />
+                            </label>
+                        </section>
+                        <section class="col col-6">
+                            <label class="label">Org Description</label>
+                            <label class="input">
+                                <input type="text" id="npoorgdesc" name="npoorgdesc" />
+                            </label>
+                        </section>
+                        
+                        <section class="col col-4">
+                            <label class="label">Org Code</label>
+                            <label class="input">
+                                <input type="text" id="npoorgcode" name="npoorgcode" />
+                            </label>
+                        </section>
+                        <section class="col col-4">
+                            <label class="label">EO Status Code</label>
+                            <label class="input">
+                                <input type="text" id="npoeostatuscode" name="npoeostatuscode" />
+                            </label>
+                        </section>
+                        <section class="col col-4">
+                            <label class="label">EO Description</label>
+                            <label class="input">
+                                <input type="text" id="npoeodesc" name="npoeodesc" />
+                            </label>
+                        </section>
+                        
+                        <section class="col col-4">
+                            <label class="label">Asset Income Code</label>
+                            <label class="input">
+                                <input type="text" id="npoassetincomecode" name="npoassetincomecode" />
+                            </label>
+                        </section>
+                        <section class="col col-4">
+                            <label class="label">Filing Code</label>
+                            <label class="input">
+                                <input type="text" id="npofilingcode" name="npofilingcode" />
+                            </label>
+                        </section>
+                        <section class="col col-4">
+                            <label class="label">PF Filing Code</label>
+                            <label class="input">
+                                <input type="text" id="npopffilingcode" name="npopffilingcode" />
+                            </label>
+                        </section>
+                        
+                        <section class="col col-6">
+                            <label class="label">IRS Asset Income Codes Description</label>
+                            <label class="input">
+                                <input type="text" id="npoirsassetincomecodesdesc" name="npoirsassetincomecodesdesc" />
+                            </label>
+                        </section>
+                        <section class="col col-6">
+                            <label class="label">IRS Filing Code Description</label>
+                            <label class="input">
+                                <input type="text" id="npoirsfilingcodedesc" name="npoirsfilingcodedesc" />
+                            </label>
+                        </section>
+                        
+                        <section class="col col-6">
+                            <label class="label">IRS PF Filing Codes Description</label>
+                            <label class="input">
+                                <input type="text" id="npoirspffilingcodedesc" name="npoirspffilingcodedesc" />
+                            </label>
+                        </section>
+                        <section class="col col-6">
+                            <label class="label">Asset Amount</label>
+                            <label class="input">
+                                <input type="text" id="npoassetamt" name="npoassetamt" />
+                            </label>
+                        </section>
+                        
+                        <section class="col col-6">
+                            <label class="label">Income Amount</label>
+                            <label class="input">
+                                <input type="text" id="npoincomeamt" name="npoincomeamt" />
+                            </label>
+                        </section>
+                        <section class="col col-6">
+                            <label class="label">Revenue Amount</label>
+                            <label class="input">
+                                <input type="text" id="revenueamt" name="revenueamt" />
+                            </label>
+                        </section>
+                    </div>
+				</div>
+				</fieldset>
+                
+                
+                <fieldset>
+				<div class="row">
+                	<div class="sky-form-headingsection  psTitle">
+						<div class="sky-form-heading pull-left">Other Details</div>
+						<div class="viewmoreBtn pull-right">
+							<i class="fa fa-minus"></i>
+						 </div>
+					</div>
+                    <div class="viewmorSection" >
+                    	<section class="col col-4">
+                            <label class="select">Show on Website</label>
+                            <label class="select">
+                                <select name="nposhowonweb" id="nposhowonweb">
+                                    <option value="1" >Yes</option>
+                                    <option value="0" >No</option>
+                                </select>
+                                <i></i>
+                            </label>
+                        </section>
+                        <section class="col col-6">
+                            <label class="select">Status</label>
+                            <label class="select">
+                                <select name="npostatus" id="npostatus">
+                                    <option value="1" >Approved</option>
+                                    <option value="0" >Pending</option>
+                                </select>
+                                <i></i>
+                            </label>
+						</section>
+                    </div>
+                </div>
+                </fieldset>
+                
+                <fieldset>
+                	<section class="pull-right">
+						<button type="submit" class="btn btn-primary" title="Insert NPO" value="Save"><i class="fa fa-save"></i>&nbsp;Save</button>
+                        <!--<button type="reset" class="btn btn-danger" title="Reset Form" value="Reset"><i class="fa fa-refresh"></i>&nbsp;Reset</button>-->
+                    </section>
+                </fieldset>
+                
+	  </div>
+      </form>
+      
+      
+      
+    </div>
+  </div>
+</div>

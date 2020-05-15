@@ -1,0 +1,28 @@
+{include="email/email-top"}
+<div style="padding:10px 5px; font-size:14px; color:#333333;">
+<p>Hello {$uname},</p><br /><br />
+<p>Your transaction is currently being processed.</p> 
+<div style="border:1px solid #000; width:60%">
+	<table width="100%" cellpadding="5"  cellspacing="5">
+    	<tr>
+        	<th colspan="2">PAYMENT INFORMATION</th>
+        </tr>
+        <tr>
+        	<td style="font-weight:bold;">Service</td>
+            <td>: {$service_name}</td>
+        </tr>
+        <tr>
+        	<td style="font-weight:bold;">Amount</td>
+            <td>: ${$charge_amount}</td>
+        </tr>
+        <tr>
+        	<td style="font-weight:bold;">Subscription Schedule</td>
+            <td>: {$schedule}</td>
+        </tr>
+    </table>
+</div>
+<p>Click on this link: {$link} or copy and paste this url- {$link_url} on your brower address bar to download your transaction receipt.</p>
+<p>&nbsp;</p>
+<p>Thank you,&nbsp;</p>
+</div>
+{include="email/email-bottom"}

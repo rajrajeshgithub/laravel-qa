@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+{include="top/head"}
+
+<link type="text/css" rel="stylesheet" href='{#RESOURCES#}css/payment.css'>
+<script type="text/javascript" src='{#RESOURCES#}js/ut1_MyaccountCreditCard.js'></script>
+<script type="text/javascript" src='{#RESOURCES#}js/inputmask.js'></script>
+<script type="text/javascript" src='{#RESOURCES#}js/jquery.inputmask.js'></script>
+<script type="text/javascript">
+$(document).ready(function(){
+$('#cardNumber').inputmask({placeholder:" ",mask: "[9999][-9999][-9999][-9999]",greedy: false});
+});
+
+   
+
+
+</script>
+
+
+</head>
+<body class="iframe-box">
+<div>
+    <section class="fundraiser-page-heading">
+      <div class="container">
+        {include="common/message"}
+        <h2 class="section-heading t-green text-bold">Credit Card Details</h2>
+      </div>
+    </section>
+    <section class="">
+        <form name="credit-card" id="credit-card" method="post" action='{#URL}ut1myaccount/UpdateCreditCard' autocomplete="off" target="_top">
+        <input type="hidden" name="customerID" value="{$customerID}" />
+        <input type="hidden" name="subscriptionID" value="{$subscriptionID}" />
+            <div class="container">
+            {include="common/message"}
+                <div class="row">
+                    <div class="col-md-12 col-sm-12 col-xs-12">
+                                <div class="fonts-lato-regular p-10">
+                                    <div class="row">
+                                        <div class="col-md-2 col-lg-2 col-sm-1">
+                                        </div>
+                                            <div class="col-lg-8 col-md-8 col-sm-10 col-xs-12">
+                                                <div class="billing-form-section">
+                                                    <div class="row">
+                                                        <div class="col-md-12 col-sm-12 col-xs-12">
+                                                            <label class="label" for="ccName">Name as it appears on credit card</label>
+                                                            <div class="form-group">
+                                                                <input type="text" class="form-control" name="ccName" id="ccName"  value=""/>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-md-7 col-sm-7 col-xs-12">
+                                                            <label class="label" for="cardNumber">Card Number</label>
+                                                            <div class="form-group">
+                                                                <input type="text" class="form-control" name="cardNumber" id="cardNumber" value="{#CC_NUMBER#}" />
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-5 col-sm-5 col-xs-12">
+                                                            <label class="label" for="sqCode">Security Code</label>
+                                                            <div class="form-group">
+                                                                <input type="text" class="form-control" name="sqCode" id="sqCode" />
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-md-6 col-sm-6 col-xs-12">
+                                                            <label class="label" for="expMonth">Expiry Month</label>
+                                                            <div class="select form-group">
+                                                                <select class="form-control" name="expMonth" id="expMonth">
+                                                                    <option value="">Select Month</option>
+                                                                    <option value="1">1</option>
+                                                                    <option value="2">2</option>
+                                                                    <option value="3">3</option>
+                                                                    <option value="4">4</option>
+                                                                    <option value="5">5</option>
+                                                                    <option value="6">6</option>
+                                                                    <option value="7">7</option>
+                                                                    <option value="8">8</option>
+                                                                    <option value="9">9</option>
+                                                                    <option value="10">10</option>
+                                                                    <option value="11">11</option>
+                                                                    <option value="12">12</option>
+                                                                </select>
+                                                                <span class="errorClass"></span>
+                                                                <i class="arrow fa fa-caret-down"></i>                    
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-6 col-sm-6 col-xs-12">
+                                                            <label class="label" for="expYear">Expiry Year</label>
+                                                            <div class="select form-group">
+                                                                <select class="form-control" name="expYear" id="expYear">
+                                                                <option value="">Select Year</option>
+                                                                {loop="$yearArr"}
+                                                                <option value="{$value}">{$value}</option>
+                                                                {/loop}
+                                                                </select>
+                                                                <span class="errorClass"></span>
+                                                                <i class="arrow fa fa-caret-down"></i>                    
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                   
+                                                    <div class="row">
+                                                        <div class="col-md-6 col-sm-6 col-xs-12">
+                                                            
+                                                        </div>
+                                                        <div class="col-md-12 col-sm-6 col-xs-12">
+                                                        	<button type="button" class="col-xs-5 button-1 mfp-close" id="" title="Cancel">Cancel</button>
+                                                            
+                                                            <button type="submit" class="col-xs-5 col-xs-offset-2 button-1" title="Change">Change</button>
+                                                            
+                                                        </div>
+                                                    </div>
+                                                </div>                                        
+                                            </div>
+                                          <div class="col-md-2 col-lg-2 col-sm-1">
+                                        </div>      
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+            </div>	
+        </form>
+    </section>
+</div>
+<!--end of code-->
+</body>
+</html>

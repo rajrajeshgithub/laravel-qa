@@ -1,0 +1,9 @@
+{include="email/email-top"}
+<div style="padding:10px 5px; font-size:14px; color:#333333;">
+<p>Hello {$uname},</p><br /><br />
+<p>Your transaction charged <strong>${$charge_amount}</strong> has been <strong>{if="$payment_status=='Approved'"}Approved{else}Declined{/if}</strong>  for <strong>{$service_name}</strong> against <strong>{$schedule}</strong> scheduled.</p>
+<p>Click on {$link} or copy and paste this url- {$link_url} on your brower address bar to show or download transaction receipt.</p>
+<p>&nbsp;</p>
+<p>Thank you,&nbsp;</p>
+</div>
+{include="email/email-bottom"}

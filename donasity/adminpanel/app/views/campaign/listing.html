@@ -1,0 +1,213 @@
+<link type="text/css" rel="stylesheet" href='{#RESOURCES#}css/bootstrap-datepicker.css'>
+<script type="text/javascript" src='{#RESOURCES#}js/bootstrap-datepicker.js'></script>
+<script type="text/javascript">
+	$(function()
+	{	
+		$('#StartDate').datepicker();
+		$('#StartDate').datepicker().on('changeDate', function (ev)
+		{
+			if(ev.viewMode == "days")
+			{
+				$('#StartDate').datepicker('hide');
+				//maxDate: jQuery('#StartDate').datepicker("getDate")
+
+			}
+		});
+		
+		$('#EndDate').datepicker();
+		$('#EndDate').datepicker().on('changeDate', function (ev)
+		{
+			if(ev.viewMode == "days")
+			{
+				$('#EndDate').datepicker('hide');
+				//maxDate: jQuery('#EndDate').datepicker("getDate")
+
+			}
+		});
+	});			
+</script>
+<ul class="breadcrumb">
+    <li title="Dashboard"><a href='{#URL#}home/'>Dashboard</a></li>
+    <li title="Campaign">Campaign-list</li>
+</ul>
+{include="common/message"}
+<div class="oh">
+	<div class="col col-4">
+        <h1 class="heading-1">Campaign - List</h1>
+    </div>
+</div>
+<div id="content-box" class="igs-form">
+	<form id="formSection" name="formSection" method="get" autocomplete="off" action="{#URL#}campaign">
+		<input type="hidden" name="pageNumber" id="pageNumber" value=""  />
+		<div class="section-heading">Filter Result <a href='javascript://' class="form-toggle-icon"><i class="fa fa-minus-square-o"></i></a></div>
+		<div class="content-section">
+			 <fieldset>
+                    <div class="row">
+                        <section class="col col-3 ">
+                        	<label class="select">Date</label>
+                                <div class="input-append date" id="StartDate" data-date="" data-date-format="mm/dd/yyyy">
+                                    <label class="input">
+                                        <i class="icon-append fa fa-calendar add-on"></i>
+                                        <input type="text" class="datepickerInput" name="StartDate" id="StartDate"  value='{$StartDate}' readonly="">
+                                        <small>Text goes here</small>
+                                    </label>
+                                 </div>
+                        </section>
+                        <section class="col col-4">
+                            <label class="select">Status</label>
+                            <label class="select">
+                            <select name="campaign_status" id="campaign_status">
+								<option value=''>Select</option>
+                                {loop="$StatusArray"}
+                                <optgroup label="{$key}">
+                                	{loop="$value"}
+                                	<option value="{$key}" {if="$campaign_status !='' && $campaign_status == $key"} selected='selected' {/if}>{$value}</option>
+                                	{/loop}
+                                </optgroup>
+                                {/loop}
+                            </select>
+                            <i></i>
+                            </label>
+                        </section>
+                       <section class="col col-2">
+                        	<label class="select">Keyword</label>
+                            <label class="input">
+                                <input type="text" id="keyword" name="keyword"  value="{$keyword}"   placeholder="Search Keyword"/>
+                            </label>
+                        </section>
+                        <section class="col col-3">
+                            <label class="select">Campaign type</label>
+                            <label class="select">
+                            <select name="campaign_type" id="campaign_type">
+								<option value=''>All</option>
+                                <option value="C" {if="$campaign_type=='C'"} selected='selected' {/if}>Captain</option>
+                                <option value="T" {if="$campaign_type=='T'"} selected='selected' {/if}>Team</option>
+                                <option value="O" {if="$campaign_type=='O'"} selected='selected' {/if}>Other</option>
+                            </select>
+                            <i></i>
+                            </label>
+                        </section>
+                    </div>
+ 
+			 </fieldset>
+            <div class="form-footer">
+                <button type="submit" name="search" value="search" id="search" class="button-1"><i class="fa fa-search"></i>&nbsp;Show Result</button>
+                <button type="button" name="reset" value="reset" class="button-2" onClick="location.href='{#URL#}campaign'"><i class="fa fa-refresh"></i>&nbsp;Reset</button>
+            </div>
+		</div>
+	</form>
+	 <div class="row">
+		<section class="col col-12">
+        	{if condition="count($CampaignList)>0"}<div class="record-found pull-left">Showing {$startRecord}-{$endRecord} of {$totalcampaign} records</div>{/if}
+        	<table border="0" id="igs-table" class="pull-left">
+                    <tr>
+                      <th width="20%">Title (EIN)</th>
+                      <th width="10%">Start - End Date</th>
+                      <th width="8%">Achieved / Goal ($)</th>
+                      <th width="10%">Contact Person</th>
+                      <th width="5%">City</th>
+                      <th width="5%">State</th>
+                      <th width="10%">Email Address</th>
+                      <th width="5%">Status</th>
+                      <th width="5%">Private</th>
+                      <th width="25%">Action</th>
+                    </tr>
+                 {if="$CampaignList"}
+                    {loop="$CampaignList"}
+                        <tr>
+                            <td data-title="Title">
+                            	<a href='{#URL#}campaign/index/edit/{function="keyEncrypt($value.Camp_ID)"}' class="title-link">
+                                {if condition="$value.Camp_Title!=''"} 
+                                	{$value.Camp_Title}  
+                                {/if} 
+                                {if condition="$value.Camp_Code!=''"}
+                                	{if condition="$value.Camp_TeamUserType=='C'"}
+                                    <span class="t-blue">Captain</span>
+                                    {/if} 
+                                	{if condition="$value.Camp_TeamUserType=='T'"}
+                                    <span class="t-blue">Team</span>
+                                    {/if}
+                                {/if}
+                                {if="$value.Camp_NPO_EIN!=''"}(<span class="t-black">{$value.Camp_NPO_EIN}</span>){/if}</a>
+                            </td>
+                            <td data-title="Start - End Date">
+                            	{if condition="$value.Camp_StartDate!='' && $value.Camp_StartDate!='0000-00-00'"}{$value.Camp_StartDate|formatDate:'m/d/Y'}{else}NA{/if} - {if condition="$value.Camp_EndDate!='' && $value.Camp_EndDate!='0000-00-00'"}{$value.Camp_EndDate|formatDate:'m/d/Y'}{else}NA{/if}
+                            </td>
+                            <td data-title="Achieved / Goal ($)">
+                            	{$value.Camp_DonationReceived} / {$value.Camp_DonationGoal}
+                            </td>
+                            <td data-title="Contact Person">{$value.Camp_CP_FirstName|ucwords}  {$value.Camp_CP_LastName|ucwords}</td>
+                            <td data-title="City">{$value.Camp_CP_City}</td>
+                            <td data-title="State">{$value.State_Name}</td>
+                            <td data-title="Email Address">{$value.Camp_CP_Email}</td>
+                            <td data-title="Status">
+                            	{$value.Camp_Status|CampaignStatusName}
+                            </td>
+                            <td data-title="Private">
+                            {$class='inactive'}
+                            {if condition="$value.Camp_IsPrivate==1"}
+                            	{$class='active'}
+                            {/if}
+                            	<span class="icon {$class}  ml-30" title='{$class}'></span>
+                            </td>
+                           <td data-title="Action">
+		                    	<a href='{#URL#}campaignimages/index/list-images/{function="keyEncrypt($value.Camp_ID)"}' class="link-text" title="Bank">Images</a>&nbsp;
+		                    	<a href='{#URL#}campaignvideo/index/list-videos/{function="keyEncrypt($value.Camp_ID)"}' class="link-text" title="Bank">Videos</a>&nbsp;
+		                    	<a href='{#URL#}campaigncomment/index/list/{function="keyEncrypt($value.Camp_ID)"}' class="link-text" title="Bank">Comments</a>&nbsp;
+		                    	<a href='{#URL#}donation?itemCode={function="keyEncrypt('CD1')"}&campId={function="keyEncrypt($value.Camp_ID)"}' class="link-text" title="Donations">Donations</a>&nbsp;
+                  		  </td>
+                        </tr>
+                    {/loop}
+                  {else}
+                        <tr><td colspan="8" class="text-center">No Record Found.</td></tr>
+                  {/if}
+			</table>
+            
+            
+		</section>
+	</div>
+    
+   <!-- pagination start-->
+    <div class="row">
+    <div class="col col-12">
+               {if condition="count($PagingList)>1"}
+               <nav>
+                  <ul class="pagination">
+                    {if="$PageSelected!=1"}
+                    <li>
+                      <a href='javascript://' onclick="return GotoPage(1);"  title="First Page" aria-label="Previous">
+                        <span aria-hidden="true">First</span>
+                      </a>
+                    </li>
+                    <li>
+                      <a href='javascript://' onclick="return GotoPage({$PageSelected-1});"  title="Previous" aria-label="Previous">
+                        <span aria-hidden="true">&laquo;</span>
+                      </a>
+                    </li>
+                    {/if}
+                    {loop="PagingList"} 
+                   		 {if="$PageSelected==$value.PageNo"} 
+                            <li class="active"><a href='javascript://' title="Page No {$value.PageNo}">{$value.PageNo}</a></li>
+                          {else}
+                          	<li><a href='javascript://' onclick="return GotoPage({$value.PageNo});" title="Page No {$value.PageNo}">{$value.PageNo}</a></li>
+                          {/if}   
+                    {/loop}
+                    {if="$PageSelected!=$lastPage"}
+                        <li>
+                          <a href='javascript://' onclick="return GotoPage({$PageSelected+1});" aria-label="Next">
+                            <span aria-hidden="true">&raquo;</span>
+                          </a>
+                        </li>
+                        <li>
+                          <a href='javascript://' onclick="return GotoPage({$lastPage});" aria-label="Last Page">
+                           Last
+                          </a>
+                        </li>
+                    {/if}
+                  </ul>
+                </nav>
+                {/if}
+            </div>
+    </div>
+    <!-- pagination end-->
+</div>

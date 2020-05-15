@@ -1,0 +1,50 @@
+{include="email/email-top"}
+<div style="padding:10px 5px; font-size:14px; color:#333333;">
+<p>Hello {$uname},</p><br /><br />
+
+<table width="700" cellpadding="3" cellspacing="0" border="1" style="border-collapse:separate;border-color:#cccccc;">
+	<tr>
+		<td colspan="4" class="text-center">Order Receipt</td>                
+    </tr>
+    <tr>
+		<td class="text-bold">Order Id : </td>
+        <td>{$arraySaleSubDetails.SS_RefNumber}</td>
+        <td class="text-bold">Order Date : </td>
+        <td>{$arraySaleSubDetails.SS_DateTime|formatDate:'m/d/y'}</td>          
+    </tr>
+    <tr>
+		<td class="text-bold">Service Name : </td>
+        <td>{$arraySaleSubDetails.SS_ItemName}</td>
+        <td class="text-bold">Service Charge Amount : </td>
+        <td>{$arraySaleSubDetails.SS_Amount}</td>          
+    </tr>
+    <tr>
+		<td colspan="4">Billing Details</td>        
+    </tr>
+    <tr>
+		<td colspan="4">
+        	<strong>{$arraySaleSubDetails.SS_FirstName} {$arraySaleSubDetails.SS_LastName}</strong><br/>
+                    {$arraySaleSubDetails.SS_StreetAddress1}<br/>
+                    {$arraySaleSubDetails.SS_StreetAddress2}<br/>
+                    {$arraySaleSubDetails.SS_City},{$arraySaleSubDetails.SS_State} {$arraySaleSubDetails.SS_Zipcode} {$arraySaleSubDetails.SS_Country}
+        </td>        
+    </tr>
+    <tr>
+		<td colspan="4">Other Details</td>        
+    </tr>
+    <tr>
+		<td colspan="4">
+        	<strong>{if="$arraySaleSubDetails.SS_PaymentMode=='RC'"}Reoccring Payment - {$arraySaleSubDetails.SS_Schedule}{else}One time payment {/if} of ${$arraySaleSubDetails.SS_Amount} upto service use.</strong>
+        </td>        
+    </tr>
+    <tr>
+		<td colspan="4">
+        	{$arraySaleSubDetails.SS_SpecialInstruction}
+        </td>        
+    </tr>
+    
+</table>
+<p>&nbsp;</p>
+<p>Thank you,&nbsp;</p>
+</div>
+{include="email/email-bottom"}

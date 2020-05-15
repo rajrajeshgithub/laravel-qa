@@ -1,0 +1,276 @@
+<script type="text/javascript" src='{#RESOURCES#}js/validatesalesubscription.js'></script>
+<link type="text/css" rel="stylesheet" href='{#RESOURCES#}css/bootstrap-datepicker.css' />
+<script type="text/javascript" src='{#RESOURCES#}js/bootstrap-datepicker.js'></script>
+<script type="text/javascript" src="http://digitalbush.com/wp-content/uploads/2013/01/jquery.maskedinput-1.3.1.min_.js"></script>
+<ul class="breadcrumb">
+    <li title="Dashboard"><a href='{#URL#}home/'>Dashboard</a></li>
+    <li title="NPO Summary">Achreoccurring</li>
+</ul>
+{include="common/message"}
+<div class="oh">
+    <div class="col col-6">
+        <h1 class="heading-1">Achreoccurring</h1>
+    </div>
+</div>
+<script>
+$(document).ready(function() {
+	getStateList(jQuery("#countryAbbr").val(), jQuery("#StateAbbr").val());
+	
+   $('input[type="radio"]').click(function() {
+       if($(this).attr('id') == 'reccurring') {
+            $('#recurring').show();           
+       }
+
+       else {
+            $('#recurring').hide();   
+       }
+   });
+   
+   $('#service').change(function(){	   
+	   	var result = $(this).val().split('|');
+		$('#itemId').val(result[0]);
+		$('#itemCode').val(result[1]);
+		$('#itemName').val(result[2]);
+		$('#itemPrice').val(result[3]);	
+		$('#itemAmount').val(1*result[3]);	
+	   });
+	   
+	 $('#itemQty').blur(function(){
+		var qty = $(this).val(); 
+		var price = $('#itemPrice').val();
+		$('#itemAmount').val(qty*price);
+		 });
+});
+
+
+function getStateList(e) {	
+    "" != jQuery.trim(e) && jQuery.ajax({
+        type: "POST",
+        url: SITEURL + "salesubscription/getStateList/" + e + "/" + jQuery("#StateAbbr").val(),
+        cache: !1,
+        beforeSend: function() {},
+        success: function(e) {
+            jQuery("#state").attr("disabled", !1).html(e)
+        },
+        error: function(e) {
+            alert(e)
+        }
+    })
+}
+    //jQuery(function($){    
+//   $('#paymentmode').click(function(){
+//        if($(this).val() =='recurring') {
+//           document.getElementById('recurring').style.display = "block";
+//        }
+//		else
+//		{
+//			document.getElementById('recurring').style.display = "none";
+//		}  
+//    });
+//});
+  </script>
+<form id="form-step1" name="form-step1" method="post" autocomplete="off" action="{#URL#}salesubscription/processStep1"  enctype="multipart/form-data">  
+<input type="hidden" name="itemId" id="itemId" value="" />
+<input type="hidden" name="SS_Id" id="SS_Id" value="{$arraySaleSubDetails.SS_ID|keyEncrypt}" />
+<input type="hidden" name="RU_ID" id="RU_ID" value="{$RU_Id}" />
+<div id="content-box" class="igs-form">
+        <div class="section-heading">Product Details <a href='javascript://' class="form-toggle-icon"><i class="fa fa-minus-square-o"></i></a></div>
+        <div class="row">
+        	<div class="content-section">
+                <section class="col col-12">
+                    <label class="label">Service</label>
+                    <label class="select">
+                      <select name="service" id="service" class="form-control">
+                      	<option value="" >Add New</option>
+                        {loop="$ItemList"}
+                        <option value="{$value.PI_ID}|{$value.PI_ItemCode}|{$value.PI_ItemName_EN}|{$value.PI_ItemCost}" {if="$value.PI_ID==$arraySaleSubDetails.SS_ItemId"}selected{/if}>{$value.PI_ItemName_EN}</option>	
+                        {/loop}
+                        
+                      </select><i></i>
+                      <span class="note">Select Service Type or create you own service to fillup code, name and other details.</span> 
+                    </label>
+                    
+               </section>
+               <section class="col col-3">
+                    <label class="label">Code</label>
+                    <label class="input"> 
+                        <input type="text" id="itemCode" name="itemCode" title="Item Code" value="{$arraySaleSubDetails.SS_ItemCode}" placeholder="Service Code">
+                      </label> 
+               </section>
+               <section class="col col-3">
+                    <label class="label">Service Name</label>
+                    <label class="input"> 
+                        <input type="text" id="itemName" name="itemName" title="Service Name" value="{$arraySaleSubDetails.SS_ItemName}" placeholder="Service Name">
+                      </label>
+               </section>
+               <section class="col col-2">
+                    <label class="label">Price</label>
+                    <label class="input"> 
+                        <input type="text" id="itemPrice" name="itemPrice" title="Service Price" value="{$arraySaleSubDetails.SS_ItemPrice}" placeholder="Price">
+                      </label> 
+               </section>
+               <section class="col col-2">
+                    <label class="label">Quantity</label>
+                    <label class="input"> 
+                        <input type="text" id="itemQty" name="itemQty" title="Item Quantiry"  value='{if="$arraySaleSubDetails.SS_ItemQuantitiy < 1"}1{else}{$arraySaleSubDetails.SS_ItemQuantitiy}{/if}' placeholder="Quantitiy" >
+                      </label> 
+               </section>
+               <section class="col col-2">
+                    <label class="label">Amount ($)</label>
+                    <label class="input"> 
+                        <input type="text" id="itemAmount" name="itemAmount" title="Service Amount" value="{$arraySaleSubDetails.SS_Amount}" placeholder="Service Amount" readonly="readonly">
+                      </label> 
+               </section>  
+            </div>
+        </div>        
+</div>
+<div id="content-box" class="igs-form">
+		<div class="section-heading">Billing Details <a href='javascript://' class="form-toggle-icon"><i class="fa fa-minus-square-o"></i></a></div>
+    	<div class="row">	
+            <div class="content-section">
+           <section class="col col-4">
+                <label class="label">First Name</label>
+                <label class="input"> 
+                  	<input type="text" id="firstName" name="firstName" title="First Name" value="{$arraySaleSubDetails.SS_FirstName}" placeholder="First Name">
+                  </label> 
+           </section>
+           <section class="col col-4">
+                <label class="label">Last Name</label>
+                <label class="input"> 
+                  	<input type="text" id="lastname" name="lastName" title="lastName" value="{$arraySaleSubDetails.SS_LastName}" placeholder="Last Name">
+                  </label> 
+           </section>
+           <section class="col col-4">
+                <label class="label">Email Address</label>
+                <label class="input"> 
+                  	<input type="email" id="emailAddress" name="emailAddress" title="Email Address" value="{$arraySaleSubDetails.SS_EmailAddress}" placeholder="Email Address">
+                  </label> 
+           </section>
+           <section class="col col-3">
+                <label class="label">Phone</label>
+                  <label class="input"> 
+                  	<input type="text" id="phoneNo" name="phoneNo" title="Phone Number" value="{$arraySaleSubDetails.SS_Phone}" placeholder="Phone Number">
+                  </label> 
+           </section>
+           <section class="col col-3">
+                <label class="label">Organization Name</label>
+                  <label class="input"> 
+                  	<input type="text" id="organizationName" name="organizationName" title="Organization Name" value="{$arraySaleSubDetails.SS_OrganizationName}" placeholder="Organization Name">
+                  </label> 
+           </section>
+           <section class="col col-2">
+                <label class="label">EIN</label>
+                  <label class="input"> 
+                  	<input type="text" id="EIN" name="EIN" title="EIN" value="{$arraySaleSubDetails.SS_EIN}" placeholder="EIN Number">
+                  </label> 
+           </section>
+           <section class="col col-4">
+                <label class="label">Website</label>
+                  <label class="input"> 
+                  	<input type="url" id="websiteUrl" name="websiteUrl" title="Website Url" value="{$arraySaleSubDetails.SS_Website}" placeholder="Website URL">
+                  </label> 
+           </section>
+           <section class="col col-6">
+                <label class="label">Address1</label>
+                  <label class="input"> 
+                  	<input type="text" id="streetAddress1" name="streetAddress1" title="Street Address1" value="{$arraySaleSubDetails.SS_StreetAddress1}" placeholder="House No.,Street">
+                  </label> 
+           </section>
+           <section class="col col-6">
+                <label class="label">Address2</label>
+                  <label class="input"> 
+                  	<input type="text" id="streetAddress2" name="streetAddress2" title="Street Address2" value="{$arraySaleSubDetails.SS_StreetAddress2}" placeholder="Street Address 2">
+                  </label> 
+           </section>
+           <section class="col col-3">
+                <label class="label">City</label>
+                  <label class="input"> 
+                  	<input type="text" id="city" name="city" title="city" value="{$arraySaleSubDetails.SS_City}" placeholder="City">
+                  </label> 
+           </section>
+           <section class="col col-2">
+                <label class="label">Zip</label>
+                  <label class="input"> 
+                  	<input type="text" id="zipCode" name="zipCode" title="Zip Code" value="{$arraySaleSubDetails.SS_Zipcode}" placeholder="Zip Code">
+                  </label> 
+           </section>
+           <section class="col col-4">
+                <label class="label">Country</label>
+                  <label class="select">
+                      <select name="country" id="country" onchange="getStateList(this.value)" class="form-control">
+                        <option value="">Select Country</option>
+                        {loop="CountryList"}
+                        <option value='{$value.Country_Abbrivation}' {if="$arraySaleSubDetails.SS_Country==$value.Country_Abbrivation"}selected{else}{if="$value.Country_Abbrivation=='US'"}selected{/if}{/if}>{$value.Country_Title}</option>
+                        {/loop}                       
+                      </select><i></i> 
+                    </label> 
+           </section>
+           <section class="col col-3">
+                <label class="label">State</label>
+                  <label class="select">
+                  	<input type="hidden" name="StateAbbr" id="StateAbbr"  value=""/>
+                      <select name="state" id="state" class="form-control">
+                        <option value="">Select State</option>
+                        {loop="StateList"}
+                        <option value='{$value.State_Value}' {if="$arraySaleSubDetails.SS_State==$value.State_Value"}selected{/if}>{$value.State_Name}</option>
+                        {/loop} 
+                      </select><i></i> 
+                    </label> 
+           </section>
+        </div>
+        </div>
+</div>
+    <div id="content-box" class="igs-form">
+            <div class="section-heading">Payment Details <a href='javascript://' class="form-toggle-icon"><i class="fa fa-minus-square-o"></i></a></div>
+            <div class="row">	
+                <div class="content-section">
+               
+               <div class="col col-12 row">
+                   <section class="col col-6">
+                        <label class="label">Payment Mode</label>
+                        <div class="row">
+                            <div class="col col-6 mt-10 mb-5">
+                                <label class="checkbox"><input type="radio"  name="paymentMode" {if="$arraySaleSubDetails.SS_PaymentMode=='OTP'"}checked{else}checked="checked"{/if} value="OTP"><i></i>One Time</label>
+                                <label class="checkbox"><input type="radio"  name="paymentMode" id="reccurring" value="RC" {if="$arraySaleSubDetails.SS_PaymentMode=='RC'"}checked{/if}><i></i>Reccurring</label>
+                            </div>
+                            <div id="recurring" class="col col-6 mb-5 {if="$arraySaleSubDetails.SS_PaymentMode!='RC'"}dn-ni{/if}">	
+                                <label class="label">Number Cycles & Intervls</label>
+                                <label class="select">
+                                  <select name="interval"  id="interval">
+                                    {loop="ReoccurringInterval"}
+                                    <option value="{$key}" {if="$arraySaleSubDetails.SS_Schedule==$key"}selected{/if}>{$value}</option>	
+                                    {/loop}                                    
+                                  </select><i></i> 
+                                </label>
+                            </div>
+                            <div class="col col-12 mt-10">
+                            	<label class="checkbox"><input type="checkbox"  name="sendReceipt" id="sendReceipt" value="1" {if="$arraySaleSubDetails.SS_EnableRecipt"}checked{/if}><i></i>Send receipt by email ?</label>
+                            </div>
+
+                        </div>
+                    </section> 
+                    <section class="col col-6">
+                           
+                    </section>
+                </div>    
+                <section class="col col-6">
+                            <label class="label">Special Instruction or Comments (Display to Customer)</label>			
+                            <div class="textarea">
+                                <textarea id="referenceNote" name="referenceNote" rows="6" class="form-control">{$arraySaleSubDetails.SS_SpecialInstruction}</textarea>
+                            </div>
+                </section>
+                <section class="col col-6">
+                            <label class="label">Internal Note (Not display to customer)</label>			
+                            <div class="textarea">
+                                <textarea id="internalNote" name="internalNote" rows="6" class="form-control">{$arraySaleSubDetails.SS_AdminNotes}</textarea>
+                            </div>
+                </section>     
+                <section class="col col-4 pull-right">
+                        <div class="form-footer">
+                          <button type="Submit" title="Submit" class="button-2"><i class="fa fa-edit"></i>&nbsp;Submit</button>
+                        </div>
+                </section>  
+            </div>
+            </div>
+    </div>
+</form>

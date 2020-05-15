@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+{include="top/head"}
+<link type="text/css" rel="stylesheet" href='{#RESOURCES#}css/payment.css'>
+<script type="text/javascript" src='{#RESOURCES#}js/registered-payment.js'></script>
+</head><body id="body">
+<div class="gray-fix-nav"> {include="top/top"} </div>
+<section class="fix-first-section"> </section>
+<section class="section-padding">
+  <form name="payment-form" id="payment-form" method="post" action="#">
+    <div class="container">
+    	{include="common/message"}
+      <div class="row"> {$pageheading} </div>
+      <div class="row">
+        <div class="col-md-12 col-sm-12 col-xs-12">
+          <div class="step-section"> {$step1}
+            <div class="step current-step step-2"> {$step2}
+              <div class="step-content">
+                <div class="row">
+                  <div class="col-lg-6 col-md-7 col-sm-9 col-xs-12">
+                    <div class="">
+                      <div class="row mt-25"> {$helpingtext}
+                        <div class="col-md-12 col-sm-12 col-xs-12">
+                          <div class="payment-process-section">
+                          {loop="DataStatus"}                          
+                            <div class="oh">
+                            	<span class="t-blue text-bold">${$value.PDD_Cost} </span>{#_DBS_RPC_DONATION_TO_#}
+                            	<span class="text-bold t-blue">{$value.PDD_PIItemName}</span>
+                                {if="$value.PDD_Status==11"}
+                                	<span class="pull-right"><i class="fa fa-check t-lightgreen"></i> {#_DBS_RPC_PAID_#}</span> 
+                                {elseif="$value.PDD_Status==12"}
+                                	<span class="pull-right"><i class="fa fa-check t-lightgreen"></i>Recurring Setup</span> 
+                                {elseif="$value.PDD_Status==0"} 
+                                	<span class="pull-right"><img src='{#RESOURCES#}images/processingicon.gif' /> {#_DBS_RPC_PENDING_#}</span> 
+                                {elseif="$value.PDD_Status==2"}
+                                	<span class="pull-right mobile-float-none t-red"><i class="fa fa-exclamation-circle"></i> {#_DBS_RPC_ERROR_#}</span>
+                                   
+                                    <div class="oh mt-5 t-red">{$value.PDD_Status_Notes}</div>
+                                {else}
+                                	<span class="pull-right waiting-icon"><img src='{#RESOURCES#}images/waitingicon.gif' /> {#_DBS_RPC_WAITING_#}</span>
+                                {/if}
+                             </div>
+                            {/loop}
+                            </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row"> {if="$PaymentFail_RowCount>0"}
+                      <div class="col-md-6 col-sm-6 col-xs-12">
+                      	<a href="/donation/registred_charity_payment/{$EncOrderID}" class="t-blue mt-20 f-18 db clear-mobile-margin">{#_DBS_RPC_RETRY_FAILED_PAYMENT_#}({$PaymentFail_RowCount})</a>
+                      </div>
+                      {/if}
+                      <div class="col-md-6 col-sm-6 col-xs-12"> <a href='{#URL#}donation/process_donation/{$EncOrderID}' class='col-xs-12 button-1 mt-15 large-btn' title="Click here to continue"> {#_DBS_RPC_CONTINUE_#} </a> </div>
+                    </div>
+                  </div>
+                  <!-- button --> 
+                  <!-- button end--> 
+                </div>
+              </div>
+            </div>
+            {if="$PayableAmount_Next>0"}
+            {$nextstep}
+            {else}
+            {$nextstep2}
+            {/if} </div>
+        </div>
+      </div>
+    </div>
+  </form>
+</section>
+{include="bottom/bottom"}
+</body>
+</html>

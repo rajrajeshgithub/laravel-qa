@@ -1,0 +1,33 @@
+- On login page, as page load it shows error message for email address.
+- On my account page, if there is no data(like donation or fundraiser) than it should show us a message like no record found & all other data should be hidden.
+
+- On start a fundraiser page, when we click on how it work section, why # is added in URL.
+- On setup fundraiser page, when we click on save & continue button, it redirects us to step 1 page & shows a message "Fundraiser Updated Successfully". Why it is so i didnt update anything.
+- No js validation for category, image & Datepicker is not working properly on step 1 page.
+- There is no image validation from php.
+
+- On step 3, Correct text for preview Area, Uploaded Photos. Or can we show this message after user upload any photo . Till than we can show "Currently No photo uploaded".
+- On step 4,there is no link on click here below UUid number text box.
+- On step 4, there is no js validation for UUId text box.
+- On Setup Fundraiser Step Complete page,Message says "Your fudariser Fundariser Title Goes here has been submit for review." In this message, there should be the name of fundraiser instead of "Fundraiser title goes here". Also there is no link on Click here & My account just below the preview button.
+- On preview fundraiser page,If there is no image of fundraiser than it should show a default image like no image available .
+- There is no link on Donate button on preview page.
+- There is no start date & end date on preview page.
+- On image popup, remove message Click here to show image.
+- On fundraiser edit basic detail page, there is no value in select location field, at the time of creation i selected india.
+- At the time of creation i selected option "Start immediate after verification", but on edit basic detail page, it shows me "Start on date i specified option" selected.
+- On edit basic detail page, In About fundraiser text area, character limit is only 300 characters but in set up fundraiser step 2 this limit is of 1000 characters.
+- On Edit basic detail, when we click on Save & continue button, it should redirect us to my account page.
+- On edit basic detail page, there should be an option for edit Campaign Image.
+- When I tried to edit a fundraiser multiple time, it shows me an additional fundraiser in fundrasier list page on my account section.
+- On fundraiser list page, complete structure is not proper. 
+- On fundraiser list page, Edit account & Change Password field is not working properly.
+- On fundraiser edit page, Fundraiser name is missing.
+- On fundraiser edit page, when we click on Comments tab, it redirects us to my account page.
+- On Edit photo video page, Why it shows us a option to upload video, when I am a level 1 user. At the time of setting up fundraiser, this option was hidden from user.
+- 
+
+
+
+
+

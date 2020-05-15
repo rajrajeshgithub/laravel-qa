@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="{#LANG_ID#}">
+<head>
+{include="top/head"}
+<link type="text/css" rel="stylesheet" href='{#RESOURCES#}css/setup-fundraiser.css'>
+<script type="text/javascript">
+	$(document).ready(function() {
+		$(".team_fundraiser").click(function() {
+			if($(this).is(':checked')) {
+				if($(this).val() == 1)
+				{
+					$("#subTeamFund").slideDown(500);					
+					$("#uniqueCode").rules('add', 'required');
+				}
+				else
+				{
+					$("#subTeamFund").slideUp(500);
+					$("#uniqueCode").removeClass('error');
+					$("#uniqueCode").rules('remove', 'required');
+				}
+			}
+		});
+	/*----------------------*/
+	$("#form-team-fundraiser").validate(
+		{
+			success: function(element)
+			{
+				$("#"+element[0].htmlFor).next("b.tooltip").remove();
+			},
+			errorPlacement: function(error, element)
+			{
+				element.next("b.tooltip").remove();
+				element.after("<b class='tooltip tooltip-top-right'>"+error.text()+"</b>");
+			},
+			rules:
+			{			
+				uniqueCode:
+				{
+					required:true,									
+					remote: 
+						{
+							url:SITEURL+"setup_fundraiser/IsDuplicateCode",
+							dataType:'json',
+							async:true,						
+						}
+				}			
+			},
+			messages:
+			{			
+				uniqueCode:{required:"Enter Team Sharing Code",remote:"Sharing code already in use"},			
+			}
+		});	
+ 
+		  /*jQuery.validator.addMethod("specialChar", function(value, element) {
+			 return this.optional(element) || /([0-9a-zA-Z\s])$/.test(value);
+		  }, "Please Fill Correct Value in Field.");*/
+
+	
+	/*--------------------------*/
+	$("#generate_code").click(function(){
+			frID		= $('#FR_id').val();
+			$.ajax(
+			{
+				type:"POST",
+				dataType:'json',
+				data:{Camp_ID:frID},
+				url:SITEURL+"setup_fundraiser/generateuniquecode",
+				success:function(data)
+				{		
+					$("#uniqueCode").val(data);
+				},
+			});	
+		});
+		
+	
+	});
+</script>
+</head>
+<body>
+<div id="panel">
+  <div class="gray-fix-nav">{include="top/top"}</div>
+  <section class="fix-first-section"> </section>
+  <section class="section-padding setup-fundraiser">
+    <div class="container"> 
+      {include="common/message"}
+      <div class="row">
+        <div class="col-md-12 col-sm-12 col-xs-12">
+          <h2 class="heading-1">{$pageheading}<!--Create Fundraiser Step 5 of 5--></h2>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12 col-sm-12 col-xs-12">
+          <form id="form-team-fundraiser" name="form-team-fundraiser" method="post" action='{#URL#}setup_fundraiser/Update_fundraiser_step5'>
+            <input type="hidden" name="FR_id" id="FR_id" value='{$FR_id}' />
+            <div class="step-section">
+              <div class="step step-1">
+                <h2 class="heading-2"><span class="mark-icon">1</span><span class="step-name">{$header_getting_started}<i class="fa fa-check"></i></span></h2>
+              </div>
+              <div class="step step-2">
+                <h2 class="heading-2"><span class="mark-icon">2</span><span class="step-name">{$header_tell_the_story}<i class="fa fa-check"></i></span></h2>
+              </div>
+              <div class="step step-3">
+                <h2 class="heading-2"><span class="mark-icon">3</span><span class="step-name">{$header_campaign_photos_vedios}<i class="fa fa-check"></i></span></h2>
+              </div>
+              <div class="step step-4">
+                <h2 class="heading-2"><span class="mark-icon">4</span><span class="step-name">{$header_collection_details}<i class="fa fa-check"></i></span></h2>
+              </div>
+              <div class="step current-step step-5">
+                <h2 class="heading-2"><span class="mark-icon">5</span><span class="step-name">{$header_strip_form}<!--Setup Team Fundraiser--></span></h2>
+                <div class="step-content">
+                  <h2 class="t-blue f-15 text-bold"> Do you want to enable Team Fundraiser?</h2>
+                  <div class="row">
+                    <div class="col-md-12 col-sm-12 col-xs-6">
+                      <label for="team_fundraiser1" class="checkbox text-bold ">
+                        <input type="radio" id="team_fundraiser1" name="team_fundraiser" class="team_fundraiser" value="1"/>
+                        <i></i>{$enable_team_fundraiser1}
+                      </label>
+                    </div>
+                    <div class="col-md-12 col-sm-12 col-xs-6">
+                      <label for="team_fundraiser0" class="checkbox text-bold ">
+                        <input type="radio" id="team_fundraiser0" name="team_fundraiser" class="team_fundraiser" value="0" />
+                        <i></i>{$enable_team_fundraiser2} </label>
+                    </div>
+                  </div>
+                 <div class="dn" id="subTeamFund">
+                  <div class="row">
+                  	<div class="col-md-4 col-sm-4 col-xs-4">
+                     	<label class="label" for="title">Team Sharing Code</label>
+                        <div class="form-group">
+                            <input type="text" class="form-control specialChar required" name="uniqueCode" id="uniqueCode" placeholder="Enter Sharing Code or click 'Generate Code'">
+                            <span class="note">This Sharing Code is used to allow team to join you fundraiser.</span>
+                        </div>                     	
+                    </div>
+                    <div class="col-md-2 col-sm-2 col-xs-2 pt-30">
+                    	<span><i class="fa fa-magic"></i>&nbsp;<a href='javascript://' id="generate_code">Generate Code</a></span>
+                    </div>
+                    
+                  </div>
+                  <div class="row">
+                    <div class="col-md-12 col-sm-12 col-xs-12">
+                      <div class="f-15 pt-15 pb-15 t-blue text-bold">{$question_team_fundraiser}<!--How do you want team fundraiser to collect donation ?--></div>
+                      <div class="row">
+                        <div class="col-md-12 col-sm-12 col-xs-12">
+                          <label class="checkbox text-bold">
+                            <input type="radio"  name="inherit_stripe" value="1" />
+                            <i></i>{$team_fundraiser1}<!--Use your STRIPE account--> </label>
+                        </div>
+                        <div class="col-md-12 col-sm-12 col-xs-12">
+                          <label class="checkbox text-bold">
+                            <input type="radio" name="inherit_stripe" value="0"  />
+                            <i></i>{$team_fundraiser2}<!--Their own STRIPE account --></label>
+                        </div>
+                      </div>
+                      <div class="pt-15">
+                        {$text_bottom}
+                      </div>
+                    </div>
+                  </div>
+                 </div>
+                  <div class="row">
+                    <div class="col-md-8 col-sm-10 col-xs-12 text-center mt-25">
+                      <input type="submit" class="button-1 large-btn" value="{$text_save_and_continue}" />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+  {include="bottom/bottom"} </div>
+</body>
+<script type="text/javascript">
+$(document).ready(function()
+{
+	$("#form-section").validate(
+	{
+		success: function(element)
+		{
+			$("#"+element[0].htmlFor).next("b.tooltip").remove();
+		},
+		errorPlacement: function(error, element)
+		{
+			element.next("b.tooltip").remove();
+			element.after("<b class='tooltip tooltip-top-right'>"+error.text()+"</b>");
+		},
+		rules:
+		{
+ 
+			UUID:{required:true},
+		},
+		messages:
+		{
+			UUID:{required:"UUID number"},
+		},
+
+	});
+});
+</script>
+</html>

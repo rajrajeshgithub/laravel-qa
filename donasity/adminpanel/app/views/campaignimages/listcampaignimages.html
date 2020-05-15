@@ -1,0 +1,158 @@
+<script type="text/javascript" src='{#RESOURCES#}js/validateCompaignImages.js'></script>
+<script type="text/javascript" src='{#RESOURCES#}js/jquery.colorbox.js'></script>
+<link href='{#RESOURCES#}css/jquery.colorbox.css' type="text/css" rel="stylesheet" />
+<script type="text/javascript">
+jQuery(function() {jQuery(".viewImage").colorbox({rel:'viewImage'})})
+jQuery(function() {jQuery(".listingImage").colorbox({rel:'listingImage'})})
+
+</script> 
+<ul class="breadcrumb">
+    <li title="Dashboard"><a href='{#URL#}home/'>Dashboard</a></li>
+    <li title="Compaign"><a href='{#URL#}campaign/'>Campaign</a></li>
+    <li title="Compaign List">Compaign Images List</li>
+</ul>
+{include="common/message"}
+<div class="oh">
+    <div class="col col-6">
+        <h1 class="heading-1">Campaign Images List</h1>
+    </div>
+    <div class="col col-6 text-right mt-15">
+     <a href='{#URL}campaignimages/index/list-images/{$CI_CID|keyEncrypt}/#Compaignimages' class="button-2" title="Add more bank detail"><i class="fa fa-file-image-o"></i>&nbsp; Add Image</a>
+    </div>
+</div>
+<div id="content-box" class="igs-form">
+	<div class="section-heading listingmoreBtn">
+    	Campaign Images List<a href='javascript://' class="form-toggle-icon "><i class="fa fa-minus-square-o"></i></a>
+    </div>
+    <div class="content-section">
+    	 <fieldset>
+            <div class="row">
+              <section class="col col-12">
+              {if condition="count($CIList)>0"} <div class="record-found pull-left">Showing {$startRecord}-{$endRecord} of {$CIList|count} records</div>{/if}
+              <table border="0" id="igs-table">
+              	<thead>
+                <tr>
+                    <th width="20%">Thumbnail</th>
+                    <th width="30%">Image Title</th>
+                    <th width="30%">Image Type</th>
+                    <th width="10%">Sort Order</th>
+                    <th width="10%">Show on Website</th>
+                </tr>
+              </thead>
+               <tbody>
+                 {if condition="$CIList!=NULL"}
+                  {loop="CIList"}
+                  <tr>
+                    <td data-title="Thumbnail"> <a href='{#CAMPAIGN_LARGE_IMAGE_URL#}{$value.Camp_Image_Name}' class="listingImage" title="Edit"><img src='{function="CheckImage(CAMPAIGN_THUMB_IMAGE_DIR,CAMPAIGN_THUMB_IMAGE_URL,NOIMAGE,$value.Camp_Image_Name)"}' width="50" height="50"></a></td>
+                     <td data-title="Image Title"><a href='{#URL#}campaignimages/index/edit-image/{$value.Camp_Image_CampID|keyEncrypt}/{$value.ID|keyEncrypt}' class="link-text" title="Edit">{$value.Camp_Image_Title}</a></td>
+                     <td data-title="Image Type">{if="array_key_exists($value.Camp_Image_Type,$ImageType)"}{$ImageType[$value.Camp_Image_Type]}{/if}</td>
+                     <td data-title="Sorting">{$value.Camp_Image_SortOrder}</td>
+                     <td data-title="Show on Website">{if="$value.Camp_Image_ShowOnWebsite==1"}<span class="icon active ml-15" title="Active"></span>{else}
+                    <span class="icon inactive ml-15" title="Inactive"></span>{/if}</td>
+                   </tr>
+                  {/loop}
+                  {else}
+                  <tr><td class="text-center" colspan="6">No Record Found!</td></tr> 
+                 {/if}
+                </tbody>
+              </table>
+              
+              </section>
+            </div>
+         </fieldset>
+    </div>
+</div>
+
+
+<form id="formSection" name="formSection"   method="post" action='{#URL#}campaignimages/index/{$action}' enctype="multipart/form-data" class="igs-form">
+  <input type="hidden" name="CI_ID" id="CI_ID" {if="isset($CI_ID) && $CI_ID!=NULL"} value="{$CI_ID}" {/if}/>
+  <input type="hidden" name="CI_CampaignID" id="CI_CampaignID" value="{$CI_CID}"/>
+  <input type="hidden" name="action" id="action" value="{$action}"/>
+  <div id="Compaignimages">
+  	<div id="content-box">
+    	<div class="section-heading text-left viewmoreBtn">	
+            <li class="fa fa-fw fa-file-text iColor"></li>&nbsp;Image Details - {if="$action==='add-image'"}Add{else}Edit{/if}<a href='javascript://' class="form-toggle-icon"><i class="fa fa-minus-square-o"></i></a>
+         </div>
+         
+         <div class="content-section ">
+            <fieldset>
+                <div class="row">
+                	<section class="col col-6">
+                     {if="isset($ImageDetail) && $ImageDetail.Camp_Image_Name != ''"}
+                     <div class="pull-left col-10">
+                     {else}
+                     <div class="pull-left col-12">
+                     {/if}
+                        <label class="label">Image Name</label>
+                         <input type="hidden" id="CI_oldImage" name="CI_oldImage" {if="isset($ImageDetail) && $ImageDetail!=NULL"}value="{$ImageDetail.Camp_Image_Name}"{/if} />
+                         {if="isset($ImageDetail) && $ImageDetail.Camp_Image_Name != ''"}
+                         <label for="file" class="input input-file col-11 pull-left clear-padding">
+                         {else}
+                         <label for="file" class="input input-file col-12 pull-left clear-padding">
+                         {/if}
+                            <div class="button">
+                                <input type="file" name="CI_imageName" id="CI_imageName" multiple="" onchange="filePath.value = this.value">Browse
+                            </div>
+                            <input type="text" id="filePath" name="filePath" {if="isset($ImageDetail) && $ImageDetail.Camp_Image_Name != ''"}placeholder="Change jpg,png,gif image"{else}placeholder="Include jpg,png,gif image"{/if} readonly="" value="">
+                         </label> 
+                     </div> 
+                     {if="isset($ImageDetail) && $ImageDetail.Camp_Image_Name != ''"}   
+                        <div class="pull-right mt-20">
+                        <label class="db">{if="$ImageDetail.Camp_Image_Name != ''"} <a href='{#CAMPAIGN_LARGE_IMAGE_URL#}{$ImageDetail.Camp_Image_Name}' class="viewImage cboxElement"><i class="fa fa-search"></i>&nbsp; View Image</a>{/if}</label>
+                        <label class="db">{if="$ImageDetail.Camp_Image_Name != ''"} <a href='javascript://' onclick="confirmDeleteMainImg('{$CI_CID|keyEncrypt}','{$ImageDetail.ID|keyEncrypt}');" class="DeleteImage"><i class="fa fa-trash-o"></i>&nbsp; Delete</a>{/if}</label>           
+                        </div>
+                     {/if}   
+                    </section>
+                    
+                    <section class="col col-6">
+                            <label class="label">Image Title</label>
+                            <label class="input">
+                                <input type="text"  id="CI_imageTitle" name="CI_imageTitle"  placeholder="Image Title"{if="isset($ImageDetail) && $ImageDetail!=NULL"} value="{$ImageDetail.Camp_Image_Title}"{/if} >
+                            </label>
+                    </section>
+                    
+                    <section class="col col-6">
+                        <label class="label">Image Type</label>
+                        <label class="select">
+                            <select name="CI_imageType" id="CI_imageType" class="form-control-select form-control pull-left">
+                            <option>Select</option>
+                            {loop="ImageType"}
+                                <option value="{$key}" {if="isset($ImageDetail) && $ImageDetail!=NULL"}{if="$key==$ImageDetail.Camp_Image_Type"}selected{/if}{/if}>{$value}</option>
+                            {/loop}
+                            
+                            </select><i></i>
+                            </label>
+                    </section>
+                
+                    <section class="col col-6">
+                            <label class="label">Sort Order</label>
+                           <label class="input">
+                                <input type="text"  id="CI_sorting" name="CI_sorting"  placeholder="Sorting" {if="isset($ImageDetail) && $ImageDetail!=NULL"}value="{$ImageDetail.Camp_Image_SortOrder}"{/if} >
+                            </label>
+                    </section>
+                   
+                     <section class="col col-6">
+                        <label class="label"></label>
+                         <label class="checkbox mr-10">
+                            <input type="checkbox" name="CI_status" id="CI_status" {if="isset($ImageDetail) && $ImageDetail!=NULL"}{if="$ImageDetail.Camp_Image_ShowOnWebsite=='1'"} checked="checked" {/if}{/if}  value="1" /><i></i>Show On Website
+                         </label>
+                    </section>
+                    
+                    <section class="col col-12">
+                        {if="$action=='add-image'"}
+                            <div class="pull-right">
+                                 <button type="submit" name="Save" value="Save" class="button-1" ><i class="fa fa-save"></i> Save</button>
+                            </div>
+                        {else}
+                             <div class="pull-right">
+                                <button type="submit" name="Save" value="Save Changes" class="button-1" ><i class="fa fa-save"></i> Save Changes</button>
+                                <button type="button" name="Delete" value="Delete" class="button-warning" onclick="return Delete_Image('{$CI_ID|keyEncrypt}','{$CI_CID|keyEncrypt}')" ><i class="fa fa-trash-o"></i> Delete</button>
+                            </div>
+                        {/if}        
+                    </section>
+                </div>
+            </fieldset>
+         </div>               
+    </div>
+  </div>
+</form>                               

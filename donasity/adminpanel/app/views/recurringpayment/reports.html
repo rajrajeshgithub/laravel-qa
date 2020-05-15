@@ -1,0 +1,152 @@
+<link type="text/css" rel="stylesheet" href='{#RESOURCES#}css/bootstrap-datepicker.css'>
+<script type="text/javascript" src='{#RESOURCES#}js/bootstrap-datepicker.js'></script>
+<script type="text/javascript">
+	$(function() {	
+		$('#filter_donation').click(function(){
+			$('#pageNumber').val(1);
+		});
+	});	
+	
+	function ExportData() {
+		var ActionUrl = SITEURL + 'donation/index/recurring-export-reports';
+		$('#formSection').attr('action', ActionUrl);
+		$('#formSection').submit();
+		$('#formSection').attr('action', '');
+	}		
+</script>
+<style type="text/css">
+	.running {color: #99cc33}
+	.canceled {color: #a94442}
+</style>
+
+<ul class="breadcrumb">
+    <li title="Dashboard"><a href='{#URL#}home/'>Dashboard</a></li>
+    <li title="NPOs">Donation</li>
+    <li title="Recurring Profile Report">Recurring Profile Report</li>
+</ul>
+{include="common/message"}
+<div class="oh">
+    <div class="col col-6">
+        <h1 class="heading-1">Recurring Profile Report</h1>
+    </div>
+</div>
+<div id="content-box" class="igs-form">
+    <form id="formSection" name="formSection" method="get" autocomplete="off" action=''>
+        <input type="hidden" name="pageNumber" id="pageNumber" value="{$pageSelected}"  />
+        <div class="section-heading">Filter Result <a href='javascript://' class="form-toggle-icon"><i class="fa fa-minus-square-o"></i></a></div>
+        <div class="content-section">
+            <fieldset>
+                <div class="row">
+                    <section class="col col-4">
+                        <label class="label">Status</label>
+                        <label class="select">
+                            <select class="form-control" name="status" id="status">
+	                            <option value='0'>All</option>
+	                            <option value='1' {if condition="$status==1"}selected{/if}>Running</option>
+	                            <option value='2' {if condition="$status==2"}selected{/if}>Canceled</option>
+                       		 </select>
+                            <i></i> 
+                         </label>
+                    </section>
+                    <section class="col col-4">
+                        <label class="label">Cycle</label>
+                        <label class="select">
+                            <select class="form-control" name="cycle" id="cycle">
+	                            <option value=''>All</option>
+	                            <option value='1' {if condition="$cycle=='1'"}selected{/if}>Monthly</option>
+	                            <option value='2' {if condition="$cycle=='2'"}selected{/if}>Quaterly</option>
+	                            <option value='3' {if condition="$cycle=='3'"}selected{/if}>Half Yearly</option>
+	                            <option value='4' {if condition="$cycle=='4'"}selected{/if}>Yearly</option>
+                        	</select>
+                            <i></i> </label>
+                    </section>
+                     <section class="col col-4">
+                        <label class="label">Cause Name</label>
+                            <label class="input">
+                               <input type="text" class="form-control" name="keyword" id="keyword" placeholder="Cause Name" value='{$keyword}'>
+                            </label>
+                    </section>
+                </div>
+            </fieldset>
+            <div class="form-footer">
+                <button type="submit" name="" value="" id="filter_donation" class="button-1"><i class="fa fa-search"></i>&nbsp;Show Result</button> &nbsp; 
+                <a href='{#URL#}donation/index/recurring-profile' class="button-2"><i class="fa fa-refresh"></i>&nbsp;Default</a>
+                {if condition="$totalRecords>0"} &nbsp; 
+                <a href='javascript://' id="export" class="button-2" onclick="ExportData()"><i class="fa fa-search"></i>&nbsp;Export Result</a>
+                {/if}
+            </div>
+        </div>
+    </form>
+    <div class="row">
+        <section class="col col-12">
+        	{if condition="$totalRecords>0"}
+        	<div class="record-found pull-left">Showing {$startRecord}-{$endRecord} of {$totalRecords} records</div>
+            {/if}
+            <table border="0" id="igs-table" class="pull-left">
+                <tr>
+                    <th width="10%">Cause Name</th>
+                    <th width="8%">Cycle</th>
+                    <th width="7%">User Name</th>
+                    <th width="8%">Email</th>
+                    <th width="8%">Charity Name</th>
+                    <th width="10%">Recurring Mode</th>
+                    <th width="10%">Number of Cycle</th>
+                    <th width="10%">Amount Paid ($)</th>
+                    <th width="10%">Amount Pending ($)</th>
+                    <th width="10%">Last Date</th>
+                    <th width="5%">Next Date</th>
+                </tr>
+                {if condition="$totalRecords>0"}
+                {loop="recurringprofilelist"}
+                <tr>
+                    <td data-title="Cause Name">{$value.PDD_PIItemName}</td>
+                    <td data-title="Cycle">{$value.RP_RecurringCycle}</td>
+                    <td data-title="User Name">{$value.Username}</td>
+                    <td data-title="Email">{$value.RU_EmailID}</td>
+                    <td data-title="Charity Name">{$value.PDD_PIItemName}</td>
+                    <td data-title="Recurring Mode">{$value.RP_RecurringCycle}</td>
+                    <td data-title="Number of Cycle">{$value.PDD_ReoccuringProfileID}</td>
+                    <td data-title="Amount Paid ($)">{$value.AmountPaid}</td>
+                    <td data-title="Amount Pending ($)">&nbsp;</td>
+                    <td data-title="Last Date">{$value.RP_StartDate|formatDate:'m/d/Y'}</td>
+                    <td data-title="Next Date">{$value.RP_StartDate|formatDate:'m/d/Y'}</td>
+                </tr>
+                {/loop}
+                {else}
+                <tr>
+                    <td class="text-center" colspan="11">Change filter criteria to display more details of recurring profile report.</td>
+                </tr>
+                {/if}
+            </table>
+        </section>
+    </div>
+    {if condition="$totalRecords>0"}
+    <!-- pagination start-->
+    <div class="row">
+        <div class="col col-12"> 
+            <nav>
+                <ul class="pagination">
+                    {if="$pageSelected!=1"}
+                    <li> <a href='javascript://' onclick="return GotoPage(1);"  title="First Page" aria-label="Previous"> <span aria-hidden="true">First</span> </a> </li>
+                    <li> <a href='javascript://' onclick="return GotoPage({$pageSelected-1});"  title="Previous" aria-label="Previous"> <span aria-hidden="true">&laquo;</span> </a> </li>
+                    {/if}
+                    {if="count($pagingList)>1"}
+                    {loop="pagingList"} 
+                        {if="$pageSelected==$value.PageNo"}
+                        <li class="active"><a href='javascript://' title="Page No {$value.PageNo}">{$value.PageNo}</a></li>
+                        {else}
+                        <li><a href='javascript://' onclick="return GotoPage({$value.PageNo});" title="Page No {$value.PageNo}">{$value.PageNo}</a></li>
+                        {/if}
+                    {/loop}
+                    {/if}
+                    {if="$pageSelected!=$lastPage"}
+                    <li> <a href='javascript://' onclick="return GotoPage({$pageSelected+1});" aria-label="Next"> <span aria-hidden="true">&raquo;</span> </a> </li>
+                    <li> <a href='javascript://' onclick="return GotoPage({$lastPage});" aria-label="Last Page"> Last </a> </li>
+                    {/if}
+                </ul>
+            </nav>
+    	</div>
+    </div>
+    <!-- pagination end--> 
+    {/if}
+</div>

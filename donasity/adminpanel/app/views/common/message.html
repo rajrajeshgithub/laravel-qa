@@ -1,0 +1,19 @@
+{$msgValues=NULL}
+{$msgValues|getMessage}
+{if="$msgValues!=NULL"}
+    <fieldset>
+    	<div class="col col-12 mt-10">
+            {if condition="$msgValues!=null"}
+                {if condition="$msgValues.msgType==1"}
+                    <div class="alert alert-danger" role="alert">
+                        <span>{$msgValues.ErrorMsg}</span>
+                    </div>                            
+                    {elseif condition="$msgValues.msgType==2"}
+                    <div class="alert alert-success" role="alert">
+                        <span>{$msgValues.ConfirmationMsg}</span>
+                    </div>
+                {/if}
+            {/if}
+         </div>
+    </fieldset>
+ {/if}

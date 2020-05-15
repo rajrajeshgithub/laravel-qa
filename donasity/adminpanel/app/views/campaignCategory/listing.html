@@ -1,0 +1,202 @@
+<script type="text/javascript">
+$(document).ready(function()
+{
+	var baseUrl = (window.location).href; // You can also use document.URL
+	var UrlLastId = baseUrl.substring(baseUrl.lastIndexOf('#') + 1);
+	
+	if($('#C_NpoCatId').val()!='')
+	{
+		$('.viewmoreBtn i').removeClass('fa-minus').addClass('fa-plus');
+		$('.viewmoreBtn i').closest('.row').find('.viewmorSection').attr( 'style','display:block' );
+	}
+	else
+	{
+		if(UrlLastId==='CampCategory')
+		{
+			$('.viewmoreBtn i').removeClass('fa-plus').addClass('fa-minus');
+			$('.viewmoreBtn i').closest('.row').find('.viewmorSection').attr( 'style','display:block' );
+			
+		}
+		else
+		{
+			$('.viewmoreBtn i').removeClass('fa-minus').addClass('fa-plus');
+			$('.viewmoreBtn i').closest('.row').find('.viewmorSection').attr( 'style','display:none' );
+		}
+	}
+		
+	
+	$('#addCategory').click(function()
+	{
+			$('.viewmoreBtn i').removeClass('fa-plus').addClass('fa-minus');
+			$('.viewmoreBtn i').closest('.row').find('.viewmorSection').attr( 'style','db' );
+			window.location(SITEURL+"npocategory#NpoCategory")
+			
+	})
+	$(".GenerateUrl").click(function()
+	{
+		var str = $("#C_CategoryNameEn").val();
+		str = str.replace(/[^a-z\s]/gi, '');
+		str = $.trim(str);				
+		str = str.replace(/[_\s]/g, '-');				
+		str = str.toLowerCase();
+		$("#C_urlFriendlyName").val(str);
+			
+	})
+});
+
+
+function GotoPage(pageNo)
+{
+	$('#pageNumber').val(pageNo);
+	$('#formSection').attr('action', '');
+	document.formSection.submit();
+	return false;
+}
+</script>
+
+<div id="rightSection">
+      <div class="rightPannel">
+            <div class="breadcrumb">
+              <ul>
+                <li title="Dashboard"><a href='{#URL#}home/'><img src='{#RESOURCES#}img/dashboard_thumb.png'/>Dashboard</a></li>
+                <li>&nbsp;»&nbsp;</li>
+                <li title="Campaign"><a href='{#URL#}campaigncategory/'>Campaign</a></li>
+        		<li>&nbsp;»&nbsp;</li>
+                <li title="Campaign Category">Campaign Category - List</li>
+              </ul>
+            </div>
+            <div class="contentSection">
+                  <div class="pageHeader text-left"><li class="fa fa-fw fa-bars iColor"></li>&nbsp;Campaign Category - List
+                  	<div class="pull-right  mr-10">
+                      <a href='{#URL}campaigncategory#CampCategory' id="addCategory" class="btn btn-secondary" title="Add Category"><i class="fa fa-bars"></i>&nbsp; Add Category</a>
+               		 </div>
+                  </div>
+              {include="common/message"}           
+                  <div class="sky-form mb-20 box-shadow-none">
+                          <fieldset>
+                          <div class="row">
+                                <div class="sky-form-headingsection psTitle">
+                                    <div class="sky-form-heading pull-left">Campaign Categories - List</div>
+                                    <div class="listingmoreBtn pull-right mr-10">
+                                        <i class="fa fa-minus"></i>
+                                     </div>
+                                </div>
+                                
+                                <div class="listingmoreBtn">
+                                <section class="col col-12 pull-left">
+                                    <table  id="sky-table" cellpadding="0" cellspacing="0" width="100%" align="center">
+                                      <thead>
+                                        <tr>
+                                            <th width="90%">Name English | Spanish</th>                                           
+                                            <th width="10%">Show On Website</th>
+                                        </tr>
+                                      </thead>
+                                      <tbody>
+                                         {if condition="$CampCategoryList!=NULL"}
+                                             {loop="CampCategoryList"}
+                                          <tr>
+                                            <td data-title="Name English | Spanish">                                                  	
+                                                {$value.space}
+                                                <i class="fa fa-arrows-v color-grey-light"></i>&nbsp;
+                                                <a href='{#URL#}campaigncategory/index/edit/{$value.CampCat_ID|keyEncrypt}' class="page-link" title="Edit Category">
+                                                {$value.CampCat_DisplayName_EN} | {$value.CampCat_DisplayName_ES}                    
+                                                </a>
+                                             </td>                                            
+                                            <td data-title="Show On Website">{if="$value.CampCat_ShowOnWebsite==1"}<span class="icon active ml-15" title="Active"></span>{else}
+                                            <span class="icon inactive ml-15" title="Inactive"></span>{/if}</td>
+                                           </tr>
+                                          {/loop}
+                                          {else}
+                                            <tr><td class="text-center" colspan="2">No Record Found!</td></tr> 
+                                         {/if}
+                                    </tbody>
+                                </table>
+                                </section>
+                              </div> 
+                              </div> 
+                          </fieldset>
+                  </div>
+                  
+                  <div class="sky-form box-shadow-none border-top">
+                      <div id="CampCategory">
+                              <fieldset>
+                              <form id="formSection" name="formSection"   method="post" action='{#URL#}campaigncategory/index/{$action}' >
+                              <input type="hidden" name="C_CampCatId" id="C_CampCatId" value="{$CampDetails.CampCat_ID}"/>
+                                <div class="row">
+                                    <div class="sky-form-headingsection psTitle">
+                                        <div class="sky-form-heading pull-left">Category Details - {if="$action=='insert'"}Add{else}Edit{/if}</div>
+                                        <div class="viewmoreBtn pull-right mr-10">
+                                            <i class="fa fa-plus"></i>
+                                         </div>
+                                    </div>
+                                    {if="$action=='update'"}                                                        
+                                    	{$CampCatParentList = $CampCatParentList}
+                                    {else}
+                                     	{$CampCatParentList = $CampCategoryList}                                     
+                                    {/if}
+                                    <div class="viewmorSection" >
+                                         <section class="col col-2">
+                                                <label class="label">Parent Category</label>
+                                                <label class="select">
+                                                    <select name="C_parentCategory" id="C_parentCategory" class="form-control-select form-control pull-left" >
+                                                        <option value="0">None</option>
+                                                         {loop="CampCatParentList"}
+                                                            <option value='{$value.CampCat_ID}' {if="$action=='update'"}{if="$value.CampCat_ID==$CampDetails.CampCat_ParentID && $CampDetails.CampCat_ParentID!=0"}selected{/if}{/if}>{$value.space}{$value.CampCat_DisplayName_EN}|{$value.CampCat_DisplayName_ES}</option>
+                                                         {/loop}                                                        
+                                                    </select><i></i>
+                                                </label>
+                                        </section>
+                                        
+                                        <section class="col col-2">
+                                                <label class="label">Category Name (English)</label>
+                                                <label class="input">
+                                                    <input type="text"  id="C_CategoryNameEn" name="C_CategoryNameEn"  placeholder="Category Name" value="{$CampDetails.CampCat_DisplayName_EN}" >
+                                                </label>
+                                        </section>
+                                        
+                                        <section class="col col-2">
+                                                <label class="label">Category Name (Spanish)</label>
+                                                <label class="input">
+                                                    <input type="text"  id="C_CategoryNameEs" name="C_CategoryNameEs"  placeholder="Category Name" value="{$CampDetails.CampCat_DisplayName_ES}" >
+                                                </label>
+                                        </section>
+                                        
+                                        
+                                        <section class="col col-3">
+                                                <label class="label pull-left">Url Friendly Name</label>
+                                                <label class="display-inline-block GenerateUrl padding-left-10"><a href='javascript://' class="link"><li class="fa fa-magic">&nbsp;</li>Generate</a></label>
+                                                <label class="input">
+                                                    <input type="text"  id="C_urlFriendlyName" name="C_urlFriendlyName"  placeholder="Url Friendly Name" value="{$CampDetails.CampCat_UrlFriendlyName}" >
+                                                </label>
+                                        </section>
+                                      
+                                        <section class="col col-2 db">
+                                            <label class="label"></label>
+                                             <label class="checkbox mr-10">
+                                                <input type="checkbox" name="C_status" id="C_status" {if="$CampDetails.CampCat_ShowOnWebsite=='1'"} checked="checked" {/if}  value="1" /><i></i>Show on Website
+                                             </label>
+                                        </section>
+                                        
+                                      <fieldset>
+                                        <section>
+                                            {if="$action=='insert'"}
+                                                <div class="pull-right mb-10">
+                                                    <button type="submit" name="Save" value="Save" class="btn btn-primary" ><i class="fa fa-save"></i> Save</button>
+                                                </div>
+                                            {else}
+                                                <div class="pull-right mb-10">
+                                                    <button type="submit" name="Save" value="Save Changes" class="btn btn-primary" ><i class="fa fa-save"></i> Save Changes</button>
+                                                </div>
+                                            {/if}       
+                                           
+                                        </section>
+                                     </fieldset>
+                                    </div>       
+                               </div> 
+                                </form>
+                              </fieldset>                 
+                      </div>
+                </div>
+            </div>
+      </div>
+</div>

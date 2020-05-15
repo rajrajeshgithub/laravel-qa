@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="{#LANG_ID#}">
+<head>
+{include="top/head"}
+ <link type="text/css" rel="stylesheet" href='{#RESOURCES#}css/contact-us.css'/>
+<script type="text/javascript" src='{#RESOURCES#}js/contact-us.js'></script>
+<script src='https://www.google.com/recaptcha/api.js' async defer></script> 
+</head>
+<body  id="body">
+	<div class="gray-fix-nav">
+        {include="top/top"}
+        </div>
+   {$Contactdetails}
+    <section class="section-padding cms-section contactus-form bg-cream">
+    <div class="container">
+    <div class="row">
+    <div class="col-md-8 col-sm-9 col-xs-12">
+    {$pageheading}
+    <form id="contact-form" method="post" action="#">
+    <div class="row mt-25">
+        <div class="col-md-6 col-sm-6 col-xs-12">
+        	<div class="form-group"><input class="form-control" name="name" id="name" placeholder="Name" type="text" /></div>
+        </div>
+        <div class="col-md-6 col-sm-6 col-xs-12">
+        	<div class="form-group"><input class="form-control" name="email" id="email" placeholder="Email" type="text" /></div>
+        </div>
+        <div class="col-md-12 col-sm-12 col-xs-12">
+        	<div class="form-group"><textarea name="message" id="message" class="form-control" rows="9" placeholder="Message"></textarea></div>
+        </div>
+        <div class="col-md-12 col-sm-12 col-xs-12 mb-15">
+          <div class="g-recaptcha" data-sitekey="6Le-wvkSAAAAAPBMRTvw0Q4Muexq9bi0DJwx_mJ-"></div>
+        </div>
+        <div class="col-md-12 col-sm-12 col-xs-12">
+          <button type="submit" class="button-1" title="click here to send your query">Send</button>
+        </div>
+    </div>
+    </form>
+    </div>
+    </div>
+    </div>
+    </section> 	
+  {include="bottom/bottom"}    
+</body>
+
+</html>

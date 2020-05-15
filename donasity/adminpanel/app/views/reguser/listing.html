@@ -1,0 +1,152 @@
+<script type="text/javascript">
+function GotoPage(pageNo) {
+	$('#pageNumber').val(pageNo);
+	$('#formSection').attr('action', '');
+	document.formSection.submit();
+	return false;
+}
+
+function ExportData() {
+	var actionUrl = SITEURL + 'reguser/index/export-user';
+	$('#formSection').attr('action', actionUrl);
+	$('#formSection').submit();
+	$('#formSection').attr('action', '');
+}
+
+jQuery(document).ready(function(){
+	/*jQuery('#exportUser').click(function() {
+		window.location = SITEURL + 'reguser/index/export-user';
+	});*/
+});
+</script>
+
+<ul class="breadcrumb">
+  <li title="Dashboard"><a href='{#URL#}home/'>Dashboard</a></li>
+  <li title="Users">Users</li>
+  <li title="Registered User List">Registered Users - List</li>
+</ul>
+<div class="oh">
+  <div class="col col-6">
+    <h1 class="heading-1">Registered Users</h1>
+  </div>
+  <div class="col col-6 text-right mt-15"> 
+  	<!--<a href='javascript://' class="button-2 " title="Export User" id="exportUser" ><i class="fa fa-user-plus"></i>&nbsp; Export User</a>-->
+    <a href='{#URL}reguser/index/add' class="button-2 " title="Add Registered User"><i class="fa fa-plus"></i>&nbsp;Add User</a> 
+    
+  </div>
+</div>
+<div id="content-box" class="igs-form">
+  <form id="formSection" name="formSection" method="post" autocomplete="off" action="">
+    <input type="hidden" name="pageNumber" id="pageNumber" value=""  />
+    <div class="section-heading">Filter Result <a href='javascript://' class="form-toggle-icon"><i class="fa fa-minus-square-o"></i></a></div>
+    <div class="content-section">
+      <fieldset>
+        <div class="row">
+          <section class="col col-4 pull-left">
+            <label class="label">Search Keyword</label>
+            <label class="input">
+              <input type="text" name="searchValues" id="searchValues" value="{$Search}" placeholder="Search keyword" />
+            </label>
+          </section>
+          <section class="col col-4 ">
+            <label class="label">Search Keyword In</label>
+            <label class="select">
+              <select name="searchFields" id="searchFields" class="form-control">
+                <option value="0">Every Where</option>
+                <option {if condition="$Field=='RU_FistName'"} selected="selected" {/if}  value="RU_FistName">First Name</option>
+                <option {if condition="$Field=='RU_LastName'"} selected="selected" {/if}  value="RU_LastName">Last Name</option>
+                <option {if condition="$Field=='RU_EmailID'"} selected="selected" {/if} value="RU_EmailID">Email</option>
+              </select>
+              <i></i> </label>
+          </section>
+          <section class="col col-4">
+            <label class="label">Status</label>
+            <label class="checkbox mr-10">
+              <input type="radio" id="status" name="status" value="1" {if="$status!=''"}{if="$status==1"}checked='checked'{/if}{/if} />
+              <i></i>Active 
+            </label>
+            <label class="checkbox pull-left">
+              <input type="radio" id="status" name="status" value="0" {if="$status!=''"}{if="$status==0"}checked='checked'{/if}{/if} />
+              <i></i>Inactive 
+            </label>
+          </section>
+        </div>
+      </fieldset>
+      <div class="form-footer">
+        <button type="submit" name="search" value="search" id="search" class="button-1"><i class="fa fa-search"></i>&nbsp;Search</button>
+        <button type="button" name="reset" value="reset" class="button-2" onclick="reloadPage();"><i class="fa fa-refresh"></i>&nbsp;Reset</button>
+        {if condition="$totalRecords>0"} &nbsp;  &nbsp;   &nbsp; 
+        <a href='javascript://' class="button-1" title="Export Registered Users" onclick="ExportData()"><i class="fa fa-file-excel-o"></i>&nbsp;Export</a>
+        {/if}
+      </div>
+    </div>
+  </form>
+  <div class="row">
+    <section class="col col-12"> 
+      {if="$DnrList"}
+      <div class="record-found pull-left">Showing {$startRecord}-{$endRecord} of {$totalRecords} records</div>
+      {/if}
+      <table border="0" id="igs-table">
+        <tr>
+          <th>Name User</th>
+          <th>Email</th>
+          <th>City</th>
+          <th>State</th>
+          <th>Status</th>
+          <th>Action</th>
+        </tr>
+        {if="$DnrList"}
+        {loop="DnrList"}
+        <tr>
+          <td data-title="User Name">
+          	<a href='{#URL#}reguser/index/edit/{$value.ID|keyEncrypt}' class="title-link" title="Edit Registered User">{$value.fullName}</a>
+          </td>
+          <td data-title="Email">{$value.RU_EmailID}</td>
+          <td data-title="City">{$value.RU_City}</td>
+          <td data-title="State">{$value.State_Name}</td>
+          <td data-title="Status">
+          	{if="$value.RU_Status==1"}
+            <span class="icon active ml-15" title="Active"></span>
+            {else}
+            <span class="icon inactive ml-15" title="Inactive"></span>
+            {/if}
+          </td>
+          <td><a href='{#URL#}salesubscription/newOrder/{$value.ID|keyEncrypt}|{1|keyEncrypt}' class="title-link">Create Order</a></td>
+        </tr>
+        {/loop}
+        {else}
+        <tr>
+          <td class="text-center" colspan="6">No Record Found!</td>
+        </tr>
+        {/if}
+      </table>
+    </section>
+  </div>
+  {if="$PagingList"} 
+  <!-- pagination start-->
+  <div class="row">
+    <div class="col col-12">
+      <nav>
+        <ul class="pagination">
+          {if="$PageSelected!=1"}
+          <li> <a href='javascript://' onclick="return GotoPage(1);"  title="First Page" aria-label="Previous"> <span aria-hidden="true">First</span> </a> </li>
+          <li> <a href='javascript://' onclick="return GotoPage({$PageSelected-1});"  title="Previous" aria-label="Previous"> <span aria-hidden="true">&laquo;</span> </a> </li>
+          {/if}
+          {loop="PagingList"} 
+          {if="$PageSelected==$value.PageNo"}
+          <li class="active"><a href='javascript://' title="Page No {$value.PageNo}">{$value.PageNo}</a></li>
+          {else}
+          <li><a href='javascript://' onclick="return GotoPage({$value.PageNo});" title="Page No {$value.PageNo}">{$value.PageNo}</a></li>
+          {/if}
+          {/loop}
+          {if="$PageSelected!=$lastPage"}
+          <li> <a href='javascript://' onclick="return GotoPage({$PageSelected+1});" aria-label="Next"> <span aria-hidden="true">&raquo;</span> </a> </li>
+          <li> <a href='javascript://' onclick="return GotoPage({$lastPage});" aria-label="Last Page"> Last </a> </li>
+          {/if}
+        </ul>
+      </nav>
+    </div>
+  </div>
+  <!-- pagination end--> 
+  {/if} 
+</div>

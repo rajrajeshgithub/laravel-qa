@@ -4,6 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
+use Psy\Command\ParseCommand;
 
 class Question extends Model
 {
@@ -20,8 +21,8 @@ class Question extends Model
 
     public function getUrlAttribute()
     {
-        //return view("question.show", $this->id);
-        return '#';
+        return route("questions.show", $this->slug);
+        //return '#';
     }
 
     public function getCreatedDateAttribute()
@@ -38,5 +39,10 @@ class Question extends Model
             return "answered";
         }
         return "unanswered";
+    }
+
+    public function getBodyHtmlAttribute()
+    {
+
     }
 }

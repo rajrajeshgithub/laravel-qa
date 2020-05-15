@@ -1,0 +1,129 @@
+/* CSS Document */
+.section-padding.fundraiser-page-heading{padding:20px 0px;}
+.section-padding.fundraiser-page-heading h2{margin-bottom:0px;}
+.user-name.heading-3{font-size:18px; color:#4d4d4d;}
+.edit-account{font-family: 'latobold',sans-serif; font-size:16px; margin-top:10px;}
+.edit-account a{color:#abc340;}
+.user-category-list{font-family: 'latobold',sans-serif; font-size:16px; color:#333; margin-top:25px;}
+.user-category-list ul{margin-left:0px;}
+.user-category-list li{padding-right:30px; padding-left:0px;}
+.user-category-list a{color:#B6CB5A;}
+.section-padding.user-donation-detail{padding-top:20px; padding-bottom:55px;}
+.user-donation-detail{background:#efefef; margin-top:80px; position:relative;}
+.donation-category-tab{position: absolute; top: -60px; margin-left:0px;}
+.donation-category-tab li{font-size:30px; padding-left:0px; padding-right:30px;}
+.donation-category-tab li a{color:#abc340; padding:15px 40px; display:inline-block;}
+.donation-category-tab li a:hover{background:#efefef; text-decoration:none;}
+.donation-category-tab li.active-category-tab a{background:#efefef;}
+.category-list-option{margin-left:0px;}
+.category-list-option a{font-family: 'latobold',sans-serif; font-size:16px; color:#333; display:inline-block;}
+.category-list-option a:hover{color:#abc340; text-decoration:none;}
+.category-list-option li{border-right:1px solid #aaa; padding:8px 20px;}
+.category-list-option li:first-child{padding-left:0px;}
+.category-list-option li.active-option a{color:#abc340; text-decoration:none;}
+.user-donation-listing{margin-top:30px;}
+.user-donation-listing .listing-heading{font-family: 'latoregular',sans-serif; font-size:24px; color:#4d4d4d; padding:13px 0px;}
+.user-donation-listing .listing-heading i.fa{color:#abc340; float:right; margin-right:15px; margin-top:4px;}
+.donation-listing-row{font-family: 'latoregular',sans-serif; font-size:16px; color:#4d4d4d; padding:6px 0px;}
+.donation-listing-row:nth-child(odd){background:#e3e3e3;}
+.donation-type span{font-family: 'latobold',sans-serif; font-size:18px; display:inline-block; padding:10px 2px; width:68px; text-align:center; color:#FFF; }
+.donation-type .type-ntd{background:#c0d278;}
+.donation-type .type-td{background:#09426a;}
+.donation-listing-row .donation-name, .donation-listing-row .donation-date, .donation-listing-row .donation-amount{padding-top:10px;}
+.donation-bottom-menu{font-family: 'latobold',sans-serif; font-size:18px; margin-top:60px;}
+.donation-bottom-menu a{margin-right:50px; display:inline-block; color:#4d4d4d;}
+.donation-filter-section{font-family: 'latoregular',sans-serif;}
+.user-donation-detail.donation-page{margin-top:10px;}
+.donation-name.fundraiser-name{color:#abc340;}
+.donation-name.npo-organization-name{color:#D0719B;}
+.donation-page .donation-bottom-menu{margin-top:0px;}
+.donation-page .donation-listing-row .donation-name{padding-top:0px;}
+.donation-page .donation-listing-row .donation-name .note{display:block;}
+/* fundraiser edit */
+.date.heading-3{font-size:18px; color:#abc340; font-family: 'latoregular',sans-serif;}
+.goal-raised{margin-top:10px;}
+.fundraiser-edit-section .user-category-list{margin-top:15px;}
+.fundraiser-edit-section .user-category-list a{color:#abc340; vertical-align:middle; display:inline-block;}
+/* fundraiser comment */
+.comment-box{font-family:'latoregular',sans-serif; font-size:18px; line-height:25px;color:#666666; padding:40px 0px 30px 0px;overflow:hidden;border-bottom:1px solid #b1b1b1;}
+.comment-box:first-child{padding-top:20px;}
+.comment-heading{font-family:'latobold',sans-serif; font-size:18px; color:#abc340; margin-bottom:0px; margin-top:0px;}
+.edit-content-box textarea{width:100%; height:100px; outline:none; padding:10px;}
+.comment-content{margin-bottom:10px; margin-top:10px;}
+.saveComment{display:none;}
+/* fundraiser listing */
+.donation-listing-section .donation-listing-row label.checkbox{float:left;}
+/* ---- multiselect list css ----- */
+label.multiselect{display:block;}
+.btn-group, .btn-group-vertical{position: relative; display:inline-block; vertical-align:middle; outline:none; width:100%;}
+.btn {
+  display: block;
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  width: 100%;
+  height: 38px;
+  padding: 8px 10px;
+  outline: none;
+  border-width: 1px;
+  border-style: solid;
+  border-radius: 0;
+  background: #fff;
+  font: 15px/19px 'Open Sans', Helvetica, Arial, sans-serif;
+  color: #404040;
+  appearance: normal;
+  -moz-appearance: none;
+  -webkit-appearance: none;
+  text-align:left;
+}
+.btn-multiselect {color:#333; background-color:#fff; border-color:#c0c0c0; width:100%;}
+.multiselect-container.dropdown-menu {
+  position: absolute;
+  top: 38px;
+  left: 0;
+  z-index: 1000;
+  display: none;
+  float: left;
+  min-width: 99.7%;
+  padding: 5px 0;
+  margin: 0px 0px;
+  font-size: 14px;
+  text-align: left;
+  list-style: none;
+  background-color: #fff;
+  -webkit-background-clip: padding-box;
+  background-clip: padding-box;
+  border: 1px solid #c0c0c0;
+}
+.multiselect-container.dropdown-menu > li > a {
+  display: block;
+  padding: 3px 20px;
+  clear: both;
+  font-weight: normal;
+  line-height: 1.42857143;
+  color: #333;
+  white-space: nowrap;
+  outline:none;
+}
+.open > .multiselect-container.dropdown-menu{display:block;}
+.multiselect-container a:hover{text-decoration:none;}
+.multiselect-container .checkbox{margin-bottom:5px;}
+
+
+/* CSS Document */
+.donation-social .social-icon{background:url(../img/social_icon.png) no-repeat; height:35px; width:35px; display:inline-block;}
+.donation-social .social-icon.docx{background-position:0px 0px;}
+.donation-social .social-icon.doc{background-position:36px 0px;}
+.donation-social .social-icon.png{background-position:-72px 0px;}
+.donation-social .social-icon.jpg{background-position:-110px 0px;}
+.donation-social .social-icon.pdf{background-position:-148px 0px;}
+.donation-social .social-icon.ppt{background-position:-184px 0px;}
+.donation-social .social-icon.pptx{background-position:-220px 0px;}
+.donation-social .social-icon.txt{background-position:-258px 0px;}
+.donation-social .social-icon.rtf{background-position:-294px 0px;}
+.donation-social .social-icon.gif{background-position:-332px 0px;}
+.donation-social .social-icon.xls{background-position:-362px 0px;}
+.donation-social .social-icon.xlsx{background-position:-110px 0px;}
+
+
+
+

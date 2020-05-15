@@ -1,0 +1,48 @@
+::-moz-selection{color:#fff; background:#09426A;}
+::selection{color:#fff; background:#09426A;}
+#header{background:#09426A;}
+.fa{color:#09426A !important;}
+.section-heading{border-left:5px solid #09426A;}
+.breadcrumb li:first-child a{color:#09426A;}
+.igs-panel .input input:focus,
+.igs-panel .select select:focus,
+.igs-panel .textarea textarea:focus,
+.igs-panel .radio input:focus + i,
+.igs-panel .checkbox input:focus + i,
+.igs-panel .toggle input:focus + i {border-color:#09426A;}
+.igs-panel .input:hover input,
+.igs-panel .select:hover select,
+.igs-panel .textarea:hover textarea,
+.igs-panel .radio:hover i,
+.igs-panel .checkbox:hover i,
+.igs-panel .toggle:hover i {border-color: #09426A;}
+.igs-panel .radio input + i:after {background-color:#09426A;}
+.igs-panel .checkbox input + i:after{color:#09426A;}
+.igs-panel .radio input:checked + i,
+.igs-panel .checkbox input:checked + i,
+.igs-panel .toggle input:checked + i {border-color:#09426A;}
+.igs-panel .rating input:checked ~ label {color:#09426A;}
+.igs-panel .toggle i:before {background-color:#09426A;}
+.button-1{background:#07326B;}
+.button-2{background:#155480;}
+.button-3{background:#4F8EBB;}
+.button-1, .button-2, .button-3{border-bottom:2px solid #012138;}
+.link-1{color:#07326B;text-decoration:underline;}
+.link-2{color:#155480;text-decoration:underline;}
+.link-3{color:#4F8EBB;text-decoration:underline;}
+.link-1:hover, .link-2:hover, .link-3:hover{text-decoration:none;}
+.active-link{background:#09426A;}
+.igs-panel .button{background:#07326B;}
+.pagination>.active>a, 
+.pagination>.active>a:focus, 
+.pagination>.active>a:hover, 
+.pagination>.active>span, 
+.pagination>.active>span:focus, 
+.pagination>.active>span:hover{background-color:#09426A; border-color:#09426A;}
+.igs-panel .tooltip{background:#09426A;}
+.igs-panel .tooltip-top-right:after{border-top:4px solid #09426A;}
+.tab-menu li a:hover{border-top: 3px solid #09426A;}
+.tab-menu li.active-tab a{border-top:3px solid #09426A;}
+#igs-table th{background-color:#09426A;}
+.progress-bar{background:#09426A;}
+.column-box1-bottom a:hover{background:#09426A;}

@@ -1,0 +1,45 @@
+<footer>
+	<div class="container">
+    	<div class="row">
+        	<div class="col-md-6 col-sm-6 col-xs-12">
+            	<div class="fotter-heading hidden-xs">{#_SITE_MAP_#}</div>
+                <div class="row bottom-text hidden-xs">
+                	 {if condition="$arrBottomInfo!=NULL"}
+                     <div class="col-md-4 col-sm-4 col-xs-12" style="min-height:65px;">
+                               <ul class="bottom-menu m-0">
+                     	{loop="arrBottomInfo"}
+                                {if="$value.IsExternalLink==1"}
+                                    <li><a href='{$value.external_url}' title="Click to show {$value.CMSPagesTitle|strtolower}" class="cyan">{$value.CMSPagesTitle}</a></li>
+                                {elseif="$value.IsInternalLink==1"}
+                                    <li><a href='{#SITEURL#}{$value.internal_url}' title="Click to show {$value.CMSPagesTitle|strtolower}" class="cyan">{$value.CMSPagesTitle}</a> </li>
+                                {else}
+                                    <li><a href='{#SITEURL#}{$value.CMSPagesNameINURL}.html' title="Click to show {$value.CMSPagesTitle|strtolower}" class="cyan">{$value.CMSPagesTitle}</a></li>
+                                     
+                                {/if}
+                                
+                                {if="($counter+1)%4==0"}                                    
+                                    </ul>
+                                    </div>
+                                     <div class="col-md-4 col-sm-4 col-xs-12" style="min-height:65px;">
+                                        <ul class="bottom-menu m-0">
+                                {/if}
+                        {/loop}
+                    {/if}
+                	</ul>
+                    </div>
+                </div>
+            </div>
+        	{$arrBottomMetaInfo.bottompage}
+            {$arrBottomMetaInfo.bottomsociallinks}
+
+        </div>
+    </div>
+</footer>
+<form name="languageForm" id="languageForm" action='{#URL#}top/activeLanguage' method="post">
+<input type="hidden" name="activeLanguage" id="activeLanguage"  />
+<span class="side-btn">
+    	<a href='javascript://' id="en"  {if="LANG_ID =='en'"}class="active-side-btn" {else} class="activeLanguage" {/if}>ENGLISH</a>&nbsp;|&nbsp;<a href='javascript://' id="es"{if="LANG_ID =='es'"}class="active-side-btn" {else} class="activeLanguage" {/if}>ESPAñOL</a>	
+    </span>
+</form>
+
+<link type="text/css" rel="stylesheet" href='{#RESOURCES#}css/responsive.css' />

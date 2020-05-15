@@ -1,0 +1,352 @@
+<script type="text/javascript" src='{#RESOURCES#}js/validatesalesubscriptioneditform.js'></script>
+<script type="text/javascript" src="http://digitalbush.com/wp-content/uploads/2013/01/jquery.maskedinput-1.3.1.min_.js"></script>
+<style type="text/css">
+#mycheck{ color:red; font-size:13px;}
+</style>
+<ul class="breadcrumb">
+    <li title="Dashboard"><a href='{#URL#}home/'>Dashboard</a></li>
+    <li title="Sale Subscription List"><a href='{#URL#}salesubscription'>Sale Subscription - List</a></li>
+    <li title="Order Details - Edit">Order / Payment Details - Edit</li>
+</ul>
+{include="common/message"}
+<div class="oh">
+    <div class="col col-6">
+        <h1 class="heading-1">Order / Payment Details - Edit</h1>
+    </div>
+    <div class="col col-4 text-right mt-15 pull-right"> 
+  		<a href='{#URL#}salesubscription' class="button-2" title="Add Customer"><i class="fa fa-user"></i>&nbsp;View List</a> 
+  	</div>
+</div>
+<div id="content-box" class="igs-form">
+    <div class="section-heading">Order Details</div>
+    <div class="row">	
+        <div class="content-section">
+       <section class="col col-2">
+            <label class="label text-bold">Order ID</label>
+            <label class="label">{$arraySaleSubDetails.SS_RefNumber} <span class="t-blue text-bold">( {loop="$statusArray"}{if="$key==$arraySaleSubDetails.SS_Status"}{$value}{/if}{/loop} )</span></label> 
+       </section>
+       <section class="col col-2">
+            <label class="label text-bold">Order Date</label>
+            <label class="label">{$arraySaleSubDetails.SS_DateTime|formatDate:'m/d/y h:ia'}</label> 
+            </label>
+       </section>       
+        <section class="col col-2">
+            <label class="label text-bold">Customer#(PaySimple)</label>
+            <label class="label">{$arraySaleSubDetails.SS_PaySimpleCustomerID}</label> 
+            </label>
+       </section>
+        <section class="col col-2">
+            <label class="label text-bold">Service Name</label>
+            <label class="label">{$arraySaleSubDetails.SS_ItemName}</label> 
+       </section>
+       <section class="col col-2">
+            <label class="label text-bold">Service Code</label>
+            <label class="label">{$arraySaleSubDetails.SS_ItemCode}</label> 
+            </label>
+       </section>   
+        <section class="col col-2">
+            <label class="label text-bold">Service Charge Amount</label>
+            <label class="label">${$arraySaleSubDetails.SS_Amount}</label> 
+            </label>
+       </section>
+       <section class="col col-2">
+            <label class="label text-bold">{$arraySaleSubDetails.SS_FirstName} {$arraySaleSubDetails.SS_LastName}</label>
+            <label class="label ">{$arraySaleSubDetails.SS_StreetAddress1}</label>
+            <label class="label ">{$arraySaleSubDetails.SS_StreetAddress2}</label>
+            <label class="label ">{$arraySaleSubDetails.SS_City}{if="$arraySaleSubDetails.SS_City!=NULL"},{/if}{$arraySaleSubDetails.SS_State} {$arraySaleSubDetails.SS_Zipcode} {$arraySaleSubDetails.SS_Country}</label>
+       </section>
+       <section class="col col-2">
+            <label class="label text-bold">Email Address</label>
+            <label class="label ">{$arraySaleSubDetails.SS_EmailAddress}</label> 
+            <label class="label text-bold">Phone</label>
+            <label class="label">{$arraySaleSubDetails.SS_Phone}</label>                    
+       </section>
+      
+       <section class="col col-2">
+            <label class="label text-bold">Organization Name</label>
+            <label class="label">{if="$arraySaleSubDetails.SS_OrganizationName!=NULL"}{$arraySaleSubDetails.SS_OrganizationName}{else}-NA-{/if}</label>
+            <label class="label text-bold">EIN</label> 
+            <label class="label">{if="$arraySaleSubDetails.SS_EIN!=NULL"}{$arraySaleSubDetails.SS_EIN}{else}-NA-{/if}</label>                      
+       </section> 
+       <section class="col col-2">                    
+            <label class="label text-bold">Website</label>
+            <label class="label">{if="$arraySaleSubDetails.SS_Website!=NULL"}{$arraySaleSubDetails.SS_Website}{else}-NA-{/if}</label>
+            <label class="label text-bold">Send receipt by email ?</label>
+            <label class="label">{if="$arraySaleSubDetails.SS_EnableRecipt==1"}Yes{else}No{/if}</label>
+       </section>
+       <section class="col col-4">                    
+            <label class="label text-bold">Last Payment Date</label>
+        	<label class="label">
+          	{if="$arraySaleSubDetails.SS_LastOuccringDate!=NULL && $arraySaleSubDetails.SS_LastOuccringDate!='0000-00-00'"}
+            {$arraySaleSubDetails.SS_LastOuccringDate|formatDate:'m/d/y'}
+            {else}
+            -NA-
+            {/if}</label>  
+			<label class="label text-bold">Next Payment Date</label>
+        	<label class="label">
+            {if="$arraySaleSubDetails.SS_PaymentMode=='RC'"}
+            {if="$arraySaleSubDetails.SS_Status!=16 && $arraySaleSubDetails.SS_Status!=21"}
+            {if="$arraySaleSubDetails.SS_NextOuccringDate!=NULL && $arraySaleSubDetails.SS_NextOuccringDate!='0000-00-00'"}
+            {$arraySaleSubDetails.SS_NextOuccringDate|formatDate:'m/d/y'}
+            {else}
+            -NA-
+            {/if}
+            {else}
+            	-NA-
+            {/if}
+            {else}
+            	-NA-
+            {/if}</label>          
+       </section> 
+       
+       <section class="col col-6">
+            <label class="label text-bold">{if="$arraySaleSubDetails.SS_PaymentMode=='RC'"}Recurring Payment - {$arraySaleSubDetails.SS_Schedule} upto service will be used.{/if}</label>
+           	{if="$arraySaleSubDetails.SS_SpecialInstruction!=NULL"}
+            <label class="label text-bold">Special Instructions for customer</label>
+            <label class="label">{$arraySaleSubDetails.SS_SpecialInstruction}</label>
+            {/if}
+            {if="$arraySaleSubDetails.SS_AdminNotes!=NULL"}
+            <label class="label text-bold">Administrator Notes</label>
+            <label class="label">{$arraySaleSubDetails.SS_AdminNotes}</label>
+            {/if}
+       </section>
+       <section class="col col-6">                    
+            <label class="label text-bold">Bank Details</label>
+            <label class="label">{if="$arraySaleSubDetails.SS_BankDetails!=NULL"}{$arraySaleSubDetails.SS_BankDetails|keyDecryptFront}{else}-NA-{/if}</label>            
+       </section>
+       
+                        
+    	</div>
+    </div>
+       
+</div>
+
+<form id="billing-form" name="billing-form" method="post" autocomplete="off" action="{#URL#}salesubscription/updateOrder" enctype="multipart/form-data"> 
+	<input type="hidden" name="SS_Id" id="SS_Id" value="{$arraySaleSubDetails.SS_ID|keyEncrypt}" />	
+    <div id="content-box" class="igs-form">
+		<div class="section-heading">Billing Details - Edit<a href='javascript://' class="form-toggle-icon"><i class="fa fa-plus-square-o"></i></a></div>
+    	<div class="row">	
+           <div class="content-section dn-ni">
+           <section class="col col-4">
+                <label class="label">First Name</label>
+                <label class="input"> 
+                  	<input type="text" id="firstName" name="firstName" title="First Name" value="{$arraySaleSubDetails.SS_FirstName}" placeholder="First Name">
+                  </label> 
+           </section>
+           <section class="col col-4">
+                <label class="label">Last Name</label>
+                <label class="input"> 
+                  	<input type="text" id="lastName" name="lastName" title="Last Name" value="{$arraySaleSubDetails.SS_LastName}" placeholder="Last Name">
+                  </label> 
+           </section>
+           <section class="col col-4">
+                <label class="label">Email Address</label>
+                <label class="input"> 
+                  	<input type="email" id="emailAddress" name="emailAddress" title="Email Address" value="{$arraySaleSubDetails.SS_EmailAddress}" placeholder="Email Address">
+                  </label> 
+           </section>
+           <section class="col col-3">
+                <label class="label">Phone</label>
+                  <label class="input"> 
+                  	<input type="text" id="phoneNo" name="phoneNo" title="Phone Number" value="{$arraySaleSubDetails.SS_Phone}" placeholder="Phone Number">
+                  </label> 
+           </section>
+           <section class="col col-3">
+                <label class="label">Organization Name</label>
+                  <label class="input"> 
+                  	<input type="text" id="organizationName" name="organizationName" title="Organization Name" value="{$arraySaleSubDetails.SS_OrganizationName}" placeholder="Organization Name">
+                  </label> 
+           </section>
+           <section class="col col-2">
+                <label class="label">EIN</label>
+                  <label class="input"> 
+                  	<input type="text" id="EIN" name="EIN" title="EIN" value="{$arraySaleSubDetails.SS_EIN}" placeholder="EIN Number" readonly="readonly">
+                  </label> 
+           </section>
+           <section class="col col-4">
+                <label class="label">Website</label>
+                  <label class="input"> 
+                  	<input type="url" id="websiteUrl" name="websiteUrl" title="Website Url" value="{$arraySaleSubDetails.SS_Website}" placeholder="Website URL">
+                  </label> 
+           </section>
+           <section class="col col-6">
+                <label class="label">Address1</label>
+                  <label class="input"> 
+                  	<input type="text" id="streetAddress1" name="streetAddress1" title="Street Address1" value="{$arraySaleSubDetails.SS_StreetAddress1}" placeholder="House No.,Street">
+                  </label> 
+           </section>
+           <section class="col col-6">
+                <label class="label">Address2</label>
+                  <label class="input"> 
+                  	<input type="text" id="streetAddress2" name="streetAddress2" title="Street Address2" value="{$arraySaleSubDetails.SS_StreetAddress2}" placeholder="Street Address 2">
+                  </label> 
+           </section>
+           <section class="col col-3">
+                <label class="label">City</label>
+                  <label class="input"> 
+                  	<input type="text" id="city" name="city" title="city" value="{$arraySaleSubDetails.SS_City}" placeholder="City">
+                  </label> 
+           </section>
+           <section class="col col-2">
+                <label class="label">Zip</label>
+                  <label class="input"> 
+                  	<input type="text" id="zipCode" name="zipCode" title="Zip Code" value="{$arraySaleSubDetails.SS_Zipcode}" placeholder="Zip Code">
+                  </label> 
+           </section>
+           <section class="col col-4">
+                <label class="label">Country</label>
+                  <label class="select">
+                      <select name="country" id="country" onchange="getStateList(this.value)" class="form-control">
+                        <option value="">Select Country</option>
+                        {loop="CountryList"}
+                        <option value='{$value.Country_Abbrivation}' {if="$arraySaleSubDetails.SS_Country==$value.Country_Abbrivation"}selected{else}{if="$value.Country_Abbrivation=='US'"}selected{/if}{/if}>{$value.Country_Title}</option>
+                        {/loop}                       
+                      </select><i></i> 
+                    </label> 
+           </section>
+           <section class="col col-3">
+                <label class="label">State</label>
+                  <label class="select">
+                  	<input type="hidden" name="StateAbbr" id="StateAbbr"  value=""/>
+                      <select name="state" id="state" class="form-control">
+                        <option value="">Select State</option>
+                        {loop="StateList"}
+                        <option value='{$value.State_Value}' {if="$arraySaleSubDetails.SS_State==$value.State_Value"}selected{/if}>{$value.State_Name}</option>
+                        {/loop} 
+                      </select><i></i> 
+                    </label> 
+           </section>
+           <section class="col col-4 pull-right">
+                    <div class="form-footer">
+                      <button type="Submit" title="Submit" class="button-2"><i class="fa fa-edit"></i>&nbsp;Submit</button>
+                    </div>
+            </section>
+        </div>
+		</div>
+	</div>
+</form>
+
+<form id="payment-detail" name="payment-detail" method="post" autocomplete="off" action="{#URL#}salesubscription/updatePaymentMethod"  enctype="multipart/form-data">
+	<input type="hidden" name="SS_Id" id="SS_Id" value="{$arraySaleSubDetails.SS_ID|keyEncrypt}" />	
+    <input type="hidden" name="Method_Id" id="Method_Id" value="{$arraySaleSubDetails.SS_PaySimplePaymentMethodID|keyEncrypt}" />	
+	<div id="content-box" class="igs-form">
+    	<div class="section-heading">Payment Details - Edit<a href='javascript://' class="form-toggle-icon"><i class="fa fa-plus-square-o"></i></a></div>
+    	<div class="row">	
+       <div class="content-section dn-ni">
+           <section class="col col-8">
+                <label class="label">Bank Name</label>
+                  <label class="input"> 
+                    <input type="text" id="bankName" name="bankName" title="bankname" value="" placeholder="Bank Name">
+                  </label> 
+                </label>
+           </section>
+           <section class="col col-4">
+                <label class="label">Account Type<span id="mycheck" class="pull-right"></span></label>
+                  <div class="row">
+                        <div class="col col-6">
+                            <label class="checkbox"><input type="radio"  name="accountType" id="accountType" value="Savings"><i></i>Saving</label>
+                        </div>
+                        <div class="col col-6">
+                            <label class="checkbox"><input type="radio"  name="accountType" id="accountType" value="Checking"><i></i>Checking</label>
+                        </div>
+                    </div>
+                </label>
+           </section>
+           <section class="col col-4 cb">
+                <label class="label">Routing Number</label>
+                  <label class="input"> 
+                    <input type="text" id="routingNumber" name="routingNumber" title="Routing Number" value="{#SAMPLE_ROUTING_NUMBER#}" placeholder="Routing Number">
+                  </label> 
+                </label>
+           </section>
+           <section class="col col-4">
+                <label class="label">Account Number</label>			
+                <label class="input"> 
+                    <input type="text" id="accountNumber" name="accountNumber" title="Account Number" value="{#SAMPLE_ACCOUNT_NUMBER#}" placeholder="Account Number">
+                </label>
+           </section>
+           <section class="col col-4">
+                <label class="label">Check Number</label>
+                  <label class="input"> 
+                    <input type="text" id="checkNumber" name="checkNumber" title="Check Number" value="{$arraySaleSubDetails.SS_CheckNumber}" placeholder="Check Number">
+                  </label> 
+                </label>
+           </section>
+          <!-- <section class="col col-4">
+                <label class="label">Drivers Licence Details (optional)</label>
+                  <label class="input"> 
+                    <input type="text" id="licenceNumber" name="licenceNumber" title="Licence Number"  value="" placeholder="Licence Number"/>
+                  </label> 
+                </label>
+           </section>
+           <section class="col col-4">
+                  <label class="label">Licence State</label>
+                  <label class="input"> 
+                    <input type="text" id="licenceState" name="licenceState" title="Licence State" value="" placeholder="Licence State">
+                  </label> 
+                </label>
+           	</section>-->
+            {if="$arraySaleSubDetails.SS_Status<=15 || ($arraySaleSubDetails.SS_Status>=21 && $arraySaleSubDetails.SS_Status<=30)"}
+           	<section class="col col-4  mt-20">
+                  <a href='{#URL#}salesubscription/processSendLinkCustomerPaymentDetails/{$arraySaleSubDetails.SS_ID|keyEncrypt}' class="button-2"><i class="fa fa-envelope"></i>&nbsp;Send To User</a>
+           	</section>
+           	<section class="col col-4 mt-25">
+                    <label class="label text-bold text-center">Or</label>
+           	</section>
+            
+         	<section class="col col-4 text-right mt-20">
+                  <button type="Submit" title="Submit" id="submit" class="button-2"><i class="fa fa-edit"></i>&nbsp;Update Yourself</button>
+        	</section>
+            {else}
+            <section class="col col-12 text-right mt-20">
+                  <button type="Submit" title="Submit" id="submit" class="button-2"><i class="fa fa-edit"></i>&nbsp;Update</button>
+        	</section>
+            {/if}
+       </div>
+    </div>
+    </div>
+</form>
+
+	<div id="content-box" class="igs-form">
+    	<div class="row">
+
+                {if="$arraySaleSubDetails.SS_Status>=11 && $arraySaleSubDetails.SS_Status<=30"}
+                <div class="col col-3 mt-15 "> 
+                    <a href='{#URL#}salesubscription/transaction/{$arraySaleSubDetails.SS_ID|keyEncrypt}' class="button-2" title="View Transactions"><i class="fa fa-list-alt"></i>&nbsp;Show Transactions&nbsp;({$arraySaleSubDetails.CountSSPT_ID})</a> 
+                </div>
+                {/if}
+
+            {if="$arraySaleSubDetails.SS_PaymentMode=='RC' && ($arraySaleSubDetails.SS_Status==15 || $arraySaleSubDetails.SS_Status==21)"}
+            <div class="col col-5 text-right mt-15 "> 
+            	{if="$arraySaleSubDetails.SS_Status==15"}
+                <a href='{#URL#}salesubscription/StopRecurringTransation/{$arraySaleSubDetails.SS_ID|keyEncrypt}' class="button-2" title="Stop Recurring"><i class="fa fa-toggle-off"></i>&nbsp;Stop Recurring</a> 
+                {elseif="$arraySaleSubDetails.SS_Status==21"}
+                <a href='{#URL#}salesubscription/StartRecurringTransation/{$arraySaleSubDetails.SS_ID|keyEncrypt}' class="button-2" title="Start Recurring"><i class="fa fa-toggle-on"></i>&nbsp;Start Recurring</a>                {/if}
+            </div>
+            {/if}
+            {if="$arraySaleSubDetails.SS_Status>=11 && $arraySaleSubDetails.SS_Status<=14"}
+            <form name="frm_active" id="frm_active" method="post" action="{#URL#}salesubscription/processActive" enctype="multipart/form-data">
+            <div class="col col-3 mt-15">            
+            <input type="hidden" id="SS_Id" name="SS_Id" value="{$arraySaleSubDetails.SS_ID|keyEncrypt}" />
+				<label class="checkbox"><input type="checkbox" name="chargeWithActivation" id="chargeWithActivation" value="1"/><i></i>&nbsp;Charge Payment with activation ?</label>
+            </div>
+            <div class="col col-2 mt-15 ">
+            	<label class="input"><button type="submit" class="button-2" name="" title="Check to charge first payment"  >Activate Now</button></label> 
+            </div>
+            </form>
+            {/if}
+            {if="$arraySaleSubDetails.SS_Status>=15"}
+            <form name="frm_charge" id="frm_charge" method="post" action="{#URL#}salesubscription/chargePayment" enctype="multipart/form-data">
+            <input type="hidden" name="SS_Id" id="SS_Id" value="{$arraySaleSubDetails.SS_ID|keyEncrypt}"/>    
+            <div class="col col-2 text-right mt-15"> 
+            	 <label class="input"> 
+            	<input type="text" name="amountCharge" id="amountCharge" class="" placeholder="Enter Charge Amount"/>                
+                </label>
+            </div>
+            <div class="col col-2  mt-15 ">             	
+                <button type="submit" class="button-2" title="Add Customer" value=""><i class="fa fa-usd"></i>&nbsp;Charge Payment</button> 
+            </div>
+            </form>
+            {/if}
+        </div>
+    </div>	

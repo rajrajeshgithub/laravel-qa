@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+{include="top/head"}
+</head>
+<body id="body">
+<div class="gray-fix-nav">
+{include="top/top"}
+</div>
+
+<section class="fix-first-section">
+
+</section>
+<section class="section-padding">
+	<div class="container">    
+    {include="common/message"}  
+    	<h2 class="heading-1 login-heading">Verify Your Captain's Fundraiser</h2> 
+       
+        <div class="row">
+        	<div class="col-md-2 col-sm-2 col-xs-2">
+            	<div class="user-image">
+                	<img src='{function="CheckImage(CAMPAIGN_MAIN_IMAGE_DIR,CAMPAIGN_MAIN_IMAGE_URL,NO_IMAGE,$arrCampaign.camp_thumbImage)"}' class="img-responsive" alt="image" />
+                </div>
+            </div>
+            <div class="col-md-10 col-sm-10 col-xs-10">
+                <h2 class="heading-2 mt-0">{$arrCampaign.Camp_Title}</h2>
+                <div class="date heading-3 mt-10">{$arrCampaign.Camp_ShortDescription}</div>
+                <div class="date heading-3 mt-10"><i class="fa fa-map-marker"></i>&nbsp;{if="$arrCampaign.Camp_Location_City==NULL&&$arrCampaign.Camp_Location_State==NULL&&$arrCampaign.Camp_Location_Country==NULL&&$arrCampaign.Camp_Location_Logitude==NULL&&$arrCampaign.Camp_Location_Latitude==NULL"}-NA-
+                {else} {if condition="$arrCampaign.Camp_Location_City==NULL"}{else}{$arrCampaign.Camp_Location_City},{/if} {if="$arrCampaign.Camp_Location_State==NULL"}{else}{$arrCampaign.Camp_Location_State},{/if} {if="$arrCampaign.Camp_Location_Country==NULL"}{else}{$arrCampaign.Camp_Location_Country}{/if}  {/if}
+                </div>
+               	<div class="date heading-3 mt-10"><i class="fa fa-user"></i>&nbsp;{$arrCampaign.FullName}</div>
+            </div>            
+        </div>
+        <div class="row">
+        	<form name="CodeVerificationForm" id="CodeVerificationForm" method="post" action="{#URL#}team_fundraiser/joinFundraiser">   
+                <input type="hidden" name="uniquecode" id="uniquecode" value="{$arrCampaign.Camp_Code}" />                		
+                <div class="row"> 
+                	<div class="col-md-5 col-sm-5 col-xs-12 btn-right">
+                        <label class="label hidden-xs">&nbsp;</label>
+                        <a href='{#URL#}fundraiser/{$arrCampaign.Camp_ID|keyEncrypt}'class="button-2 large-btn" target="campaigndetails" title="Click here to show fundriaser details"><i class="fa fa-info-circle"></i> Show Fundraiser Details </a>
+                    </div>                           
+                    <div class="col-md-5 col-sm-5 col-xs-12 btn-right">
+                        <label class="label hidden-xs">&nbsp;</label>
+                        <button type="submit" class="button-1 large-btn" title="Click here to continue">Continue To Join</button>
+                    </div>     
+                </div>
+               
+            </form>
+        </div>
+    </div>	
+</section>
+{include="bottom/bottom"}
+</body>
+</html>

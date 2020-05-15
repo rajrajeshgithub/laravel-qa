@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+{include="top/head"}
+</head>
+<body id="body">
+<div class="gray-fix-nav">
+{include="top/top"}
+</div>
+<section class="fix-first-section">
+</section>
+<section class="section-padding">	   
+   <div class="container">
+   		{if condition="$msgValues!=NULL"}
+     <div id="msgSection" class="margin-top-10">
+        {if condition="$msgValues!=null"}
+            {if condition="$msgValues.msgType==1"}
+                <div class="alert alert-danger text-center">
+                    <span>{$msgValues.ErrorMsg}</span>
+                </div>                            
+                {elseif condition="$msgValues.msgType==2"}
+                <div class="alert alert-success text-center">
+                    <span>{$msgValues.ConfirmationMsg}</span>
+                </div>
+            {/if}                                          
+        {/if}
+    </div>
+    {/if}
+    	
+   		{if="$stripe_status=='0'"}
+   		{$messagefailure}
+        {elseif="$stripe_status=='1'"}
+        {$messagesucess} 
+        {else}
+        Invaild Access
+        {/if}     
+    </div>
+</section>
+{include="bottom/bottom"}
+</body>
+</html>

@@ -1,0 +1,12 @@
+{include="email/email-top"}
+<div style="padding:10px 5px; font-size:14px; color:#333333;">
+<p>Hello {$uname},</p><br /><br />
+<p>This mail is to inform you that we have added a order with Ref# {$order_id} for your <strong>{$service_name}</strong>.</p>
+<p>The charges for <strong>{$service_name}</strong> is amount <strong>${$charge_amount}</strong> which is scheduled <strong>{$schedule}</strong> until you unsubscrbe for it.</p><br/>
+<p>Click on {$link} or copy and paste this url- {$link_url} on your brower address bar to add payment details.</p>
+<p>&nbsp;</p>
+<p>Thank you,&nbsp;</p>
+</div>
+{include="email/email-bottom"}
+
+

@@ -1,0 +1,105 @@
+/* CSS Document */
+body{color:#FFF;}
+.top-back-bg{width:100%; height:96px;}
+.main-banner{width:100%; position:relative; overflow:hidden;}
+.main-description{width:100%; position:absolute; top:30%; z-index:1000; left:0px;}
+.banner-steps{padding:30px 0px 40px 0px;}
+.banner-steps a{position:relative; background:rgba(255,255,255,0.3); text-transform:uppercase; border-radius:5px; font-family: 'quicksandbold',sans-serif; font-size:30px; color:#FFF; text-decoration:none; display:block; padding:35px 0px;}
+.banner-steps a:hover{background:#abc340; text-decoration:none;}
+.banner-steps a.active-step{background:#abc340; text-decoration:none;}
+.banner-step-description{font-size:30px; font-family: 'quicksandbold',sans-serif;}
+.banner-steps a span{position:absolute; width:100%; bottom:-27px; left:0px;}
+.banner-steps a.active-step i{color:#abc340; font-size:45px;}
+.generosity-meet-step a{font-family: 'quicksandbold',sans-serif; border:1px solid transparent; border-radius:3px; text-decoration:none; color:#FFF; font-size:24px; line-height:21px; display:block; padding:12px 0px; height:72px;}
+.diversity-tab{padding-top:25px !important;}
+.generosity-meet-step a:hover,
+.generosity-meet-step a.active{border:1px solid #abc340; color:#abc340; cursor:pointer;}
+.generosity-meet-slider .owl-prev{background:url(../images/arrowlightleft.png) no-repeat scroll center center !important; height: 162px !important; width: 85px !important; left:0px !important; top:20% !important;}
+.generosity-meet-slider .owl-next{background:url(../images/arrowlightright.png) no-repeat scroll center center !important; height: 162px !important; width: 85px !important; right:0px !important; top:20% !important;}
+.flat-transaction .flat-percentage{font-size:122px;}
+.search-section{background:#fff; padding:20px 0px; font-size:36px;}
+.search-section input[type="text"]{background:transparent; border:1px solid transparent; padding:4px 0px 4px 70px; width:100%; color:#969696; outline:none;}
+.search-btn{background:transparent; border:none; font-size:42px; padding-right:10px; margin-right:15px; position:absolute; left:0px; color:#abc340; border-right:2px solid #969696; outline:none;}
+.generosity-meet{background:#0d2946; width:100%; padding:28px 0px 0px 0px; position:relative; height:645px;}
+.generosity-meet .free-fundraisers-slide{padding-top:70px;}
+.flat-transaction-slide{padding-top:45px;}
+.diversity-slide{padding-top:40px;}
+.banner-heading{font-size:72px; text-align:center; color:#ffffff;}
+.banner-heading sup, .main-heading sup{font-size:24px; top:-1em;}
+.main-heading{font-size:48px; text-align:center; color:#abc340; line-height:60px; text-decoration:none;}
+.main-heading:hover{text-decoration:none;}
+.donate-now
+{
+	background-image:url(../images/donateimagebg.jpg);
+	background-repeat:no-repeat;
+	background-attachment:fixed !important;
+	width:100%;
+	padding:125px 0px 140px 0px;
+	position:relative;
+	-webkit-background-size: cover !important;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	background-size: cover;
+}
+.fundraiser
+{
+	background-image:url(../images/startbg.jpg);
+	background-repeat:no-repeat;
+	background-attachment:fixed !important;
+	width:100%;
+	padding:75px 0px 108px 0px;
+	position:relative;
+	-webkit-background-size: cover !important;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	background-size: cover;
+}
+.non-profit
+{
+	background-image:url(../images/nonprofitbg.jpg);
+	background-repeat:no-repeat;
+	background-attachment:fixed !important;
+	width:100%;
+	padding:130px 0px 168px 0px;
+	position:relative;
+	-webkit-background-size: cover !important;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	background-size: cover;
+}
+.section-content .main-heading{
+	font-size:72px;
+}
+.featured-fundraisers{background:#0d2946; width:100%; padding:32px 0px 105px 0px; position:relative;}
+.featured-fundraisers .main-heading{font-size:60px; margin-bottom:40px;}
+.donation-categories .main-heading{font-size:60px; margin-bottom:35px;}
+.donation-categories{background:#fff; width:100%; padding:35px 0px 105px 0px; position:relative;}
+.connect-with-friends{background:url(../images/connectbg.jpg) no-repeat; background-size:cover; width:100%; height:616px; position:relative;}
+.connect-with-friends .main-heading{font-size:72px; margin-top:250px;}
+.down-arrow{width:100%; text-align:center; position:absolute; bottom:18px; cursor:pointer;}
+.down-arrow i{background:url(../images/arrowdown.png) no-repeat; display:inline-block; width:56px; height:31px;}
+.main-btn .button-1{font-family: 'quicksandbold',sans-serif; font-size:24px; border-radius:5px; width:164px; padding:13px 0px; text-align:center; border:2px solid #fff;}
+.main-btn .button-1:hover{background:#98b142;}
+.section-description{font-family: 'latoregular',sans-serif; font-size:18px;}
+.section-description p{line-height:30px;}
+.mobile-image-section img{position:absolute; top:-35px; left:0px;}
+.featured-fundraisers .owl-wrapper .owl-item:first-child{padding-left:15px;}
+.featured-fundraisers .owl-wrapper .owl-item:last-child{padding-right:15px;}
+.featured-fundraisers .owl-wrapper .owl-item{padding:0px 15px;}
+.featured-box{background:#fff; border:1px solid #fff; margin:0px 0px; color:#0b4269; font-family: 'latoregular',sans-serif; color:#0b4269; text-align:left;}
+.featured-box a{color:#0b4269;}
+.featured-box a img{transition: all .2s ease-in-out;}
+.featured-box a:hover img{transform: scale(1.1);}
+.featured-box span{display:block; overflow:hidden;}
+.featured-box span.fundraisers-name{height:auto; padding-bottom:2px; font-size:18px; padding:5px 15px 0px 15px;}
+.featured-tag span{font-family: 'quicksandbold',sans-serif; font-size:24px; background:#abc340; text-transform:uppercase; width:165px; text-align:center; padding:5px 5px; display:inline-block;}
+.social-mobile-image
+{
+	-webkit-transform-origin:100% 600px;
+	transform-origin:100% 900px;
+	bottom:0px;
+	-webkit-transform: rotate(0deg);
+	-moz-transform: rotate(0deg);
+	transform: rotate(0deg);
+}
+.carousel, .carousel-inner, .carousel-inner>.item, .carousel-inner>.item>a>img, .carousel-inner>.item>img{height:100% !important;}

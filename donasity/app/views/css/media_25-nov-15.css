@@ -1,0 +1,14 @@
+/* CSS Document */
+section.media-page{background:url(../images/media-banner.jpg) no-repeat;background-size:cover;background-position:center bottom;}
+.section-padding.media-page-heading{padding-top:50px}
+.media-page-heading .heading-1{margin-bottom:0px;}
+.media-content-section{background:#ebebeb;}
+.news-box{background:#0f456c; color:#fff; font-family: 'latoregular',sans-serif; overflow:hidden;}
+.news-box p{margin-bottom:0px;}
+.fpo-text{font-family: 'quicksandbold',sans-serif; font-size:54px; position:absolute; top:45%; left:0px; width:100%; text-align:center;}
+.press-date-box{font-family: 'latoblack',sans-serif; background:#abc340; float:left; padding:8px 5px; margin-top:6px; text-align:center; font-size:11.5px;}
+.press-date{font-family: 'latoblack',sans-serif; font-size:49px; line-height:48px;}
+.news-box.bg-dark-blue{background:#0c3552;}
+.press-detail{border-bottom:1px solid #e5e5e5; padding-bottom:20px; font-size:18px; color:#666666;}
+.press-box{margin-bottom:20px;}
+.news-description{padding-bottom:5px;}

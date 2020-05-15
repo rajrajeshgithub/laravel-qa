@@ -1,0 +1,15 @@
+{include="email/email-top"}
+<div style="padding:10px 5px; font-size:14px; color:#333333;">
+  <p>Hello {$UserName},<br /><br />
+    Thank you for your donation to
+  {loop="$detail"}
+  <p>
+  {$value.PDD_PIItemName} :{$value.PDD_Cost}</p><br />
+   {/loop}
+    <br />
+Using <link https://www.donasity.com>donasity.com</link>. A check is being issued on your behalf and will be sent to this non-profit organization. The processing fee has been drafted from your account today. 
+
+    Thank you for using donasity.com"
+</div>
+{include="email/email-bottom"}
+

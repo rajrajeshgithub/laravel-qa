@@ -1,0 +1,57 @@
+<!DOCTYPE>
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        {include="top/head"}
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <link rel="shortcut icon" href='{#RESOURCES#}img/favicon.ico'>
+        <title>{$title}</title>
+		<noscript>
+            <div style="background:#CCC; opacity:0.9; color:#000; position:absolute; width:100%; height:100%; z-index:1000;">
+                <div style="font-size:18px;background-color:#333; text-align:center; position:absolute;color:#FFF; opacity:1.0; height:30px; width:100%; height:100%; z-index:1000;">
+                 For full functionality of this site it is necessary to enable JavaScript.
+                 Here are the <a href="http://www.enable-javascript.com/" target="_blank" style="text-decoration:underline; color:#F00">
+                 instructions how to enable JavaScript in your web browser</a>.
+                </div>
+            </div>
+		</noscript>
+        <link rel="stylesheet" href='{#RESOURCES#}css/style.css' type="text/css" />
+        <link rel="stylesheet" href='{#RESOURCES#}css/controls.css' type="text/css" />
+        <link rel="stylesheet" href='{#RESOURCES#}css/font-awesome/css/font-awesome.css' type="text/css" />
+        <script type="text/javascript">var SITEURL = '{$SiteURL}';</script>
+        <script type="text/javascript" src='{#RESOURCES#}js/jquery-1.11.1.js'></script>
+        <script type="text/javascript" src='{#RESOURCES#}js/jquery.validate.js'></script>
+        <script type="text/javascript" src='{#RESOURCES#}js/common.js'></script>
+		<script type="text/javascript" src='{#RESOURCES#}js/smoothScroll.js'></script>
+    </head>
+    <body>
+            <div id="outerSection">
+                  
+                <div id="middleSection">
+					
+                </div>
+                	{include="bottom/bottom"}
+	        </div>
+    </body>
+</html>
+
+<div id="rightSection">
+  <div class="rightPannel">
+      <div class="breadcrumb">
+          <ul>
+            <li title="Dashboard"><img src='{#RESOURCES#}img/dashboard_thumb.png'/>Dashboard</li>
+          </ul>
+        </div>
+    <div class="contentSection">
+        {if="$case=='addgroup' || $case=='editgroup'"}
+                    {include="static/addgroup"}
+                    {elseif="$case=='addpage'"}
+                    {include="static/addpage"}
+                    {elseif="$case=='pagelist'"}
+                    {include="static/pagelisting"}
+                    {elseif="$case=='grouplist'"}
+                    {include="static/grouplisting"}
+                    {/if}
+        
+    </div>
+  </div>
+</div>

@@ -1,0 +1,141 @@
+<script type="text/javascript" src='{#RESOURCES#}js/login.js'></script>
+<div class="loginbody">
+    {include="common/message"}
+    <div class="text-center logo-section"><img src='{#RESOURCES#}img/logo.png' height="55px;"></div>
+		<div class="login-panel">      			
+			<form id="login-form" class="igs-form" action="{#URL#}login/index/login" method="post" autocomplete="off" >
+				<div class="login-header">Login form</div>
+				<fieldset>					
+					<section>
+						<div class="row">
+							<label class="label col col-4">Username</label>
+							<div class="col col-8">
+								<label class="input">
+									<i class="icon-append fa fa-user"></i>
+									<input type="text" name="userName" id="userName">
+								</label>
+							</div>
+						</div>
+					</section>
+					<section>
+						<div class="row">
+							<label class="label col col-4">Password</label>
+							<div class="col col-8">
+								<label class="input">
+									<i class="icon-append fa fa-lock"></i>
+									<input type="password" name="password" id="password"  maxlength="20">
+								</label>
+								<div class="note"><a href='javascript://' class="forgot-password">Forgot password?</a></div>
+							</div>
+						</div>
+					</section>
+					
+					<section>
+						<div class="row">
+							<div class="col col-4"></div>
+							<div class="col col-8">
+								<label class="checkbox"><input type="checkbox" name="remember" checked><i></i>Keep me logged in</label>
+							</div>
+						</div>
+					</section>
+				</fieldset>
+				<div class="login-footer">
+					<button type="submit" class="button-1">Log in</button>					
+				</div>
+			</form>
+            
+			<form id="password-recovery-form" class="igs-form" autocomplete="off" method="post" action="{$Url}login/index/forgotPassword/">
+			<div class="login-header">Password recovery</div>
+			<fieldset>					
+				<section>
+					<label class="label">E-mail</label>
+					<label class="input">
+						<i class="icon-append fa fa-envelope-o"></i>
+						<input type="email" name="fpEmailAddress" id="fpEmailAddress">
+					</label>
+				</section>
+				<div class="message">				
+					<p><i class="fa fa-check"></i> Your request successfully sent!<br><a href='javacsript://' class="close-window">Close window</a></p>
+				</div>
+			</fieldset>
+			
+			<div class="login-footer">
+				<button type="submit" name="submit" class="button">Submit</button>
+			</div>
+		</form>
+        </div>
+</div>
+<!--<div class="body body-s" id="login">
+	{include="common/message"}
+	<div id="loginContainer">
+        <div class="logoSection">
+            <img src='{#RESOURCES#}img/logologin.png' alt="Welcome to Ultra folders Admin Panel" width="220px" title="Welcome to Project ultrafolders Admin Panel" />
+        </div>
+        <form id="loginfrm" action="{#URL#}login/index/login" method="post" autocomplete="off" class="shadowEffect igs-form">
+            <header>Login form</header>
+            <fieldset>
+                <section>
+                    <div class="row">
+                        <label class="label col col-4">Username</label>
+                        <div class="col col-8">
+                            <label class="input">
+                                <i class="icon-append fa fa-user"></i>
+                                <input type="text" class="form-control" id="userName" name="userName" placeholder="enter username">
+                            </label>
+                        </div>
+                    </div>
+                </section>
+                
+                <section>
+                    <div class="row">
+                        <label class="label col col-4">Password</label>
+                        <div class="col col-8">
+                            <label class="input">
+                                <i class="icon-append fa fa-key fa-fw"></i>
+                                <input type="password" class="form-control" id="password" name="password" placeholder="enter password">
+                            </label>                            
+                        </div>
+                        <div class="margin-bottom-0 form-group" id="nav"><a href='javascript://' title="Lost your Password" id="lostPassBtn">Forgot password?</a></div>
+                    </div>
+                </section>
+                
+                <section>
+                    <div class="row">
+                        <div class="col col-4"></div>
+                        <div class="col col-8">
+                            <label class="checkbox"><input type="checkbox" name="checkboxInline" id="checkboxInline" checked><i></i>Keep me logged in</label>
+                        </div>
+                    </div>
+                </section>
+            </fieldset>
+            <footer>
+                <button type="submit" class="btn btn-primary pull-right"><i class="fa fa-sign-in fa-lg"></i>&nbsp;Log in</button>            
+            </footer>
+        </form>
+    </div>
+    <div id="forgotPassContainer">
+    	<div class="logoSection">
+            <img src='{#RESOURCES#}img/logologin.png' alt="Welcome to Ultra folders Admin Panel" width="220px" title="Welcome to Project ultrafolders Admin Panel" />
+        </div>
+         <form class="forgotpassForm igs-form" id="forgotpassForm"  method="post" action="{$Url}login/index/forgotPassword/">
+         <header>Recover Password</header>  
+             <fieldset>					
+            <section>
+                <div class="row">
+                    <label class="label col col-4">E-mail</label>
+                    <div class="col col-8">
+                        <label class="input">
+                            <i class="icon-append fa fa-envelope"></i>
+                            <input type="text" class="form-control" id="fpEmailAddress" name="fpEmailAddress" placeholder="enter email address">
+                        </label>
+                    </div>
+                    <div class="margin-bottom-0 form-group" id="nav"><a href='javascript://' title="Back to Login" id="loginBtn">Back to login</a></div>
+                </div>
+            </section>
+            </fieldset>          
+            <div class="overflow-hidden clear-both footer">
+            	<button type="submit" name="submit" value="" class="btn btn-primary pull-right"><i class="fa fa-refresh fa-fw"></i>Reset Password</button>
+            </div>
+        </form> 
+	</div>
+</div>-->

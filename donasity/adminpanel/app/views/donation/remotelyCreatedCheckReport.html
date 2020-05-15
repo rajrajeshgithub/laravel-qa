@@ -1,0 +1,161 @@
+<link type="text/css" rel="stylesheet" href='{#RESOURCES#}css/bootstrap-datepicker.css' />
+<script type="text/javascript" src='{#RESOURCES#}js/bootstrap-datepicker.js'></script>
+<script type="text/javascript">
+	$(function() {	
+		$('#StartDate').datepicker();
+		$('#StartDate').datepicker().on('changeDate', function (ev) {
+			if(ev.viewMode == "days") {
+				$('#StartDate').datepicker('hide');
+				maxDate: jQuery('#StartDate').datepicker("getDate");
+			}
+		});
+		
+		$('#EndDate').datepicker();
+		$('#EndDate').datepicker().on('changeDate', function (ev) {
+			if(ev.viewMode == "days") {
+				$('#EndDate').datepicker('hide');
+				maxDate: jQuery('#EndDate').datepicker("getDate");
+			}
+		});
+		
+		$('#filter_donation').click(function(){
+			$('#pageNumber').val(1);
+		});
+	});	
+	
+	function ExportData() {
+		var ActionUrl = SITEURL + 'donation/index/echeck-export-reports';
+		$('#formSection').attr('action', ActionUrl);
+		$('#formSection').submit();
+		$('#formSection').attr('action', '');
+	}		
+</script>
+
+<ul class="breadcrumb">
+    <li title="Dashboard"><a href='{#URL#}home/'>Dashboard</a></li>
+    <li title="Daily Donation & Purchase Report"><a href='{#URL#}donation/index/summary-purchase-donation'>Summary Donation Purchase</a></li>
+    <li title="Remotely Created Check Report">Remotely Created Check Report</li>
+</ul>
+{include="common/message"}
+<div class="oh">
+    <div class="col col-12">
+        <h1 class="heading-1">Remotely Created Check Report</h1>
+    </div>
+</div>
+<div id="content-box" class="igs-form">
+    <form id="formSection" name="formSection" method="get" autocomplete="off" action=''>
+        <input type="hidden" name="pageNumber" id="pageNumber" value="{$pageSelected}"  />
+        <div class="section-heading">Filter Result <a href='javascript://' class="form-toggle-icon"><i class="fa fa-minus-square-o"></i></a></div>
+        <div class="content-section">
+            <fieldset>
+                <div class="row">
+                    <section class="col col-3 ">
+                        <label class="label">Date Form</label>
+                        <div class="input-append date" id="StartDate" data-date="" data-date-format="mm/dd/yyyy">
+                            <label class="input"> <i class="icon-append fa fa-calendar add-on"></i>
+                                <input type="text" class="datepickerInput" name="FromDate" id="FromDate"  value='{$fromDate}' readonly />
+                            </label>
+                        </div>
+                    </section>
+                    <section class="col col-3 ">
+                        <label class="label">Date to</label>
+                        <div class="input-append date" id="EndDate" data-date="" data-date-format="mm/dd/yyyy">
+                            <label class="input"> <i class="icon-append fa fa-calendar add-on"></i>
+                                <input type="text" class="datepickerInput" name="ToDate" id="ToDate"  value='{$toDate}' readonly />
+                            </label>
+                        </div>
+                    </section>
+                    <section class="col col-3">
+                        <label class="label">eCheck Status</label>
+                        <label class="select">
+                            <select name="eCheckStatus" id="eCheckStatus">
+                                <option value="">All</option>
+                                <option value="1" {if="$eCheckStatus=='1'"}selected="selected"{/if} >Clear</option>
+                                <option value="2" {if="$eCheckStatus=='2'"}selected="selected"{/if} >Pending</option>
+                            </select>
+                            <i></i> 
+                        </label>
+                    </section>
+                </div>
+            </fieldset>
+            <div class="form-footer">
+                <button type="submit" name="" value="" id="filter_donation" class="button-1"><i class="fa fa-search"></i>&nbsp;Show Result</button> &nbsp; 
+                <a href='{#URL#}donation/index/remotely-created-check-report' class="button-2"><i class="fa fa-refresh"></i>&nbsp;Reset</a>
+                {if condition="$totalRecords>0"}&nbsp; 
+                <a href='javascript://' id="export" class="button-1" onclick="ExportData()"><i class="fa fa-search"></i>&nbsp;Export Result</a>
+                {/if}
+            </div>
+        </div>
+    </form>
+    <div class="row">
+        <section class="col col-12">
+        	{if condition="$totalRecords>0"}
+        	<div class="record-found pull-left">Showing {$startRecord}-{$endRecord} of {$totalRecords} records</div>
+            {/if}
+            <table border="0" id="igs-table" class="pull-left">
+                <tr>
+                	<th>Date</th>
+                    <th>Bank</th>
+                    <th>Account Number</th>
+                    <th>Account Type</th>
+                    <th>Name User</th>
+                    <th>Paid Amount($)</th>
+                    <th>Transaction Fee($)</th>
+                    <th>Donation Amount($)</th>
+                    <th>Status</th>
+                </tr>
+                {if condition="$totalRecords>0"}
+                {loop="donationList"}
+                <tr>
+                	<td data-title="Date">{function="formatDate($value.PDD_DateTime, 'm/d/Y')"}</td>
+                    <td data-title="Bank">{function="UnSerializeArray($value.PDD_eCheckComment, 'Bank_Name')"}</td>
+                    <td data-title="Account Number">{function="UnSerializeArray($value.PDD_eCheckComment, 'Account_Number')"}</td>
+                    <td data-title="Account Type">{function="UnSerializeArray($value.PDD_eCheckComment, 'Account_Type')"}</td>
+                    <td data-title="Username">{$value.RU_FistName} {$value.RU_LastName}</td>
+                    <td data-title="Paid Amoount ($)">{$value.PDD_SubTotal}</td>
+                    <td data-title="Transaction Fee ($)">{$value.PDD_TransactionFee}</td>
+                    <td data-title="Donation Amount ($)">{$value.PDD_Cost}</td>
+                    <td data-title="Status">
+                    {if condition="$value.PDD_eCheckStatus=='1'"}Clear{/if}
+                    {if condition="$value.PDD_eCheckStatus=='0'"}Pending{/if}
+                    </td>
+                </tr>
+                {/loop}
+                {else}
+                <tr>
+                    <td class="text-center" colspan="9">Change filter criteria to display more details.</td>
+                </tr>
+                {/if}
+            </table>
+        </section>
+        
+    {if condition="$totalRecords>0"}
+    <!-- pagination start-->
+    <div class="container">
+        <div class="col col-12"> 
+            <nav>
+                <ul class="pagination">
+                    {if="$pageSelected!=1"}
+                    <li> <a href='javascript://' onclick="return GotoPage(1);"  title="First Page" aria-label="Previous"> <span aria-hidden="true">First</span> </a> </li>
+                    <li> <a href='javascript://' onclick="return GotoPage({$pageSelected-1});"  title="Previous" aria-label="Previous"> <span aria-hidden="true">&laquo;</span> </a> </li>
+                    {/if}
+                    {if="count($pagingList)>1"}
+                    {loop="pagingList"} 
+                        {if="$pageSelected==$value.PageNo"}
+                        <li class="active"><a href='javascript://' title="Page No {$value.PageNo}">{$value.PageNo}</a></li>
+                        {else}
+                        <li><a href='javascript://' onclick="return GotoPage({$value.PageNo});" title="Page No {$value.PageNo}">{$value.PageNo}</a></li>
+                        {/if}
+                    {/loop}
+                    {/if}
+                    {if="$pageSelected!=$lastPage"}
+                    <li> <a href='javascript://' onclick="return GotoPage({$pageSelected+1});" aria-label="Next"> <span aria-hidden="true">&raquo;</span> </a> </li>
+                    <li> <a href='javascript://' onclick="return GotoPage({$lastPage});" aria-label="Last Page"> Last </a> </li>
+                    {/if}
+                </ul>
+            </nav>
+    	</div>
+    </div>
+    <!-- pagination end--> 
+    {/if}
+</div>

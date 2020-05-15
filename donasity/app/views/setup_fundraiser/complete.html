@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="{#LANG_ID#}">
+<head>
+{include="top/head"}
+<link type="text/css" rel="stylesheet" href='{#RESOURCES#}css/setup-fundraiser.css'>
+</head>
+<body>
+    <div id="panel">    
+    	<div class="gray-fix-nav">{include="top/top"}</div>
+		<section class="fix-first-section">
+</section>
+		<section class="section-padding setup-fundraiser">
+	<div class="container">
+    	{include="common/message"}
+    	<div class="row">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                <h2 class="heading-1">{$pageheading}</h2>
+            </div>
+        </div>            
+        <div class="row">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="step-fundraiser-complete-page">
+                    <div class="row">
+                        <div class="col-xs-12">
+                            {$text_Fundraiser_Step_Complete}
+                        </div>
+                    </div>	
+                   
+                    <div class="row">
+                        <div class="col-xs-12 text-center mt-50">
+                            <a href='{#URL#}fundraiser-preview/{$FR_id}/{$FundraiserDetail[0][Camp_UrlFriendlyName]}' class="button-1 large-btn" title="Click here to preview fundraiser">{$text_preview_fundraiser}</a>
+                        </div>
+                        <div class="col-md-4 col-md-offset-4 col-sm-6 col-sm-offset-3 col-xs-12 text-center mt-15">
+	                        {$text_bottom} 
+    					</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>	
+</section>
+        {include="bottom/bottom"}
+   </div>
+</body>
+</html>

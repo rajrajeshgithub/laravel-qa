@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+{include="top/head"}
+<style>
+ /* NOTE: The styles were added inline because Prefixfree needs access to your styles and they must be inlined if they are on local disk! */
+:before, :after {
+  content: '';
+  display: block;
+  /position: absolute;
+  box-sizing: border-box;
+}
+
+.ambassador_header
+{
+	background:#09426A;
+	border-left:5px solid #abc340;
+	color:white;
+}
+
+.td-n
+{
+	text-decoration:none !important;
+}
+
+html, body {
+  height: 100%;
+}
+
+
+p {
+  line-height: 1.8;
+}
+
+.title {
+  height: 60px;
+  padding: 0 30px;
+  font-size: 18px;
+  line-height: 60px;
+}
+
+.chart {
+  height: 250px;
+  padding: 20px;
+  background: linear-gradient(to bottom, #345 0%, #234 100%);
+
+}
+.widget{
+	background-color:#ffffff !important;
+	color:#000;
+	}  
+.disabled-box{background: rgba(253, 253, 253, 0.5);padding-top:50px; font-weight:bold; height:100%; position:absolute; top:0px; left:0px; width:100%; z-index: 10; font-size:24px; text-align:center; color:#000; text-transform:uppercase;}  
+.disabled-link{z-index:50;position:absolute;}
+</style>    
+<script src='{#RESOURCES#}js/prefixfree.min.js'></script>
+<script type="text/javascript" src='https://www.google.com/jsapi'></script>    
+    <script type="text/javascript">
+	 google.load('visualization', '1', {'packages':['corechart']});      
+    // Set a callback to run when the Google Visualization API is loaded.
+    google.setOnLoadCallback(drawChart);
+	function drawChart() {
+		  
+		//$.parseJSON(jsonData);
+		
+       // var data = google.visualization.arrayToDataTable({$jsondata});
+
+	var data = new google.visualization.DataTable();
+	data.addColumn('string', 'Date'); // Implicit domain label col.
+	data.addColumn('number', 'Donation'); // Implicit series 1 data col.
+	data.addRows({$chartData});
+        /*var options = {
+          title: 'Donation Chart',
+          curveType: 'none',
+          legend: { position: 'bottom' }
+        };*/
+		options = {
+      curveType: 'none',
+      lineWidth: 2,
+      hAxis: {
+        // Show a baseline at 0
+        baseline: 0,
+        // 6 Gridlines, 4 labels + left and right for padding
+        gridlines: {
+          count: 6
+        },
+        // Hide our labels
+        //textPosition: 'none'
+      },
+      vAxis: {
+        baseline: 0,
+      },
+      series: [
+        {},
+        {},
+        // Hide our dummy series
+        {
+          lineWidth: 0,
+          pointsize: 0,
+          visibleInLegend: false
+        },
+      ]
+    };
+
+        var chart = new google.visualization.LineChart(document.getElementById('chart_div'));
+
+        chart.draw(data, options);
+      }
+	  
+	  $('document').ready(function(){
+		  $("#month").change(function(){
+			  	
+			  	$("#frmChart").submit();
+			  })
+		  
+		  });
+	
+	</script>
+	{if="$widgetDetials!=NULL"}
+	<script type="text/javascript">
+		function loadbttncol(btn){
+			/* edit visual button color has been changed, retain width */
+			var currentwidthsettng=document.getElementById('currbuttonwid').value;
+			var widthstringx=' width="'+currentwidthsettng+'"';
+			var buttonimgname='donate_now_donasity'+btn+'.png';
+			var buttonimagepath='{#RESOURCES#}images/'+buttonimgname;
+			document.getElementById("mybtn").src=buttonimagepath;
+			
+			var x = document.getElementById("btncol");
+			var y = x.getElementsByClassName("btncolswatch");
+			var i;
+			for (i = 0; i < y.length; i++) {
+			  y[i].style.border = "0px";
+			}
+			
+			/* edit button code */
+			var newdonatenowbtnlink='<a href=\'{#URL#}donation/Ambassador_Donation/{$widgetDetials.W_UniqueKey}\' target="donasity"><img id="mybtn" src=\''+buttonimagepath+'\' border="0" '+widthstringx+' alt="Donate Now button powered by donasity" /></a>';
+			
+			document.getElementById(btn).style.border = "thin solid #ff0000";
+			document.getElementById("mywidgetcodesnippet").value=newdonatenowbtnlink;
+			document.getElementById('currbuttonimg').value=buttonimgname;
+		}
+		function loadbttnwid(wdth){
+			/* edit visual button width has been changed, retain image name */
+			var currentbuttonimg=document.getElementById('currbuttonimg').value;
+			var buttonimagepath='{#RESOURCES#}images/'+currentbuttonimg;
+			
+			var currsizRay=wdth.split('z');
+			var desiredbttnwidth=currsizRay[1];
+			
+			var w = document.getElementById("sztil");
+			var q = w.getElementsByClassName("btnsize");
+			var d;
+			for (d = 0; d < q.length; d++) {
+			  q[d].style.border = "thin solid #888888";
+			}
+			
+			/* edit button code */
+			var newdonatenowbtnlink='<a href=\'{#URL#}donation/Ambassador_Donation/{$widgetDetials.W_UniqueKey}\' target="donasity"><img id="mybtn" src=\''+buttonimagepath+'\' border="0" width="'+desiredbttnwidth+'" alt="Donate Now button powered by donasity" /></a>';
+			
+			document.getElementById("mywidgetcodesnippet").value=newdonatenowbtnlink;
+			document.getElementById(wdth).style.border = "thin solid #ff0000";	
+			document.getElementById('mybtn').style.width = desiredbttnwidth+"px";
+			document.getElementById('currbuttonwid').value = desiredbttnwidth;
+			
+		}
+	</script>
+	{/if}   
+	
+</head>
+<body id="body">
+<div class="gray-fix-nav"> {include="top/top"} </div>
+<link type="text/css" rel="stylesheet" href='{#RESOURCES#}css/donation-dashboard.css' />
+{$MonthArray = array('1'=>'January','2'=>'February','3'=>'March','4'=>'April','5'=>'May','6'=>'June','7'=>'July','8'=>'August','9'=>'September','10'=>'October','11'=>'November','12'=>'December')}
+<section class="fix-first-section fundraiser-page"> </section>
+<section class="section-padding fundraiser-page-heading"  style="font-family: 'latobold',sans-serif;">	
+    <div class="container"> 
+    {include="common/message"}
+		<h2 class="heading-1 p-10">Ambassador Portal </h2>
+        <h2 class="heading-3 p-15 ambassador_header">Widget Code <i class="fa fa-minus-square-o pull-right"></i></h2>
+        <div class="oh p-relative">
+        	{if="$widgetDetials.W_Status=='0'"}<div class="disabled-box"><i class="fa fa-ban fa-2x t-lightgray"></i></div>{/if}
+            <div class="col-md-12 col-sm-12 col-xs-12 p-15 bg-light-grey pb-35">
+            	<div class="row"> 
+
+				
+                        {if="$widgetDetials!=NULL"}
+                         <div class="col-md-8 col-sm-8 col-xs-6 bg-light-grey"> 
+                        	<span class="note t-black mb-10">Copy and paste this Widget Code on your website.</span>
+                            <textarea rows="4" cols="30" id="mywidgetcodesnippet" {if="$widgetDetials.W_Status=='1'"}readonly{else}disabled{/if} class="form-control widget"><a href='{#URL#}donation/Ambassador_Donation/{$widgetDetials.W_UniqueKey}' target="donasity"><img id="mybtn" src='{#RESOURCES#}images/donate_now_donasity.png'  border="0" width="300" alt="Donate Now powered by donasity" /></a></textarea>
+                            <div class="disabled-link mt-10"> <span class="f-14 mt-10 t-black mt-10 text-bold"><span class="dib"><a href='{#URL#}ambassadorportal/updateWidget/{$widgetDetials.W_ID|keyEncrypt}/{$Status|keyEncrypt}'><strong class="link-1">Click Here </strong></a></span> to {if="$widgetDetials.W_Status=='1'"}temporarily disable{else}enable{/if} your widget code</span></div>
+                     	</div>
+						
+                        {else}
+						<div class="col-md-12 col-sm-12 col-xs-11 bg-light-grey text-center"> 
+							<a href='{#URL#}ambassadorportal/add-widget' class="button-1 mt-10" title="Create Widget">Initiate Ambassador Reporting and Create Widget</a>
+							<span class="t-black mb-10 mt-10 db t-12">Ambassador Dashboard and Widget code access.</span>								
+						</div>
+                        {/if}            	
+                    
+                    
+                    {if="$widgetDetials!=NULL"}
+					<div class="col-md-4 col-sm-4 col-xs-6 bg-light-grey">
+                        <div class="heading-3 text-center">Preview</div>
+						<div style="margin:0 auto; text-align:center; height:145px;">
+                        <a href='{#URL#}donation/Ambassador_Donation/{$widgetDetials.W_UniqueKey}' target="donasity"><img id='mybtn' src='{#RESOURCES#}images/donate_now_donasity.png' width="300" class="img-responsive pt-10" border="0"></a><p class="f-10" style="margin:0 auto; text-align:center;">click button above to preview</p>
+						</div>
+					</div>
+                    {/if}
+                </div>
+<div class="row"> 				
+					<div class="col-md-10 col-md-offset-1 col-sm-10 col-sm-offset-1 col-xs-10 col-xs-offset-1" id="btncol">
+					{if="$widgetDetials!=NULL"}
+					
+						<hr class="hrgray"><br/>
+						Click to choose a button color:<br />
+						<div style="col-md-12">
+							<div id="b6a" onClick="javascript:loadbttncol('b6a');" class="btncolswatch btntileleft btc6a brdred"></div>
+							<div id="b9a" onClick="javascript:loadbttncol('b9a');" class="btncolswatch btntileleft btc9a"></div>
+							<div id="b0a" onClick="javascript:loadbttncol('b0a');" class="btncolswatch btntileleft btc0a"></div>							
+							<div id="b5b" onClick="javascript:loadbttncol('b5b');" class="btncolswatch btntileleft btc5b"></div>
+							<div id="b5c" onClick="javascript:loadbttncol('b5c');" class="btncolswatch btntileleft btc5c"></div>
+							<div id="b5f" onClick="javascript:loadbttncol('b5f');" class="btncolswatch btntileleft btc5f"></div>
+							<div id="b6b" onClick="javascript:loadbttncol('b6b');" class="btncolswatch btntileleft btc6b"></div>
+							<div id="b6c" onClick="javascript:loadbttncol('b6c');" class="btncolswatch btntileleft btc6c"></div>
+							<div id="b6g" onClick="javascript:loadbttncol('b6g');" class="btncolswatch btntileleft btc6g"></div>
+							<div id="b6d" onClick="javascript:loadbttncol('b6d');" class="btncolswatch btntileleft btc6d"></div>
+							<div id="b6e" onClick="javascript:loadbttncol('b6e');" class="btncolswatch btntileleft btc6e"></div>
+							<div id="b7a" onClick="javascript:loadbttncol('b7a');" class="btncolswatch btntileleft btc7a"></div>		
+
+							<div id="b5a" onClick="javascript:loadbttncol('b5a');" class="btncolswatch btntileclear btc5a" ></div>
+							<div id="b8a" onClick="javascript:loadbttncol('b8a');" class="btncolswatch btntileleft btc8a"></div>
+							<div id="b8b" onClick="javascript:loadbttncol('b8b');" class="btncolswatch btntileleft btc8b"></div>			
+							<div id="b2a" onClick="javascript:loadbttncol('b2a');" class="btncolswatch btntileleft btc2a"></div>
+							<div id="b1a" onClick="javascript:loadbttncol('b1a');" class="btncolswatch btntileleft btc1a"></div>
+							<div id="b3b" onClick="javascript:loadbttncol('b3b');" class="btncolswatch btntileleft btc3b"></div>
+							<div id="b3a" onClick="javascript:loadbttncol('b3a');" class="btncolswatch btntileleft btc3a"></div>
+							<div id="b2c" onClick="javascript:loadbttncol('b2c');" class="btncolswatch btntileleft btc2c"></div>
+							<div id="b7f" onClick="javascript:loadbttncol('b7f');" class="btncolswatch btntileleft btc7f"></div>
+							<div id="b7e" onClick="javascript:loadbttncol('b7e');" class="btncolswatch btntileleft btc7e"></div>
+							<div id="b7b" onClick="javascript:loadbttncol('b7b');" class="btncolswatch btntileleft btc7b"></div>
+							<div id="b7d" onClick="javascript:loadbttncol('b7d');" class="btncolswatch btntileleft btc7d"></div>
+						</div>			
+						
+						
+						<div style="clear:both;"><br/><br/><hr class="hrgray"><br/></div>
+						
+						Set Button Width
+						<div id="sztil">
+						<div id="sz120" onClick="javascript:loadbttnwid('sz120');" class="btnsize bsiz brdgray" style="width:120px;">120</div>
+						<div id="sz140" onClick="javascript:loadbttnwid('sz140');" class="btnsize bsiz brdgray" style="width:140px;">140</div>
+						<div id="sz160" onClick="javascript:loadbttnwid('sz160');" class="btnsize bsiz brdgray" style="width:160px;">160</div>
+						<div id="sz180" onClick="javascript:loadbttnwid('sz180');" class="btnsize bsiz brdgray" style="width:180px;">180</div>
+						<div id="sz200" onClick="javascript:loadbttnwid('sz200');" class="btnsize bsiz brdgray" style="width:200px;">200</div>
+						<div id="sz250" onClick="javascript:loadbttnwid('sz250');" class="btnsize bsiz brdgray" style="width:250px;">250</div>
+						<div id="sz300" onClick="javascript:loadbttnwid('sz300');" class="btnsize bsiz brdred" style="width:300px;">300</div>
+						<div id="sz400" onClick="javascript:loadbttnwid('sz400');" class="btnsize bsiz brdgray" style="width:400px;">400</div>
+						</div>
+					
+					{/if}
+					</div>
+					</div>
+            	</div>        
+            </div>    
+   		</div>
+	</div>
+    {if="$widgetDetials!=NULL"}
+    <div class="container">           
+        <h2 class="heading-3 p-15 ambassador_header">Donation Chart <i class="fa fa-minus-square-o pull-right"></i></h2>
+        <div class="bg-light-grey p-15 col-md-12 col-sm-12 col-xs-12">        
+        <form name="frmChart" id="frmChart" method="get" action="{#URL#}ambassadorportal/dashboard">
+        	<div class="col-md-3 col-sm-3 col-xs-3 ">            	
+                    <div class="select form-group ">
+                    <select class="form-control" name="month" id="month">
+                      <option value="">Last 30days Donations</option>
+                      {loop="$MonthArray"}
+                      <option value="{$key}" {if="$month==$key"}selected{/if}>{$value}</option>
+                      {/loop}
+                    </select>
+                    <i class="arrow fa fa-caret-down"></i>
+                    <span class="note t-black">Also view previous months records </span>
+                    </div>            	                
+            </div>  
+        	{if="$donationArray|count"}                      
+            <div class="col-md-12 col-sm-12 col-xs-12 p-15 pre">
+            	<div id="chart_div" ></div>	
+            </div>
+            {else}
+            	<div class="text-center text-bold t-gray col-md-12 col-sm-12 col-xs-12">
+            	No record found!
+                </div>
+            {/if}
+			
+			
+			<input type="hidden" name="currbuttonwid" id="currbuttonwid" value="300">
+			<input type="hidden" name="currbuttonimg" id="currbuttonimg" value="donate_now_donasity.png">
+            </form>
+        </div>
+    </div>
+
+    <div class="container">
+    	<a href='{#URL#}ambassadorportal/viewall' class="link-1 td-n">
+        	<h2 class="heading-3 p-15 ambassador_header">Donations<i class="fa fa-plus-square-o pull-right"></i></h2>
+        </a>
+    
+    	<a href='{#URL#}ambassador-portal/documents' class="link-1 td-n">
+        	<h2 class="heading-3 p-15 ambassador_header">Documents <i class="fa fa-plus-square-o pull-right"></i></h2>
+        </a>
+    </div>
+</section>
+{/if}
+    </div>
+</div>            
+<script src='{#RESOURCES#}js/Chart.min.js'></script>
+<script src='{#RESOURCES#}js/graph.js'></script>
+{include="bottom/bottom"}
+</body>
+</html>

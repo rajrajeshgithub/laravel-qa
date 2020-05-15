@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style type="text/css">
+body{font-family:Verdana, Geneva, sans-serif;margin:0;padding:0;}
+.container{width:1200px;height:1500px;background-image:url("{#RESOURCES#}/images/certificate.jpg");background-repeat:repeat;margin:auto;page-break:always;}
+a{text-decoration:none;}
+.text-bold{font-weight:bold;}
+.text-center{text-align:center;}
+.t-green{color:#abc340;}
+.t-blue{color:#002f5b;}
+.t-red{color:#F00;}
+.d-blue{color: #002f5b;}
+.p-10{padding:10px;}
+.border-bottom{}
+.total-section{padding-top:10px;border-top:solid 1px #666;}
+.row-section .col{display:inline-block;
+    font-size: 28px;
+    font-weight: bold;
+    padding-top: 15px;
+	text-align:right;
+		
+}
+.cart-note {
+    display: block;
+    font-size: 12px;
+    color: #404040;
+    font-weight: 400;
+}
+.border-bottom{border-bottom:solid 1px #666;}
+.row-section .col-left{width:800px;}
+.row-section .col-right{width:180px;}
+.print-section{position:relative;top:305px;padding:0px 75px 220px 75px;}
+.middle-section{color:#000; font-size:19px;page-break:always;}
+.receipt-list-section{padding-bottom:20px;}
+.receipt-list-heading{font-family:Verdana, Geneva, sans-serif; background-color:#e5e5e5; font-size:21px; margin-right:-7px; padding:10px; display:inline-block;}
+.receipt-list-col1{width:435px;padding-left:20px;}
+.receipt-list-col2{width:270px;}
+.receipt-list-col3{width:270px;}
+.receipt-col-section{padding-top:10px;}
+.receipt-col1{width:435px;display:inline-block;line-height:1.5;padding-bottom:10px;padding-left:20px;}
+.receipt-col2{width:270px;display:inline-block;padding-top:75px;padding-bottom:10px;}
+.receipt-col3{width:270px;display:inline-block;padding-top:75px;padding-bottom:10px;}
+.text-center{text-align:center;}
+.receipt-list-detail > table > tbody > tr > td{padding-top:10px; padding-bottom:20px;}
+.receipt-list-detail > table > tbody > tr:last-child > td{padding-bottom:10px;}
+.receipt-list-detail > table > tbody > tr > td{line-height:20px;}
+.fundraisers-name{color:#abc340; font-size:22px; padding-bottom:5px;}
+.npo-name{color:#D0719B; font-size:22px; padding-bottom:5px;}
+.total-amount-section{font-size:22px; color:#002f5b; font-weight:bold;line-height:1.5;}
+.total-amount{text-align:right;}
+.total-amount tr td{padding-top:10px; padding-bottom:10px;}
+.cart-note{display:block; font-size:14px; color:#404040; font-weight:400;}
+</style>
+</head>
+<body id="body">
+	<div class="container">
+		<div class="print-section middle-section">
+        {$text_thank_you}			
+			<div class="receipt-list-section">
+				<div class="receipt-list-heading receipt-list-col1">{#_DBS_PDF_NAME_FUNDRAISER_NON_PROFITS_#}</div>
+				<div class="receipt-list-heading receipt-list-col2 text-center">{#_DBS_PDF_DONATION_AMOUNT_#}</div>
+				<div class="receipt-list-heading receipt-list-col3 text-center">{#_DBS_PDF_TAX_EXEMPTED_#}</div>
+			</div>
+            <div>
+            {loop="OrderDetailTransactionArray"}
+            {if="$value.PDD_Status>=11 && $value.PDD_Status<=20"}
+		  <div class="receipt-col-section">
+            	<div class="receipt-col1">
+					<div class="text-bold {if="$value.PDD_PIItemType=='CD'"}fundraisers-name{else}npo-name{/if}">{$value.PDD_PIItemName} {if="$value.PDD_PIItemType=='NPOD'"}({$value.PDD_NPOEIN}){/if}</div>
+                    {if="$value.PT_PaymentGatewayTransactionID!=NULL"}<div><strong>{#_DBS_PDF_TRANSACTION_ID_#}</strong> : {$value.PT_PaymentGatewayTransactionID}</div>{/if}
+					<div><strong>{#_DBS_PDF_DONATION_DATE_TIME_#}</strong> : {if="$value.PT_LastUpdatedDate!=NULL"}{$value.PT_LastUpdatedDate|formatDate:'m/d/Y h:i a'}{else}{$value.PDD_DateTime|formatDate:'m/d/Y h:i a'}{/if} {#_DBS_PDF_EST_#}</div>
+					<div><strong>{#_DBS_PDF_PAYMENT_NOTE_#}</strong> : {$value.PDD_Status_Notes}</div>
+                </div>
+                <div class="receipt-col2 text-center">${$value.PDD_Cost}</div>
+				<div class="receipt-col3 text-center">{if="$value.PDD_TaxExempt==1"}Yes{else}No{/if}</div>
+            </div>
+            {else}
+            <div class="receipt-col-section">
+            	<div class="receipt-col1">
+					<div class="text-bold {if="$value.PDD_PIItemType=='CD'"}fundraisers-name{else}npo-name{/if}">{$value.PDD_PIItemName} {if="$value.PDD_PIItemType=='NPOD'"}({$value.PDD_NPOEIN}){/if}</div>                	
+                    <div class="t-red">{#_DBS_PDF_PAYMENT_FAILED_#} - {$value.PDD_Status_Notes}</div>					
+                </div>
+                <div class="receipt-col2 text-center">${$value.PDD_Cost}</div>
+				<div class="receipt-col3 text-center">No</div>
+            </div>
+            {/if}
+			{/loop}
+			
+		
+			</div>
+			<div class="total-section">
+				<div class="row-section">
+                          <div class="col-left col d-blue">{#_DBS_PDF_TOTAL_DONATION_#}</div>
+                          <div class="col-right col d-blue">$<span class="col-xs-4">{$totaldonation}</span></div>
+                </div>
+				<div class="row-section">
+                          <div class="col-left col d-blue">{#_DBS_PDF_DONATION_TRANSACTION_FEE_#}
+						  <span class="cart-note">{$note_cover_transaction}</span>
+						  </div>
+						  
+                          <div class="col-right col d-blue">$<span class="col-xs-4">{$transfeeamt}</span></div>
+                </div>
+				<div class="row-section">
+                          <div class="col-left col t-green">{#_DBS_PDF_YOU_PAID_#}</div>
+                          <div class="col-right col t-green"><span class="col-xs-4">{$paidamt}</span></div>
+                </div>
+			</div>
+		</div>
+		
+	</div>   
+</body>
+</html>

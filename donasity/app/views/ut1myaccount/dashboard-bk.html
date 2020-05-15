@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+{include="top/head"}
+</head>
+<body id="body">
+<div class="gray-fix-nav">
+{include="top/top"}
+</div>
+<link type="text/css" rel="stylesheet" href='{#RESOURCES#}css/donation-dashboard.css' />
+<script>
+$(document).ready(function()
+{
+	$('.donation-category-tab li').click(function(){
+		//$(this).find(".active-category-tab").removeClass('.active-category-tab');
+		$(this).parent().find(".active-category-tab").removeClass("active-category-tab");
+		$(this).addClass("active-category-tab");
+		
+		
+	});
+	
+});
+</script>
+
+<section class="fix-first-section fundraiser-page">
+</section>
+<section class="section-padding fundraiser-page-heading">
+	<div class="container">
+    	{if="$msgValues!=NULL"}
+         <div id="msgSection" class="margin-top-10">
+            {if condition="$msgValues!=null"}
+                {if condition="$msgValues.msgType==1"}
+                    <div class="alert alert-danger text-center">
+                        <span>{$msgValues.ErrorMsg}</span>
+                    </div>                            
+                    {elseif condition="$msgValues.msgType==2"}
+                    <div class="alert alert-success text-center">
+                        <span>{$msgValues.ConfirmationMsg}</span>
+                    </div>
+                {/if}                                          
+            {/if}
+        </div>
+        {/if}
+		{$pageheading}
+		<!-- user detail -->
+        {$userdetails}
+        <!-- user detail END -->
+    </div>
+</section>
+<section class="section-padding user-donation-detail">
+	<div class="container">
+        <ul class="donation-category-tab list-inline mb-0">
+            <li class="active-category-tab"><a href='javascript://' title="Donations">DONATIONS</a></li>
+            <li><a href='javascript://' title="Fundraisers">FUNDRAISERS</a></li>
+        </ul>
+        <ul class="category-list-option list-inline mb-0">
+            <li class="active-option"><a href='javascript://' title="#">View All</a></li>
+            <li><a href='javascript://' title="#">Non Tax Deductable</a></li>
+            <li><a href='javascript://' title="#">Tax Deductable</a></li>
+        </ul>
+	</div>
+	<div class="user-donation-listing">
+    	<div class="container">
+			<div class="row listing-heading">        
+                <div class="col-md-6 col-sm-6 col-xs-5">Cause Name <i class="fa fa-chevron-circle-down hidden-xs"></i></div>
+                <div class="col-md-2 col-sm-2 hidden-xs">Type <i class="fa fa-chevron-circle-down hidden-xs"></i></div>
+                <div class="col-md-2 col-sm-2 col-xs-3">Date <i class="fa fa-chevron-circle-down hidden-xs"></i></div>
+                <div class="col-md-2 col-sm-2 col-xs-4">Amount <i class="fa fa-chevron-circle-down hidden-xs"></i></div>
+			</div>
+        </div>
+    	<div class="donation-listing-section">
+        	{loop="$DonationArray"}
+            <div class="donation-listing-row">
+            	<div class="container">
+                	<div class="row">
+                        <div class="col-md-6 col-sm-6 col-xs-5 donation-name {if="$value.PDD_PIItemType=='CD'"}fundraiser-name{else}npo-organization-name{/if}">
+                        {$value.PDD_PIItemName}
+                        </div>
+                        <div class="col-md-2 col-sm-2 donation-type hidden-xs"><span class="type-ntd">{if="$value.PDD_TaxExempt==1"}TD{else}NTD{/if}</span></div>
+                        <div class="col-md-2 col-sm-2 col-xs-3 donation-date">{$value.PDD_DateTime|formatDate:'m/d/Y'}</div>
+                        <div class="col-md-2 col-sm-2 col-xs-4 donation-amount">${$value.PDD_Cost}</div>                    
+                    </div>
+                </div>	
+            </div>
+            {/loop}
+        </div>
+        <div class="container">
+        	<div class="oh donation-bottom-menu">
+                <a href='javascript://' title="Donation Archive">Donation Archive</a>
+                <a href='javascript://' title="Print">Print</a>
+			</div>
+        </div>
+    </div>
+</section>
+{include="bottom/bottom"}
+</body>
+</html>

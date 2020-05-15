@@ -1,0 +1,168 @@
+<script type="text/javascript">
+$(document).ready(function()
+{
+	{if="$action=='insert' || $action=='update'"}
+	$('#listsection').closest('.row').find('.viewmorSection').slideToggle();
+	$('#listsection').closest('.row').find('.viewmoreBtn').find('i').toggleClass("fa-plus fa-minus");
+	{else}
+	$('#addeditsection').closest('.row').find('.viewmorSection').slideToggle();
+	$('#addeditsection').closest('.row').find('.viewmoreBtn').find('i').toggleClass("fa-plus fa-minus");
+	{/if}	 
+});
+
+
+function GotoPage(pageNo)
+{
+	$('#pageNumber').val(pageNo);
+	$('#formSection').attr('action', '');
+	document.formSection.submit();
+	return false;
+}
+
+
+function DeleteCampaignComment(CampaignID,CommentID)
+{
+	if(confirm("Are you sure, you want to delete this comment ?"))
+	{
+		location.href=SITEURL+"campaigncomment/index/delete/"+CampaignID+"/"+CommentID;	
+	}	
+}
+</script>
+<!--<script type="text/javascript" src='{#RESOURCES#}js/includeEditor.js'></script>-->
+<script type="text/javascript" src='{#RESOURCES#}js/validatecampaigncomment.js'></script>
+<div id="rightSection">
+      <div class="rightPannel">
+            <div class="breadcrumb">
+              <ul>
+                <li title="Dashboard"><a href='{#URL#}home/'><img src='{#RESOURCES#}img/dashboard_thumb.png'/>Dashboard</a></li>
+                <li>&nbsp;»&nbsp;</li>
+                <li title="Campaign List"><a href='{#URL#}campaign'>Campaign</a></li>
+                <li>&nbsp;»&nbsp;</li>
+                <li title="Campaign Comment Listing"><a href='{#URL#}campaigncomment/index/list/{$campID|keyEncrypt}'>Comments List</a></li>
+        	  </ul>
+            </div>
+            <div class="contentSection">
+                  <div class="pageHeader text-left"><li class="fa fa-fw fa-bars iColor"></li>&nbsp;Campaign Comment - List
+                  	<div class="pull-right  margin-right-10">
+                      <a href='{#URL}campaigncomment/index/add/{$campID|keyEncrypt}#formsectiondiv' id="addCategory" class="btn btn-secondary" title="Add Comment"><i class="fa fa-bars"></i>&nbsp; Add Comment</a>
+               		 </div>
+                  </div>
+              {include="common/message"}           
+                  <div class="sky-form margin-bottom-20 box-shadow-none">
+                          <fieldset>
+                          <div class="row">
+                          	 <h3>{$CampaignDetail.Camp_Title} ({$campID})</h3>
+                             <div class="sky-form-headingsection  psTitle">
+                             <div class="sky-form-heading pull-left">Comment List</div>
+                                <div class="viewmoreBtn pull-right">
+                                    <i class="fa fa-minus"></i>
+                                </div>
+                             </div>
+                             <div class="viewmorSection" id="listsection" >     
+                              <table cellpadding="0" cellspacing="0" width="100%" border="0" id="sky-table">
+                                <thead>
+                                    <tr>
+                                      <th width="10%">User ID</th>
+                                      <th width="10%">Campaign ID</th>
+                                      <th width="20%">User Name</th>
+                                      <th width="45%">Comment</th>
+                                      <th width="15%">Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                {if="$CommentList"}
+                                {loop="CommentList"}
+                                <tr>
+                                  <td data-title="User ID" valign="top">{$value.Camp_Cmt_RUID}</td>
+                                  <td data-title="Campaing ID" valign="top">{$value.Camp_Cmt_CampID}</td>
+                                  <td data-title="User Name" valign="top" class="wordbreak">{$value.Camp_Cmt_UserName}</td>
+                                  <td data-title="Comment" valign="top" class="wordbreak">{$value.Camp_Cmt_Comment}</td>
+                                  <td data-title="Action" valign="top">
+                                  <a href='{#URL#}campaigncomment/index/edit/{$value.Camp_Cmt_CampID|keyEncrypt}/{$value.Camp_Cmt_ID|keyEncrypt}#formsectiondiv' class="page-link" title="Edit">
+                                  Edit
+                                  </a>&nbsp;
+                                  <a  onclick="DeleteCampaignComment('{$value.Camp_Cmt_CampID|keyEncrypt}','{$value.Camp_Cmt_ID|keyEncrypt}')"href='javascript:' class="page-link" title="Delete">
+                                  Delete
+                                  </a>
+                                  </td>
+                                </tr>
+                                {/loop}
+                                {else}
+                                <tr><td colspan="5"><center>No Record Found</center></td></tr>
+                                {/if}
+                                </tbody>
+                              </table> 
+                            </div>     
+                          </div> 
+                          </fieldset>
+                          {if="$action=='insert' || $action=='list'"}
+                          	{$ActionURl='campaigncomment/index/insert'}
+                          {else}
+                          {$ActionURl='campaigncomment/index/update'}
+                          {/if}
+                          <form name="commentform" id="commentform" method="post" action="{#URL#}{$ActionURl}">
+                          <input type="hidden" name="CampID" id="CampID" value="{$campID}"/>
+                          {if="$action=='update'"}
+                          <input type="hidden" name="CommentID" id="CommentID" value="{$CommentDetail.Camp_Cmt_ID}"/>
+                          {/if}
+                          <fieldset>
+                          <div class="row" id="formsectiondiv">
+                             <h3>{$CampaignDetail.Camp_Title} ({$campID})</h3>
+                             <div class="sky-form-headingsection  psTitle">
+                             <div class="sky-form-heading pull-left">{if="$action=='insert' || $action=='list'"}Add {else} Edit/Delete {/if}Comment</div>
+                                <div class="viewmoreBtn pull-right">
+                                    <i class="fa fa-minus"></i>
+                                </div>
+                             </div>
+                             <div class="viewmorSection" id="addeditsection" >     
+                             	<section class="margin-left-15 margin-right-15">
+                                    <label class="label">COMMENT</label>
+                                    <label class="textarea">
+                                        <textarea rows="3" name="comment" id="comment"  placeholder="Enter comment" >{$CommentDetail.Camp_Cmt_Comment}</textarea>
+                                    </label>
+                                </section>
+                                <section class="margin-left-15">
+                                	<label class="checkbox">
+                                        <input type="checkbox" id="showonwebsite" name="showonwebsite" value="1" {if="$CommentDetail.Camp_Cmt_ShowOnWebsite=='1'"}checked="checked"{/if}/>
+                                        <i></i>Show on Website
+                                    </label>
+                                </section>
+                                
+                                {if="$action=='update'"}
+                                <section class="display-block margin-left-15 margin-right-15">  
+                                <label class="margin-right-10 text-bold">Created Date : </label>
+                                <label class="">{$CommentDetail.Camp_Cmt_CreatedDate|formatDate:'n/j/Y h:ia'}</label>
+                                </section>
+                                <section class="display-block margin-left-15 margin-right-15">  
+                                <label class="margin-right-10 text-bold">Last Update Date : </label>
+                                <label class="">{$CommentDetail.Camp_Cmt_LastUpdatedDate|formatDate:'n/j/Y h:ia'}</label>
+                                </section>
+                                <!--<section class="display-block margin-left-15 margin-right-15">  
+                                <label class="margin-right-10 text-bold">Last Updated by : </label>
+                                <label class="">{$CommentDetail.Camp_Cmt_UserName}</label>
+                                </section>-->
+                                {/if}
+                                
+                            </div>     
+                          </div> 
+                          </fieldset>
+                          
+                          <fieldset>
+                            <section class="pull-right">
+                                {if="$action=='insert' || $action=='list'"}
+                                <button type="submit" class="btn btn-primary" title="Insert Comment" value="Save"><i class="fa fa-save"></i>&nbsp;Save</button>
+                                {else}
+                                <button type="submit" class="btn btn-primary" title="Update Comment" value="Save"><i class="fa fa-save"></i>&nbsp;Save Changes</button>
+                                <button type="button" class="btn btn-primary btn-danger" title="Delete Comment" value="Delete"  
+                                onclick="DeleteCampaignComment('{$campID|keyEncrypt}','{$CommentDetail.Camp_Cmt_ID|keyEncrypt}')">
+                          		<i class="fa fa-trash-o"></i>&nbsp;Delete</button>
+                                {/if}
+                            </section>
+                        </fieldset>
+                       </form>
+                  </div>
+                  
+                  
+            </div>
+      </div>
+</div>

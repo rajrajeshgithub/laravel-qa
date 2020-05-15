@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="{#LANG_ID#}">
+<head>
+{include="top/head"}
+<link type="text/css" rel="stylesheet" href='{#RESOURCES#}css/setup-fundraiser.css'>
+</head>
+<body>
+    <div id="panel">    
+    	<div class="gray-fix-nav">{include="top/top"}</div>
+			<section class="fix-first-section">
+</section>
+			<section class="section-padding setup-fundraiser">
+	<div class="container">
+    	{include="common/message"}
+    	<div class="row">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                <h2 class="heading-1">{if="$teamFundraiser"}Setup Fundraiser Step 4 of 5{else}{$pageheading}{/if}</h2>
+            </div>
+        </div>            
+        <div class="row">
+        	<div class="col-md-12 col-sm-12 col-xs-12">
+            	<form id="form-section" name="form-section" method="post" action='{#URL#}setup_fundraiser/Update_fundraiser_step4'>
+	               <input type="hidden" name="FR_id" value='{$FR_id}'>
+                   <input type="hidden" name="teamFundraiser" id="teamFundraiser" value="{$teamFundraiser}"/>
+                    <div class="step-section">
+                        <div class="step step-1">
+                            <h2 class="heading-2"><span class="mark-icon">1</span><span class="step-name">{$header_getting_started}<i class="fa fa-check"></i></span></h2>
+                        </div>
+                        <div class="step step-2">
+                            <h2 class="heading-2"><span class="mark-icon">2</span><span class="step-name">{$header_tell_the_story}<i class="fa fa-check"></i></span></h2>
+                        </div>
+                        <div class="step step-3">
+                            <h2 class="heading-2"><span class="mark-icon">3</span><span class="step-name">{$header_campaign_photos_vedios}<i class="fa fa-check"></i></span></h2>
+                        </div>
+                        <div class="step current-step step-4">
+                            <h2 class="heading-2"><span class="mark-icon">4</span><span class="step-name">{$header_collection_details}</span></h2>
+                            <div class="step-content">
+                                <h2 class="heading-3">{$header_strip_form}</h2>
+                                <div class="row">
+                                    <div class="col-md-8 col-sm-10 col-xs-12">
+                                    	{$text_above_strip_button}										
+                                       <a href='{$STRIPE_FUNDARISER_CONNECT_URL}' class="mb-10 db"><img src='{#RESOURCES#}img/stripe.png' /></a>
+									   {$text_below_strip_button}									   
+                                    </div>
+                                </div>
+								 <div class="row">
+                                    <div class="col-md-8 col-sm-10 col-xs-12">
+										{$text_above_ein_textbox}
+										<div class="form-group">
+                                            <input type="text" class="form-control" name="UUID" id="UUID" placeholder='{$placeholder_ein_textbox}'>
+                							<span class="note">{$note_ein_number}</span>    
+                                        </div>
+									   <p>{$text_bottom}</p>                                        
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-8 col-sm-10 col-xs-12 text-center mt-25">
+                                        <input type="submit" class="button-1 large-btn" value="{$text_save_and_continue}">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+    			</form>
+            </div>
+        </div>
+    </div>	
+</section>
+        {include="bottom/bottom"}
+   </div>
+</body>
+<script type="text/javascript">
+$(document).ready(function()
+{
+	$("#form-section").validate(
+	{
+		success: function(element)
+		{
+			$("#"+element[0].htmlFor).next("b.tooltip").remove();
+		},
+		errorPlacement: function(error, element)
+		{
+			element.next("b.tooltip").remove();
+			element.after("<b class='tooltip tooltip-top-right'>"+error.text()+"</b>");
+		},
+		rules:
+		{
+ 
+			UUID:{required:true},
+		},
+		messages:
+		{
+			UUID:{required:"UUID number"},
+		},
+
+	});
+});
+</script>
+</html>

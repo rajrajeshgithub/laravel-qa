@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style type="text/css">
+body{font-family:Verdana, Geneva, sans-serif;margin:0;padding:0;}
+.container{width:1200px;height:1500px;background-image:url("{#RESOURCES#}/images/certificate.jpg");background-repeat:repeat;margin:auto;page-break:always;}
+a{text-decoration:none;}
+.text-bold{font-weight:bold;}
+.text-center{text-align:center;}
+.t-green{color:#abc340;}
+.t-blue{color:#002f5b;}
+.d-blue{color: #002f5b;}
+.p-10{padding:10px;}
+.border-bottom{}
+.total-section{padding-top:10px;border-top:solid 1px #666;}
+.row-section .col{display:inline-block;
+    font-size: 28px;
+    font-weight: bold;
+    padding-top: 15px;
+	text-align:right;
+		
+}
+.cart-note {
+    display: block;
+    font-size: 12px;
+    color: #404040;
+    font-weight: 400;
+}
+.border-bottom{border-bottom:solid 1px #666;}
+.row-section .col-left{width:900px;}
+.row-section .col-right{width:100px;}
+.print-section{position:relative;top:305px;padding:0px 75px 220px 75px;}
+.middle-section{color:#000; font-size:18px;page-break:always;}
+.receipt-list-section{padding-bottom:20px;}
+.receipt-list-heading{font-family:Verdana, Geneva, sans-serif; background-color:#e5e5e5; font-size:19px; margin-right:-6px; padding:10px; display:inline-block;}
+.receipt-list-col1{width:450px;}
+.receipt-list-col2{width:273px;}
+.receipt-col-section{padding-top:10px;}
+.receipt-col1{width:480px;display:inline-block;line-height:1.5;padding-bottom:10px;}
+.receipt-col2{width:250px;display:inline-block;padding-top:75px;padding-bottom:10px;}
+.receipt-col3{width:295px;display:inline-block;padding-top:75px;padding-left:10px;padding-bottom:20px;}
+.text-center{text-align:center;}
+.receipt-list-detail > table > tbody > tr > td{padding-top:10px; padding-bottom:20px;}
+.receipt-list-detail > table > tbody > tr:last-child > td{padding-bottom:10px;}
+.receipt-list-detail > table > tbody > tr > td{line-height:20px;}
+.fundraisers-name{color:#abc340; font-size:22px; padding-bottom:5px;}
+.npo-name{color:#D0719B; font-size:22px; padding-bottom:5px;}
+.total-amount-section{font-size:22px; color:#002f5b; font-weight:bold;line-height:1.5;}
+.total-amount{text-align:right;}
+.total-amount tr td{padding-top:10px; padding-bottom:10px;}
+.cart-note{display:block; font-size:14px; color:#404040; font-weight:400;}
+
+.receipt-heading{font-weight:bold; font-size:28px; padding-top:75px; border-bottom: 1px solid #b1b1b1; padding-bottom:30px;}
+.thanks-col{line-height:1.5;padding:20px 0px;}
+.reciept-title-section{padding:15px 0px 0px 0px;}
+.reciept-title-section .heading{font-weight:bold; font-size:28px; padding-top:15px;padding-bottom:20px;padding-left:15px;}
+.reciept-title-section .left-col{width:500px;display:inline-block;padding-left:15px;padding-top:20px;padding-bottom:20px;}
+.reciept-title-section .panel{padding-top:20px;}
+.reciept-title-section .right-col{width:490px;display:inline-block;padding-left:25px;padding-top:20px;padding-bottom:20px;}
+.reciept-text{border-top:solid 1px #b1b1b1;font-size:22px;}
+.border-right{border-right:solid 1px #b1b1b1;}
+.thanks-text{border-top:solid 1px #b1b1b1;padding:20px 25px;}
+</style>
+</head>
+<body>
+<div class="container">
+	<div class="print-section middle-section">
+	<div class="thanks-col">
+		<div>{$Message1}</div>
+		<div class="text-center receipt-heading">{$Page_Heading}</div>
+		<div class="reciept-title-section">
+			<div class="left-col heading">{$Donor_Information_Heading}</div>
+			<div class="right-col heading">{$Donation_Information_Heading}</div>
+			<div class="reciept-text">
+				{$Donor_Information}
+                {$Donation_Information}
+				
+			</div>
+		</div>
+        {$Message2}
+		
+	</div>
+	</div>
+</div>
+
+</body>
+</html>

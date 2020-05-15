@@ -1,0 +1,31 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Untitled Document</title>
+</head>
+
+<body>
+{$msgValues=NULL}
+{$msgValues|getMessage}
+{if="$msgValues!=NULL"}
+    <div id="msgSection" class="mt-10">
+            {if condition="$msgValues!=null"}
+                {if condition="$msgValues.msgType==1"}
+                    <div class="alert alert-error text-center">
+                        <span>{$msgValues.ErrorMsg}</span>
+                    </div>                            
+                    {elseif condition="$msgValues.msgType==2"}
+                    <div class="alert alert-success text-center">
+                        <span>{$msgValues.ConfirmationMsg}</span>
+                    </div>
+                {/if}
+            {/if}
+    </div>
+{/if}
+<form name="uploadcsv" id="uploadcsv" method="post" action="{#URL#}nposprocess/index/upload-nposcsv" enctype="multipart/form-data">
+	<input type="file" name="csvFile" id="csvFile"/>
+    <input type="submit"/>
+</form>
+</body>
+</html>

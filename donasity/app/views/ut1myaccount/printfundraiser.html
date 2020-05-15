@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style type="text/css">
+body {
+	font-family:Verdana, Geneva, sans-serif;
+	margin:0;
+	padding:0;
+}
+.container {
+	width:1200px;
+	height:1500px;
+	background-image:url("{#RESOURCES#}/images/certificate.jpg");
+	background-repeat:repeat;
+	margin:auto;
+	page-break:always;
+}
+a {
+	text-decoration:none;
+}
+.text-bold {
+	font-weight:bold;
+}
+.text-center {
+	text-align:center;
+}
+.t-green {
+	color:#abc340;
+}
+.t-blue {
+	color:#002f5b;
+}
+.t-pink {
+	color:#D0719B !important;
+}
+.d-blue {
+	color: #002f5b;
+}
+.p-10 {
+	padding:10px;
+}
+.border-bottom {
+}
+.total-section {
+	padding-top:10px;
+	border-top:solid 1px #666;
+}
+.row-section .col {
+	display:inline-block;
+	font-size: 28px;
+	font-weight: bold;
+	padding-top: 15px;
+	text-align:right;
+}
+.cart-note {
+	display: block;
+	font-size: 12px;
+	color: #404040;
+	font-weight: 400;
+}
+.border-bottom {
+	border-bottom:solid 1px #666;
+}
+.row-section .col-left {
+	width:880px;
+}
+.row-section .col-right {
+	width:100px;
+}
+.print-section {
+	position:relative;
+	top:305px;
+	padding:0px 75px 220px 75px;
+}
+.middle-section {
+	color:#000;
+	font-size:19px;
+	page-break:always;
+}
+.receipt-list-section {
+	padding-bottom:10px;
+}
+.receipt-list-heading {
+	font-family:Verdana, Geneva, sans-serif;
+	background-color:#e5e5e5;
+	font-size:21px;
+	margin-right:-7px;
+	padding:10px;
+	display:inline-block;
+	height:50px;
+}
+.list-title {
+	font-family:Verdana, Geneva, sans-serif;
+	font-size:21px;
+	margin-right:-7px;
+	padding:10px;
+	display:inline-block;
+}
+.receipt-list-col1 {
+	width:500px;
+	padding-left:20px;
+}
+.receipt-list-col2 {
+	width:115px;
+}
+.receipt-list-col3 {
+	width:175px;
+}
+.receipt-list-col4 {
+	width:175px;
+}
+.text-center {
+	text-align:center;
+}
+.fundraisers-name {
+	color:#abc340;
+	font-size:20px;
+	padding-bottom:5px;
+}
+.note {
+	display:block;
+	font-size:16px !important;
+	color:#404040;
+	font-weight:400;
+}
+</style>
+</head>
+<body id="body">
+<div class="container">
+  <div class="print-section middle-section">
+    <p class="text-bold">{$text_top}</p>
+    <p>&nbsp;</p>
+    <div class="receipt-list-section">
+      <div class="receipt-list-heading receipt-list-col1">{$header_cause_name}</div>
+      <div class="receipt-list-heading receipt-list-col2 text-center">{$header_tax_exempt}</div>
+      <div class="receipt-list-heading receipt-list-col3">{$header_date_of_fundraiser}</div>
+      <div class="receipt-list-heading receipt-list-col4 text-center">{$header_fundraiser_amount}</div>
+    </div>
+    <div> 
+    {loop="$FundraiserArray"}
+      <div class="receipt-list-section">
+        <div class="list-title receipt-list-col1">
+          <div class="text-bold">{$value.DonorName}</div>
+          <span class="note">{$value.NPO_EIN}</span> <span class="note">{$value.NPOAddress}</span> </div>
+        <div class="list-title receipt-list-col2 text-center">{if="$value.PDD_TaxExempt==1"}YES{else}NO{/if}</div>
+        <div class="list-title receipt-list-col3 text-center">{$value.PDD_DateTime|formatDate:'m/d/Y'}</div>
+        <div class="list-title receipt-list-col4 text-center">${$value.PDD_Cost}</div>
+      </div>
+    {/loop} 
+    </div>
+  </div>
+</div>
+</body>
+</html>

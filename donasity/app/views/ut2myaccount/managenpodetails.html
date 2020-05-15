@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+{include="top/head"}
+</head>
+<body id="body">
+<div class="gray-fix-nav">
+{include="top/top"}
+</div>
+<script type="text/jscript" src='{#RESOURCES#}js/manage-npo.js'></script>
+<section class="fix-first-section">
+</section>
+<section class="section-padding">
+	<div class="container">
+    	{include="common/message"}   	
+        <h2 class="heading-1">{$pageheading}</h2>
+        <div class="row">
+        {if="$Detail.Stripe_Status==1"}                     
+            <div class="col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2 col-xs-12">
+                <div class="npo-reg-section">
+                    <form id="manage-npo-form" name="manage-npo-form" action='{#URL#}ut2myaccount/updatenpodetails' method="post" autocomplete="off" enctype="multipart/form-data">
+                        <input type="hidden" name="existlogo" id="existlogo" value="{$Detail.NPOLogo}"/>
+                        <div class="row">
+                        	<!--<div class="col-xs-12 t-gray">
+                            	<span class="db">{$Detail.NPO_Name}</span>
+                                <span class="db">{$Detail.NPO_Street}, {$Detail.NPO_City},</span>
+                             </div>-->
+                        </div>
+                        <div class="row">
+                        	<div class="col-xs-2">
+                            	<div class="heading-3 mb-10 mt-10">{#_SET_LOGO_#}</div>
+                            	<!--<img src='{#RESOURCES#}img/dummybgimg.jpg' class="img-responsive" alt="image">-->
+                                <img src='{function="CheckImage(NPO_IMAGE_DIR,NPO_IMAGE_URL,NO_PERSON_IMAGE,$Detail.NPOLogo)"}' width="70px" class="imgBorder-1" alt="" title="" rel="lightbox" />
+                            </div>
+                            <div class="col-xs-10 mt-40">
+                            	<span class="db">{$Detail.NPO_Name}</span>
+                                <span class="db">{$Detail.NPO_Street}, {$Detail.NPO_City} {if="$Detail.NPO_Zip!=''"}-{$Detail.NPO_Zip}{/if}</span>
+                             </div>
+                            <div class="col-xs-12 mt-10">
+                                <label class="label">{#_UPLOAD_IMAGE_#}</label>
+                                <div class="form-group">
+                                    <label for="file" class="input-file">
+                                        <div class="button"><input type="file" name="uploadLogo" id="uploadLogo" onchange="this.parentNode.nextSibling.value = this.value"><i class="fa fa-upload t-white"></i></div><input name="logoImg" type="text" class="form-control" readonly="">
+                                    </label>
+                                    <div class="note">{$note_image}</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                <label class="label" for="mobile">{#_WRITE_ABOUT_NPO_#}</label>
+                                <div class="form-group">
+                                    <textarea rows="5" class="form-control" name="npoDescription" id="npoDescription" maxlength="500">{$Detail.NPODescription}</textarea>
+                                    <span class="display-block font-11 ">{$note_remaining_characters} <span id="npodescriptionlength"></span></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            	<div class="col-xs-12 mt-15">
+                            	<strong>{#_CONNECTED_STRIPE_ACCOUNT_#}</strong> : {if="$Detail.Stripe_Status==0"}{#_DISCONNECTED_#}{else}{#_CONNECTED_#}{/if}
+                            	</div>
+                                <!--<div class="col-xs-12">
+                                <label class="label" for="accessCode">{#_CONNECTED_STRIPE_ACCOUNT_#}</label>
+                                <div class="select form-group">                   
+                                    <select class="form-control" name="conStripeAccount" id="conStripeAccount">
+                                        <option value="Disconnected">{#_DISCONNECTED_#}</option>-->
+                                        <!--<option value="Yes">Yes</option>
+                                        <option value="No">No</option>-->
+                                    <!--</select>
+                                    <span class="errorClass"></span>
+                                    <i class="arrow fa fa-caret-down"></i>                    
+                                </div>
+                            </div>-->
+                    	</div>
+                       
+                        
+                        
+                       
+                        </div>
+                        
+                        
+                        <div class="row">
+                        	<div class="col-xs-12 mt-15">
+                            	<strong>{#_ACCOUNT_ID_#}</strong> : {$Detail.Stripe_ClientID}
+                            </div>
+                            <div class="col-xs-12 mt-10 save-change-btn">
+                            	<button type="submit" class="button-1 f-20" title="Click here to save">{#_SAVE_CHANGE_#}</button>	
+                            </div>
+                        </div>
+                        
+                    </form>
+                </div>
+            </div>
+         {else} 
+         {$message_text_strip_disconnet}
+          <div class="row mt-15">
+                        	<div class="col-xs-12">
+                            	<a href='{$STRIPE_CONNECT_URL}'>
+                    				<img src='{#RESOURCES#}img/stripe.png' />
+                				</a>
+                		</div>
+         {/if}
+        </div>
+    </div>	
+</section>
+{include="bottom/bottom"}
+</body>
+</html>

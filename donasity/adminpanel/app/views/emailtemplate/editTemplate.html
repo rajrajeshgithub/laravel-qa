@@ -1,0 +1,151 @@
+<script type="text/javascript" language="javascript" src='{#URL#}app/tinymce/tinymce.min.js'></script>
+<script type="text/javascript" src='{#RESOURCES#}js/includeEditor.js'></script>
+<script type="text/javascript" src='{#RESOURCES#}js/validateEmailTemplate.js'></script>
+<ul class="breadcrumb">
+    <li title="Dashboard"><a href='{#URL#}home/'>Dashboard</a></li>
+    <li title="cms">CMS</li>
+    <li title="Email Template"><a href='{#URL#}emailtemplate'>Email Templates - List</a></li>
+    <li title="Edit">Edit</li>
+</ul>
+    {include="common/message"}   
+    <form id="formSection" name="formSection" class="igs-form"  method="post" action='{#URL#}emailtemplate/index/{$action}' >
+    <div class="oh">
+       <div class="col col-6">
+            <h1 class="heading-1">Email Template - View / Edit</h1>
+        </div>
+        <div class="col col-6 text-right mt-15">
+        	<a href='{#URL#}emailtemplate' class="button-2" title="Email Template Listing"><i class="fa fa-list-ul"></i> Listing</a>
+            <button type="submit" name="Save" value="Save Changes" class="button-1"><i class="fa fa-save"></i> Save Changes</button>
+         </div>
+    </div>
+    	<input type="hidden" name="tplId" id="tplId" value="{$arrTplDetail.ID}"/>
+    	<div id="content-box" >
+        	<div class="section-heading text-left">	
+           	 	<li class="fa fa-fw fa-file-text iColor"></li>&nbsp;Basic Template Detail<a href='javascript://' class="form-toggle-icon"><i class="fa fa-minus-square-o"></i></a>
+         	</div>
+            <div class="content-section">
+        		<fieldset>
+                    <div class="row">
+                    	<section class="col col-12">
+                                            <label class="label">Template Name</label>
+                                            <label class="input">
+                                                <input type="text"  id="templateName" name="templateName" value="{$arrTplDetail.tplName}"  placeholder="Template Name" >
+                                            </label>
+                        </section>
+                        
+                       <!-- <section class="col col-6">
+                                    <label class="label">Keyword</label>
+                                    <label class="input">
+                                        <input type="text"  id="keyword" name="keyword" value="{$arrTplDetail.keyword}"  placeholder="Template Name" readonly="readonly">
+                                    </label>
+                        </section>-->
+                        
+                        <section class="col col-6">
+                                <label class="label">Receiver</label>
+                                <label class="input">
+                                   <input type="text" id="receiver" value="{$arrTplDetail.mailTo}" name="receiver" placeholder="Email Receiver" >
+                                </label>
+                        </section>
+                         
+                        <section class="col col-6">
+                                <label class="label">Receiver CC</label>
+                                <label class="input">
+                                    <input type="text" id="receiverCc" name="receiverCc" value="{$arrTplDetail.mailToCc}" placeholder="Receiver CC" >
+                                </label>
+                         </section>
+                        
+                        <section class="col col-6">
+                                    <label class="label">Receiver BCC</label>
+                                    <label class="input">
+                                        <input type="text" id="receiverBcc" name="receiverBcc" value="{$arrTplDetail.mailToBcc}" placeholder="Receiver BCC" >
+                                    </label>
+                        </section>
+                        
+                        <section class="col col-6">
+                                <label class="label">Sender</label>
+                                <label class="input">
+                                    <input type="text" id="sender" name="sender" value="{$arrTplDetail.mailFrom}" placeholder="Sender" >
+                                </label>
+                         </section>
+                        
+                        <section class="col col-6">
+                                <label class="label">Subject English</label>
+                                <label class="input">
+                                    <input type="text" id="subject" name="subject" value="{$arrTplDetail.Subject_EN}" placeholder="Subject" >
+                                </label>
+                         </section>
+                        
+                        <section class="col col-6">
+                                    <label class="label">Subject Spanish</label>
+                                    <label class="input">
+                                        <input type="text" id="subjectSpanish" name="subjectSpanish" value="{$arrTplDetail.Subject_ES}" placeholder="Subject Spanish" >
+
+                                    </label>
+                        </section>
+                       
+                        <section class="col col-12">
+                                <label class="label">Description</label>
+                                <label class="textarea">
+                                    <textarea id="description" name="description"  placeholder="add description" >{$arrTplDetail.description}</textarea>
+                                </label>
+                        </section>
+                        
+                        <section class="col col-12">
+                                    <label class="label pull-left">Tags For Template&nbsp;: </label>
+                                    <label class="label pull-left text-bold">&nbsp;{$arrTplDetail.TagDesc}</label>
+                                    
+                        </section>
+                        
+                        <section class="col col-6">
+                                    <label class="checkbox">
+                                     <input type="checkbox" name="isactive" id="isactive" class="inline-checkbox" value="1" {if="$arrTplDetail.Status==1"} checked="checked" {/if}/><i></i>Is Active  
+                                    </label>
+                        </section>
+                    </div>
+                </fieldset>    
+        	</div>
+        </div>
+        
+        <div id="content-box" >
+            <div class="section-heading text-left">	
+                <li class="fa fa-fw fa-file-text iColor"></li>&nbsp;Template Prefrences<a href='javascript://' class="form-toggle-icon"><i class="fa fa-minus-square-o"></i></a>
+              </div>
+           <div class="content-section mt-15">
+           	  <div class="tab-section oh">
+                    <a href='#tab1' class="tabOption selectedTab" title="Click to add more additional page meta details"><i class="fa"></i>English</a>
+                    <div class="tabInfo open-tab" id="tab1">
+                        <fieldset>
+                                <div class="row">
+                                    <section class="col col-12">
+                                            <label class="label">Enter your English HTML code here</label>
+                                            <label class="textarea">
+                                                <textarea id="mailBody" name="mailBody" placeholder="add Tags For Template" >{$arrTplDetail.Body}</textarea>
+                                            </label>
+                                     </section>
+                                </div>
+                          </fieldset>
+                    </div>
+                    <a href='#tab2' class="tabOption" itle="Click to add more additional page meta details"><i class="fa"></i>Spanish</a>
+                      <div class="tabInfo" id="tab2">
+                             <fieldset>
+                                    <div class="row">
+                                         <section class="col col-12">
+                                                <label class="label">Enter your Spanish HTML code here </label>
+                                                <label class="textarea">
+                                                    <textarea id="mailBodySpanish" name="mailBodySpanish" placeholder="add Tags For Template" >{$arrTplDetail.BodySpanish}</textarea>
+                                                </label>
+                                         </section>
+                                    </div>
+                              </fieldset>
+                      </div>
+              </div>
+           </div>
+      </div>
+        <div class="content-section">
+       		<fieldset>
+                <div class="row mr-10 mb-10">
+                	<button type="submit" name="Save" value="Save Changes" class="button-1 pull-right"/><i class="fa fa-save"></i> Save Changes</button>
+                </div>
+            </fieldset>
+      </div>
+    </form>

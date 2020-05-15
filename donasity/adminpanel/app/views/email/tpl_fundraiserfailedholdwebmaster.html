@@ -1,0 +1,9 @@
+{include="email/email-top"}
+<div style="padding:10px 5px; font-size:14px; color:#333333;">
+    Hello Administrator,<br />
+	A Fundraiser verification failed.<br />
+  	{$CampaignDetail['Camp_ID']}  {$CampaignDetail['Camp_Title']}<br />
+	{$CampaignDetail['Camp_CP_FirstName']} {$CampaignDetail['Camp_CP_LastName']}<br />
+	<a href='{$link}' title="" style="color:#abc340;">fundraiser link</a>
+</div>
+{include="email/email-bottom"}

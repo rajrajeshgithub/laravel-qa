@@ -1,0 +1,7 @@
+- add markup field (real) in Diamond Price field
+in add/edit/import/export
+
+
+- add 'metal_factor' in add/edit/import/export
+
+- add 'duty_applicable' in import/export product.

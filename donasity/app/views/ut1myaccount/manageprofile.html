@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+{include="top/head"}
+</head>
+<body id="body">
+<div class="gray-fix-nav"> {include="top/top"} </div>
+<link type="text/css" rel="stylesheet" href='{#RESOURCES#}css/ut1.css' />
+<link type="text/css" rel="stylesheet" href='{#RESOURCES#}css/bootstrap-datepicker.css'>
+<script type="text/javascript" src='{#RESOURCES#}js/inputmask.js'></script> 
+<script type="text/javascript" src='{#RESOURCES#}js/jquery.inputmask.js'></script> 
+<script type="text/javascript" src='{#RESOURCES#}js/ut1manageprofile.js'></script> 
+<script type="text/javascript" src='{#RESOURCES#}js/bootstrap-datepicker.js'></script>
+<section class="fix-first-section fundraiser-page"> </section>
+<section class="section-padding">
+  <div class="container"> 
+  {include="common/message"}
+    <div class="login-container">
+      <div class="row">
+        <div class="col-md-12 col-sm-12 col-xs-12"> {$pageheading} </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2 col-xs-12">
+          <div class="account-section">
+            <form id="manage-profile-form" name="manage-profile-form" action='{#URL#}ut1myaccount/update' method="post" autocomplete="off" enctype="multipart/form-data">
+              <input type="hidden" name="existprofileimg" id="existprofileimg" value="{$UserDetails.RU_ProfileImage}" />
+              <div class="row">
+                <div class="col-md-6 col-sm-6 col-xs-12">
+                  <label class="label" for="fname">{#_UT1_EDIT_FIRSTNAME_#}</label>
+                  <div class="form-group">
+                    <input type="text" class="form-control" name="fname" id="fname" value="{$UserDetails.RU_FistName}" />
+                  </div>
+                </div>
+                <div class="col-md-6 col-sm-6 col-xs-12">
+                  <label class="label" for="lname">{#_UT1_EDIT_LASTNAME_#}</label>
+                  <div class="form-group">
+                    <input type="text" class="form-control" name="lname" id="lname" value="{$UserDetails.RU_LastName}" />
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-6 col-sm-6 col-xs-12">
+                  <label class="label" for="streetAddress1">{#_UT1_EDIT_ADDRESS1_#}</label>
+                  <div class="form-group">
+                    <input type="text" class="form-control" name="Address1" id="Address1" value="{$UserDetails.RU_Address1}" />
+                  </div>
+                </div>
+                <div class="col-md-6 col-sm-6 col-xs-12">
+                  <label class="label" for="streetAddress2">{#_UT1_EDIT_ADDRESS2_#}</label>
+                  <div class="form-group">
+                    <input type="text" class="form-control" name="Address2" id="Address2"  value="{$UserDetails.RU_Address2}" />
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-6 col-sm-6 col-xs-12">
+                  <label class="label" for="city">{#_UT1_EDIT_CITY_#}</label>
+                  <div class="form-group">
+                    <input type="text" class="form-control" name="city" id="city" value="{$UserDetails.RU_City}" />
+                  </div>
+                </div>
+                <div class="col-md-6 col-sm-6 col-xs-12">
+                  <label class="label" for="zipCode">{#_UT1_EDIT_ZIP_#}</label>
+                  <div class="form-group">
+                    <input type="text" class="form-control" name="zipCode" id="zipCode" value="{$UserDetails.RU_ZipCode}" />
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-6 col-sm-6 col-xs-12">
+                  <label class="label" for="country">{#_UT1_EDIT_COUNTRY_#}</label>
+                  <div class="select form-group">
+                    <select class="form-control" name="country" id="country">
+                      <option value="">{#_UT1_EDIT_SELECT_COUNTRY_#}</option>
+                      {loop="$CountryList"}
+                      <option value="{$value.Country_Abbrivation}" {if="$UserDetails.RU_Country == $value.Country_Abbrivation"} selected="selected" {/if}> {$value.Country_Title} </option>
+                      {/loop}
+                    </select>
+                    <span class="errorClass"></span> <i class="arrow fa fa-caret-down"></i> 
+                  </div>
+                </div>
+                <div class="col-md-6 col-sm-6 col-xs-12">
+                  <label class="label" for="state">{#_UT1_EDIT_STATE_#}</label>
+                  <div class="select form-group">
+                    <select class="form-control" name="state" id="state">
+                      <option value="">{#_UT1_EDIT_SELECT_STATE_#}</option>
+                      {loop="$StateList"}
+                      <option value="{$value.State_Value}" {if="$UserDetails.RU_State == $value.State_Value"} selected="selected" {/if}>{$value.State_Name}</option>
+                      {/loop}
+                    </select>
+                    <span class="errorClass"></span> <i class="arrow fa fa-caret-down"></i> 
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-6 col-sm-6 col-xs-12">
+                  <label class="label" for="phoneNumber">{#_UT1_EDIT_PHONE_#}</label>
+                  <div class="form-group">
+                    <input type="text" class="form-control" name="phoneNumber" id="phoneNumber" value="{$UserDetails.RU_Phone}" />
+                  </div>
+                </div>
+                <div class="col-md-6 col-sm-6 col-xs-12">
+                  <label class="label" for="altPhoneNumber">{#_UT1_EDIT_MOBILE_#}</label>
+                  <div class="form-group">
+                    <input type="text" class="form-control" name="altPhoneNumber" id="altPhoneNumber" value="{$UserDetails.RU_Mobile}" />
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-6 col-sm-6 col-xs-12">
+                  <label class="label" for="gender">{#_UT1_EDIT_GENDER_#}</label>
+                  <div class="select form-group">
+                    <select class="form-control" name="gender" id="gender">
+                      <option value="">{#_UT1_EDIT_GENDER_#}</option>
+                      {loop="$gender"}
+                      <option value="{$key}" {if="$UserDetails.RU_Gender==$key"} selected="selected" {/if}>{$value}</option>
+                      {/loop}
+                    </select>
+                    <span class="errorClass"></span> <i class="arrow fa fa-caret-down"></i> 
+                  </div>
+                </div>
+                <div class="col-md-6 col-sm-6 col-xs-12">
+                  <label class="label" for="altPhoneNumber">{#_UT1_EDIT_DOB_#}</label>
+                  <div class="form-group date" id="dob" data-date="12/25/1991" data-date-format="mm/dd/yyyy" data-date-viewmode="years"> <i class="icon-append fa fa-calendar add-on t-gray"></i>
+                    <input type="text" class="form-control" name="dob" {if="$UserDetails.RU_DOB!='0000-00-00'"} value="{$UserDetails.RU_DOB|formatDate:'m/d/Y'}" {/if} />
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-xs-12">
+                  <label class="label" for="phoneNumber">{#_UT1_EDIT_EMAIL_#}</label>
+                  <div class="form-group">
+                    <input type="text" class="form-control" readonly value="{$UserDetails.RU_EmailID}" />
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-xs-12 mt-10">
+                  <label class="label">{#_UT1_EDIT_PROFILEPICTURE_#}</label>
+                  <div class="form-group">
+                    <label for="file" class="input-file">
+                    <div class="button">
+                      <input type="file" name="uploadProfile" class="form-control" id="uploadProfile" onchange="this.parentNode.nextSibling.value = this.value" />
+                      <i class="fa fa-upload"></i>
+                    </div>
+                    <input name="profileImg" type="text" class="form-control" readonly />
+                    </label>
+                    <div class="note">{#_UT1_EDIT_PROFILEPICTURE_SUPPORT_TEXT_#}</div>
+                  </div>
+                </div>
+              </div>
+              <div class="row"> 
+              	{if="isset($term)"}{$term}{/if}
+                <div class="col-md-12 col-sm-12 col-xs-12 mt-10 text-center">
+                  <button type="submit" class="button-1" title="Update">{#_UT1_EDIT_UPDATE_#}</button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{include="bottom/bottom"}
+</body>
+</html>

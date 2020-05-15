@@ -1,0 +1,133 @@
+<script type="text/javascript">
+function GotoPage(pageNo)
+{
+	$('#pageNumber').val(pageNo);
+	$('#formSection').attr('action', '');
+	document.formSection.submit();
+	return false;
+}
+</script>
+<div id="rightSection">
+  <div class="rightPannel">
+    <div class="breadcrumb">
+      <ul>
+        <li title="Dashboard"><a href='{#URL#}home/'><img src='{#RESOURCES#}img/dashboard_thumb.png'/>Dashboard</a></li>
+        <li>&nbsp;»&nbsp;</li>
+        <li title="Users">Users</li>
+        <li>&nbsp;»&nbsp;</li>
+        <li title="Registered User List">Registered Users - List</li>
+      </ul>
+    </div>
+    <div class="contentSection">    
+       <div class="pageHeader text-left pull-left"><li class="fa fa-fw fa-users iColor"></li>&nbsp;Registered Users - List</div>
+        <div class="pull-right">
+                  <a href='{#URL}reguser/index/add' class="btn btn-secondary" title="Add Registered User"><i class="fa fa-user-plus"></i>&nbsp; Add User</a>
+        	</div>
+          {include="common/message"}
+       	<div class="pageSubHeader overflow-hidden psTitle">
+            <div class="pull-left margin-left-10">
+                 Filter Result
+            </div>
+        </div>
+       <div class="overflow-hidden">
+	      <form id="formSection" class="sky-form"  name="formSection" method="post" autocomplete="off" action="{#URL}reguser">
+      		<input type="hidden" name="pageNumber" id="pageNumber" value=""  />
+             <fieldset>
+             	<div class="row">
+                	<div class="viewmorSection" >
+                    	<section class="col col-3 pull-left margin-top-20">
+                            <label class="input">
+                                <input type="text" name="searchValues" id="searchValues" value="{$Search}"  placeholder="Search keyword" />
+                            </label>
+                        </section>
+                         <section class="col col-4 margin-top-5">
+                            <label class="select">Search Keyword In</label>
+                            <label class="select">
+                                <select name="searchFields" id="searchFields" class="form-control">
+                                    <option value="0">EveryWhere</option>
+                                    <option {if condition="$Field=='RU_FistName'"} selected="selected" {/if}  value="RU_FistName">First Name</option>
+                                     <option {if condition="$Field=='RU_LastName'"} selected="selected" {/if}  value="RU_LastName">Last Name</option>
+                                    <option {if condition="$Field=='RU_EmailID'"} selected="selected" {/if} value="RU_EmailID">Email</option>
+                                 </select>
+                                <i></i>
+                            </label>
+                         </section>
+                          <section class="col col-2">
+                            <label class="label">Status</label>
+                            <label class="checkbox margin-right-10">
+                            	<input type="radio" id="status" name="status" value="1"  {if="$status!=''"}{if="$status==1"}checked='checked'{/if}{/if}><i></i>Active
+                            </label>
+                            <label class="checkbox pull-left">
+                            	<input type="radio" id="status" name="status" value="0"  {if="$status!=''"}{if="$status==0"}checked='checked'{/if}{/if}><i></i>Inactive
+                            </label>
+                        </section>
+                         <section class="col col-3 margin-top-20">
+                         	<button type="submit" name="search" value="search" id="search" class="btn btn-primary"><i class="fa fa-search"></i>&nbsp;Search</button>
+					   		<button type="button" name="reset" value="reset" class="btn btn-danger" onclick="reloadPage();"><i class="fa fa-refresh"></i>&nbsp;Reset</button>
+                         </section>
+                    </div>
+                </div>
+             </fieldset>
+        	</form>
+       </div>
+       {if="$totalRecords>0"}
+           <div class="pageSubHeader overflow-hidden psTitle">
+                <div class="pull-left margin-left-10">
+                     {$totalRecords} Results Found 
+                </div>
+                <!--<div class="pull-right margin-right-10">
+                    <a href='{#URL#}metadetail/addMetaDetail' class="btn btn-primary btn-sm" title="Add Product"><i class="fa fa-edit"></i>&nbsp;Add MetaDetail</a>
+                </div>-->
+            </div>
+        {/if}
+        <table id="sky-table" cellpadding="0" cellspacing="0" width="100%" align="center">
+          <thead>
+            <tr>
+                <th width="50%">User Name</th>
+                <th width="30%">Email</th>
+                <th width="20%">Status</th>
+                <!--<th width="20%">Action</th>-->
+            </tr>
+          </thead>
+          <tbody>
+         {if condition="$DnrList!=NULL"}
+                 {loop="DnrList"}
+              <tr>
+                <td data-title="User Name"> <a href='{#URL#}reguser/index/edit/{$value.ID|keyEncrypt}' class="page-link" title="Edit Registered User">{$value.fullName}</a></td>
+                <td data-title="Email">{$value.RU_EmailID}</td>
+                <td data-title="Status">{if="$value.RU_Status==1"}<span class="icon active margin-left-15" title="Active"></span>{else}<span class="icon inactive margin-left-15" title="Inactive"></span>{/if}</td>
+                <!--<td data-title="Action">
+                    <a href='{#URL#}reguser/index/edit/{$value.ID|keyEncrypt}' class="btn btn-primary btn-sm" title="Edit"><i class="fa fa-edit"></i>&nbsp;Edit</a>
+                    <a href='{#URL#}reguser/index/delete/{$value.ID|keyEncrypt}' class="btn btn-danger btn-sm" title="Edit"><i class="fa fa-trash-o"></i>&nbsp;Delete</a>
+                </td>-->
+               </tr>
+              {/loop}
+              {else}
+              <tr><td class="text-center" colspan="4">No Record Found!</td></tr> 
+             {/if}
+        </tbody>
+        </table>
+         <div class="overflow-hidden pull-right">
+            {if condition="count($PagingList)>1"}
+                <ul class="pagination pagination-sm">
+                    {if="$PageSelected!=1"}
+                        <li class="paginate_button previous"><a href='javascript://' onclick="return GotoPage(1);"  title="First Page">First</a></li>
+                        <li class="paginate_button previous"><a href='javascript://' onclick="return GotoPage({$PageSelected-1});"  title="Previous">«</a></li>
+                    {/if}
+                    {loop="PagingList"} 
+                        {if="$PageSelected==$value.PageNo"}
+                            <li class="active paginate_button"><a title="Page No {$value.PageNo}">{$value.PageNo}</a></li>
+                        {else}
+                            <li class="paginate_button"><a href='javascript://' onclick="return GotoPage({$value.PageNo});" title="Page No {$value.PageNo}" >{$value.PageNo}</a></li>
+                        {/if} 
+                    {/loop}
+                    {if="$PageSelected!=$lastPage"}
+                        <li class="paginate_button next"><a href='javascript://' onclick="return GotoPage({$PageSelected+1});"  title="Next">»</a></li>
+                        <li class="paginate_button next"><a href='javascript://' onclick="return GotoPage({$lastPage});"  title="Last Page">Last</a></li>
+                    {/if}
+                </ul>
+            {/if}
+        </div>
+    </div>
+  </div>
+</div>

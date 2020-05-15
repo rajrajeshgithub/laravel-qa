@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+{include="top/head"}
+</head>
+<body id="body">
+<div class="gray-fix-nav">
+{include="top/top"}
+</div>
+<link type="text/css" rel="stylesheet" href='{#RESOURCES#}css/donation-dashboard.css' />
+<link rel="stylesheet" href='{#RESOURCES#}css/normalize.css'>
+<script type="text/javascript" src='https://www.google.com/jsapi'></script>    
+    <script type="text/javascript">
+    
+    // Load the Visualization API and the piechart package.
+    google.load('visualization', '1', {'packages':['corechart']});      
+    // Set a callback to run when the Google Visualization API is loaded.
+    google.setOnLoadCallback(drawChart);
+      
+   /* function drawChart() {
+      var jsonData = $.ajax({
+          url: SITEURL+"ut2myaccount/getChartData",
+          dataType: "json",
+          async: false
+          }).responseText;
+          
+      // Create our data table out of JSON data loaded from server.
+      var data = new google.visualization.DataTable(jsonData);
+var options = {
+        title: 'Motivation Level Throughout the Day',
+        hAxis: {
+          title: 'Time of Day',
+          format: 'h:mm a',
+          viewWindow: {
+            min: [7, 30, 0],
+            max: [17, 30, 0]
+          }
+        },
+        vAxis: {
+          title: 'Rating (scale of 1-10)'
+        }
+      };
+
+      var chart = new google.visualization.LineChart(
+        document.getElementById('chart_div'));
+
+     // chart.draw(data, options);
+      // Instantiate and draw our chart, passing in some options.
+     // var chart = new google.visualization.PieChart(document.getElementById('chart_div'));
+      chart.draw(data, {width: 400, height: 240});
+    }*/
+	function drawChart() {
+		
+		var jsonData = $.ajax({
+          url: SITEURL+"ut2myaccount/getChartData",
+          dataType: "html",
+          async: false
+          }).responseText;
+          
+	//alert(jsonData);
+	   // [['2004',  0],['2005',  0],['2006',  660],['2007',  1030]]    
+        var data = google.visualization.arrayToDataTable(jsonData);
+
+        var options = {
+          title: 'Company Performance',
+          curveType: 'none',
+          legend: { position: 'bottom' }
+        };
+
+        var chart = new google.visualization.LineChart(document.getElementById('chart_div'));
+
+        chart.draw(data, options);
+      }
+	
+	</script>
+<section class="fix-first-section fundraiser-page">
+<div id="chart_div"></div>
+</section>
+<section class="section-padding user-donation-detail">
+	<div class="container">
+        <ul class="donation-category-tab list-inline mb-0">
+            <li class="active-category-tab"><a href='{#URL#}ut2myaccount/ambassador-donations' title="Donations">DONATIONS</a></li>
+            <li><a href='{#URL#}ut2myaccount/ambassador-documents' title="Fundraisers">DOCUMENTS</a></li>
+        </ul>
+        <ul class="category-list-option list-inline mb-0">
+            <li class="active-option"><a href='{#URL#}ut2myaccount/viewall?type=NPO&id={function="keyEncrypt($LoggedUserID)"}' title="View All">View All</a></li>
+            
+        </ul>
+	</div>
+	<div class="user-donation-listing">
+    	<div class="container">
+			<div class="row listing-heading">        
+                <div class="col-md-6 col-sm-6 col-xs-5">Donor Name <a href='{#URL#}ut2myaccount/dashboard?sortfrom={$sortfrom}&sortto=DonorName'><i class="fa fa-chevron-circle-down hidden-xs"></i></a></div>
+                <div class="col-md-2 col-sm-2 hidden-xs">Type <a href='{#URL#}ut2myaccount/dashboard?sortfrom={$sortfrom}&sortto=Type'><i class="fa fa-chevron-circle-down hidden-xs"></i></a></div>
+                <div class="col-md-2 col-sm-2 col-xs-3">Date <a href='{#URL#}ut2myaccount/dashboard?sortfrom={$sortfrom}&sortto=Date'><i class="fa fa-chevron-circle-down hidden-xs"></i></a></div>
+                <div class="col-md-2 col-sm-2 col-xs-4">Amount <a href='{#URL#}ut2myaccount/dashboard?sortfrom={$sortfrom}&sortto=Amount'><i class="fa fa-chevron-circle-down hidden-xs"></i></a></div>
+			</div>
+        </div>
+        
+    	{if="$DonationArray!=NULL"}
+    	<div class="donation-listing-section">
+        	{loop="$DonationArray"}
+        	<div class="donation-listing-row">
+            	<div class="container">
+                	<div class="row">
+                        <div class="col-md-6 col-sm-6 col-xs-5 donation-name {if="$value.PDD_PIItemType=='CD'"}fundraiser-name{else}npo-organization-name{/if}">
+                        	 {$value.DonorName}<br><span class="note">{$value.RU_EmailID}</span>
+                        </div>
+                        <div class="col-md-2 col-sm-2 donation-type hidden-xs"><span class="type-ntd">{if="$value.PDD_TaxExempt==1"}TD{else}NTD{/if}</span></div>
+                        <div class="col-md-2 col-sm-2 col-xs-3 donation-date">{$value.PDD_DateTime|formatDate:'m/d/Y'}</div>
+                        <div class="col-md-2 col-sm-2 col-xs-4 donation-amount">${$value.PDD_Cost}</div>                    
+                    </div>
+                </div>	
+            </div>
+            {/loop}
+        </div>        
+        {else}
+        	<div class="nrf text-center">No record found!</div>
+        {/if}        
+        
+    </div>
+    
+</section>
+{include="bottom/bottom"}
+</body>
+</html>

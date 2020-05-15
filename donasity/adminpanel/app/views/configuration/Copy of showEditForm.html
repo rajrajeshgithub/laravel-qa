@@ -1,0 +1,72 @@
+<script type="text/javascript" src='{#RESOURCES#}js/validateconfig.js'></script>
+<script type="text/javascript">
+	$(document).ready(function()
+	{
+		$('.viewmoreBtn i').click(function()
+		{
+			 $(this).toggleClass("fa-plus fa-minus");
+		 	$(this).closest('.row').find('.viewmorSection').slideToggle();
+		
+		});
+	})
+</script>
+<link rel="stylesheet" type="text/css" href='{#RESOURCES#}css/style.css'>
+<div id="rightSection">
+  <div class="rightPannel">
+    <div class="breadcrumb">
+      <ul>
+        <li title="Dashboard"><a href='{#URL#}home/'><img src='{#RESOURCES#}img/dashboard_thumb.png'/>Dashboard</a></li>
+        <li>&nbsp;»&nbsp;</li>
+        <li title="">Settings</li>
+        <li>&nbsp;»&nbsp;</li>
+        <li title="Configuration - Edit">Configuration - Edit</li>
+      </ul>
+    </div>
+    <div class="contentSection">
+    <form class="sky-form" id="configform" name="configform"  method="post" action='{#URL#}configuration/index/update/' autocomplete="off">
+     	<input type="hidden" name="configid" id="configid" value="{$arrConfigDetail.0.ConfigID}"/>
+      <div class="pageHeader text-left">
+      		<li class="fa fa-fw fa-file-text iColor"></li>&nbsp;Configuration - Edit
+          	<div class="pull-right margin-right-20">
+                <button type="submit" class="btn btn-primary" title="Add Static Page" value=""><i class="fa fa-save"></i>&nbsp;Save Changes</button>
+                <a href='{#URL#}configuration/' class="btn btn-primary" title="Add Product"><li class="fa fa-list-ul"></li>&nbsp;Configuration List</a>
+                
+         	 </div>
+      </div>
+      {include="common/message"}       
+      <div class="">
+          		<fieldset>
+				<div class="row">
+					<div class="sky-form-headingsection psTitle">
+						<div class="sky-form-heading pull-left">Basic Configuration Details</div>
+						<div class="viewmoreBtn pull-right">
+							<i class="fa fa-minus"></i>
+						 </div>
+					</div>
+					<div class="viewmorSection" >
+					<!--<div class="sky-form-subheading">Sub Heading</div>-->
+					<section class="col col-6 margin-top-5">
+						<label class="select">Code</label>
+						<label class="textarea">
+							<textarea name="configCode" id="configCode">{$arrConfigDetail.0.ConfigCode}</textarea>
+						</label>
+					</section>
+					<section class="col col-6 margin-top-5">
+						<label class="select">Value</label>
+						<label class="textarea">
+							<textarea name="configValue" id="configValue">{$arrConfigDetail.0.ConfigValue}</textarea>
+						</label>
+					</section>
+				</div>
+				</div>				
+				</fieldset>
+				<fieldset>
+                	<section>
+                     <button type="submit" class="btn btn-primary" title="Add Static Page" value=""><i class="fa fa-save"></i>&nbsp;Save Changes</button>
+					</section>
+                </fieldset>		 
+      </div>
+      </form>
+    </div>
+  </div>
+</div>

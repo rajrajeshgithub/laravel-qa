@@ -1,0 +1,158 @@
+<script type="text/javascript">
+$(document).ready(function()
+{
+	{if="$action=='update'"}
+		$(".listsection").find(".form-toggle-icon").trigger("click");	
+	{/if}
+	
+	
+	$('.more').click(function(){
+		$(this).parent().parent().find('.limited').addClass('dn');
+		$(this).parent().parent().find('.full').removeClass('dn');
+	});
+	
+	$('.less').click(function(){
+		$(this).parent().parent().find('.limited').removeClass('dn');
+		$(this).parent().parent().find('.full').addClass('dn');
+	});	 
+});
+
+
+function GotoPage(pageNo)
+{
+	$('#pageNumber').val(pageNo);
+	$('#formSection').attr('action', '');
+	document.formSection.submit();
+	return false;
+}
+
+
+function DeleteCampaignComment(CampaignID,CommentID)
+{
+	if(confirm("Are you sure, you want to delete this comment ?"))
+	{
+		location.href=SITEURL+"campaigncomment/index/delete/"+CampaignID+"/"+CommentID;	
+	}	
+}
+</script>
+<!--<script type="text/javascript" src='{#RESOURCES#}js/includeEditor.js'></script>-->
+<script type="text/javascript" src='{#RESOURCES#}js/validatecampaigncomment.js'></script>
+<ul class="breadcrumb">
+    <li title="Dashboard"><a href='{#URL#}home/'>Dashboard</a></li>
+    <li title="Campaign List"><a href='{#URL#}campaign'>Campaign</a></li>
+    <li title="Campaign Comment Listing"><a href='{#URL#}campaigncomment/index/list/{$campID|keyEncrypt}'>Comments List</a></li>
+</ul>
+{include="common/message"}
+<div class="oh">
+	 <div class="col col-6">
+            <h1 class="heading-1">Comment - List</h1>
+        </div>
+</div>
+<div id="content-box" class="igs-form listsection">
+	 <div class="section-heading text-left">	
+        <li class="fa fa-fw fa-file-text iColor"></li>&nbsp;Comment - List<a href='javascript://' class="form-toggle-icon"><i class="fa fa-minus-square-o"></i></a>
+    </div>
+    <div class="content-section">
+     <fieldset>
+     <div class="row">
+     	<section class="col col-12">
+        	<table border="0" id="igs-table">
+            	<tr>
+                  <th width="15%">User Name</th>
+                  <th width="60%">Comment</th>
+                  <th width="10%">Show on Website</th>
+                  <th width="15%">Action</th>
+                </tr>
+                <tbody>
+                	{if="$CommentList"}
+                    {loop="CommentList"}
+                    <tr>
+                      <td data-title="User Name" valign="top" class="wordbreak">{$value.Camp_Cmt_UserName}</td>
+                      <td data-title="Comment" valign="top" class="wordbreak">
+                      <span class='limited'>{$value.limitedcomment}</span>
+                      <span class='full dn'>{$value.Camp_Cmt_Comment}<span>
+                      </td>
+                      <td data-title="Action" valign="top">
+                      {if="$value.Camp_Cmt_ShowOnWebsite=='1'"}
+                      <span class="icon active ml-15" title="Active"></span>
+                      {else}
+                      <span class="icon inactive ml-15" title="Inactive"></span>
+                      {/if}
+                      </td>
+                      <td data-title="Action" valign="top">
+                      <a href='{#URL#}campaigncomment/index/edit/{$value.Camp_Cmt_CampID|keyEncrypt}/{$value.Camp_Cmt_ID|keyEncrypt}#formsectiondiv' class="button-2 edit" title="Edit">
+                      Edit
+                      </a>&nbsp;
+                      <a  onclick="DeleteCampaignComment('{$value.Camp_Cmt_CampID|keyEncrypt}','{$value.Camp_Cmt_ID|keyEncrypt}')"href='javascript:' class="button-warning" title="Delete">
+                      Delete
+                      </a>
+                      </td>
+                    </tr>
+                    {/loop}
+                    {else}
+                    <tr><td colspan="5"><center>No Record Found</center></td></tr>
+                    {/if}
+                </tbody>
+            </table>
+            <!--{if condition="count($CommentList)>0"} <div class="record-found">Showing {$startRecord}-{$endRecord} of {$totalrecord} records</div>{/if}-->
+        </section>
+     </div>
+     </fieldset>
+     </div>
+</div>
+
+
+{if="$action=='update'"}
+    {$ActionURl='campaigncomment/index/update'}
+    <form name="commentform" id="commentform" method="post" action="{#URL#}{$ActionURl}">
+        <input type="hidden" name="CampID" id="CampID" value="{$campID}"/>
+        {if="$action=='update'"}
+        <input type="hidden" name="CommentID" id="CommentID" value="{$CommentDetail.Camp_Cmt_ID}"/>
+        {/if}
+        
+        <div id="content-box"  class="igs-form">
+            <div class="section-heading text-left">	
+                <li class="fa fa-fw fa-file-text iColor"></li>&nbsp;Edit/Delete Comment<a href='javascript://' class="form-toggle-icon"><i class="fa fa-minus-square-o"></i></a>
+            </div>
+            <div class="content-section">
+                <fieldset>
+                    <div class="row">
+                    	<section class="col col-12">
+                            <label class="label">Comment</label>
+                            <label class="textarea">
+                                <textarea rows="3" name="comment" id="comment"  placeholder="Enter comment" >{$CommentDetail.Camp_Cmt_Comment}</textarea>
+                            </label>
+                        </section>
+                        <section class="col col-12 ml-15">
+                            <label class="checkbox">
+                                <input type="checkbox" id="showonwebsite" name="showonwebsite" value="1" {if="$CommentDetail.Camp_Cmt_ShowOnWebsite=='1'"}checked="checked"{/if}/>
+                                <i></i>Show on Website
+                            </label>
+                        </section>
+    
+                        
+                        <section class="db ml-15">  
+                        <label class="mr-10 text-bold">Created Date : </label>
+                        <label class="">{$CommentDetail.Camp_Cmt_CreatedDate|formatDate:'n/j/Y h:ia'}</label>
+                        </section>
+                        <section class="db ml-15">  
+                        <label class="mr-10 text-bold">Last Update Date : </label>
+                        <label class="">{$CommentDetail.Camp_Cmt_LastUpdatedDate|formatDate:'n/j/Y h:ia'}</label>
+                        </section>
+                    </div>
+                </fieldset>
+           </div>
+           
+           <div class="content-section">
+                <fieldset>
+                    <div class="row">
+                        <button type="button" class="button-warning" title="Delete Comment" value="Delete"  
+                                onclick="DeleteCampaignComment('{$campID|keyEncrypt}','{$CommentDetail.Camp_Cmt_ID|keyEncrypt}')">
+                          		<i class="fa fa-trash-o"></i>&nbsp;Delete</button>&nbsp;
+                                <button type="submit" class="button-1" title="Update Comment" value="Save"><i class="fa fa-save"></i>&nbsp;Save Changes</button>
+                    </div>
+                </fieldset>
+            </div>
+       </div>
+    </form>            
+{/if}

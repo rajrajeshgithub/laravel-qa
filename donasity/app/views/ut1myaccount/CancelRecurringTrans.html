@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+{include="top/head"}
+
+<style>
+	
+</style>
+</head>
+<body class="igs-panel iframe-box">
+<div id="content-box">
+<section class="fundraiser-page-heading">
+  <div class="container">
+  	{include="common/message"}
+    <h2 class="section-heading t-green text-bold">Cancel Recurring</h2>
+  </div>
+</section>
+    <section class="">
+      <form name="credit-card" id="credit-card" method="post" action='{#URL}ut1myaccount/CancelRecurring' autocomplete="off" target="_top">
+        <input type="hidden" name="customerID" value="{$customerID}" />
+        <input type="hidden" name="subscriptionID" value="{$subscriptionID}" />
+        <div class="container"> 
+          {include="common/message"}
+          
+          <div class="row">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+              <div class="fonts-lato-regular p-10">
+                <div class="row">
+                  <div class="col-md-2 col-lg-2 col-sm-1"> </div>
+                  <div class="col-lg-8 col-md-8 col-sm-10 col-xs-12">
+                    <div class="billing-form-section">
+                      <div class="row">
+                        <div class="col-md-12 col-sm-12 col-xs-12">
+                          <label class="label" for="ccName">Comment (Optional)</label>
+                          <div class="form-group">
+                            <textarea name="comment" id="comment" rows="3" class="form-control" placeholder="Please enter reason to cancel recurring." style="width:100%" ></textarea>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="row">
+                     
+                        <div class="col-md-12 col-sm-6 col-xs-12">
+                        	<button type="submit" class="col-xs-5 button-1" title="Cancel">Cancel</button>
+                        	<button type="submit" class="col-xs-5 col-xs-offset-2  button-1 " title="Next">Next</button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-2 col-lg-2 col-sm-1"> </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+    </section>
+</div>  
+<!--end of code--> 
+</body>
+</html>

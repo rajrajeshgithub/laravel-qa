@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+{include="top/head"}
+<link type="text/css" rel="stylesheet" href='{#RESOURCES#}css/setup-fundraiser.css' />
+<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=places"></script>
+<script type="text/javascript" src='{#RESOURCES#}js/team-fundraiser-form.js'></script>
+<script type="text/javascript">
+	$(document).ready(function(){
+		$("#btnStartFund").click(function(){			
+			$("#startFund").val(1);
+			$("#form-section-payment").submit();
+		});
+	});
+</script>
+</head>
+<body id="body">
+<div class="gray-fix-nav">
+{include="top/top"}
+</div>
+<section class="fix-first-section fundraiser-page">
+</section>   
+
+<section class="section-padding setup-fundraiser edit-basic-detail">
+<div class="step-section">	
+	<div class="container">
+    	{include="common/message"}
+    	<div class="row">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                <h2 class="heading-1">{$pageheading}</h2>
+				<p class="f-18"><a href='{#URL#}ut1myaccount/FundraiserEdit/{$FundraiserDetail.Camp_ID|keyEncrypt}' title="Return">&lt; {#_RETURNTO_FUNDRAISER_#}</a><br />
+				<a href='{#URL#}ut1myaccount/fundraisers-list' title="Return">&lt; {#_RETURN_TO_DASHBOARD_#}</a></p>
+            </div>
+        </div>
+        <div class="row">		
+        	<div class="col-md-12 col-sm-12 col-xs-12"> 
+				<form id="form-section" name="form-section" method="post" action='{#URL#}ut1myaccount/UpdateTeamFundraiserBasicDetail' enctype="multipart/form-data">
+					<input type="hidden" name="FR_id" value='{$FundraiserDetail.Camp_ID|keyEncrypt}'>                       
+					<input type="hidden" name="urlFriendlyName" id="urlFriendlyName" value="{$FundraiserDetail.Camp_UrlFriendlyName}">
+					<input type="hidden" name="Camp_Location_City" id="Camp_Location_City" value='{$FundraiserDetail.Camp_Location_City}'>
+					<input type="hidden" name="Camp_Location_State" id="Camp_Location_State" value='{$FundraiserDetail.Camp_Location_State}'>
+					<input type="hidden" name="Camp_Location_Country" id="Camp_Location_Country" value='{$FundraiserDetail.Camp_Location_Country}'>
+					<input type="hidden" name="Camp_Location_Logitude" value='{$FundraiserDetail.Camp_Location_Logitude}'>
+					<input type="hidden" name="Camp_Location_Latitude" value='{$FundraiserDetail.Camp_Location_Latitude}'>
+					<input type="hidden" name="Camp_Location_Zip" value='{$FundraiserDetail.Camp_Location_Zip}'>
+
+					<h2 class="heading-2"><span class="mark-icon">1</span><span class="step-name">{$section_one_basic}</span></h2>                      	
+					<div class="step-content">
+						<h2 class="heading-3">{$header_choose_category}</h2>
+						<div class="row">
+							<div class="form-group">
+								{loop="CategoryList"}
+									<div class="col-md-4 col-sm-4 col-xs-12 mb-5">
+										<label class="checkbox"><input type="radio" name="category" value='{$value.NPOCat_ID}'  {if="$FundraiserDetail['Camp_Cat_ID']==$value.NPOCat_ID"}checked{/if}><i></i>{$value.$categoryname}</label>
+									</div>
+								{/loop}
+							</div>
+						</div>
+							<div class="mt-25">
+								<label class="label" for="title"><h3><span class="t-blue text-bold">{$set_fr_details}</span></h3></label>
+								<div class="row">
+									<div class="col-md-8 col-sm-10 col-xs-12">
+										<label class="label" for="title"><span class="t-blue text-bold">{$title_name_fr}</span> {$title_name_madeby}</label>
+										<div class="form-group">
+											<div class="oh f-14 text-bold text-italic">&nbsp;&nbsp;&nbsp;&nbsp;{$FundraiserDetail.Camp_Title}</div>
+										</div>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-md-8 col-sm-10 col-xs-12 mb-20">
+										<label class="label" for="subTitle">{$text_subtitle_team}</label>
+										<div class="form-group">
+											<input type="text" class="form-control" name="subTitle" id="subTitle" value='{$FundraiserDetail.Camp_ShortDescription}' />
+										</div>
+									</div>
+								</div>
+								{if="$FundraiserDetail.Camp_DescriptionHTML!=NULL"}
+								<div class="row">
+									<div class="col-md-8 col-sm-10 col-xs-12 mb-20">
+										<label class="label" for="title">{$about_fr}</label>
+										<div class="form-group mb-20">
+											<div class="oh mt-15 f-14 text-italic">{$FundraiserDetail.Camp_DescriptionHTML}</div>
+										</div>
+									</div>
+								</div>
+								{/if}
+								<div class="row">
+									<div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+									 <label class="label" for="subTitle"><span class="t-blue text-bold">{$camp_img_text}</span></label>
+									 <span class="note">{$upload_img_notes}</span>
+										<div class="form-group">
+											<label for="file" class="input-file">
+												<div class="button t-white"><input type="file" name="uploadPhoto" class="form-control" id="uploadPhoto"   onchange="this.parentNode.nextSibling.value = this.value"><i class="fa fa-upload"></i></div><input name="uploadImg" id="uploadImg" type="text" class="form-control" readonly="" />
+											</label>
+											
+										</div>
+									</div>
+									<div class="col-lg-3 col-md-3 col-sm-3 col-xs-3 mb-20 pt-20"> {$current_team_logo}<br />
+										<img src='{#URL#}/read_write/campaignimages/main/{$FundraiserDetail.camp_thumbImage}' width="80">
+									</div>
+								</div>                                
+								<div class="row">
+									<div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+										<label class="label" for="donation"><span class="t-blue text-bold">{$text_title_goal}</span> {$text_set_goal}</label>
+									</div>
+									<div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 mb-20">										
+										<div class="form-group">
+											<i class="icon-prepend fa fa-usd"></i>
+											<input type="text" class="form-control" name="donation" id="donation" placeholder="" value='{function="round($FundraiserDetail.Camp_DonationGoal)"}' />
+											<input type="hidden" name="origdon" class="form-control" id="origdon" value='{function="round($FundraiserDetail.Camp_DonationGoal)"}'>
+										</div>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-md-8 col-sm-10 col-xs-12">
+										<label class="label" for="location"><span class="t-blue text-bold">{$text_current_location}</span></label>
+										<span class="note">{$how_donors_location}</span>
+										<div class="form-group">
+											<input type="text" class="form-control" name="location" id="location" value='{$FundraiserDetail.Camp_Location}' />
+										</div>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-md-8 col-sm-10 colxs-12">
+										<div class="row">
+											<div class="col-md-12 col-sm-6 col-xs-12">
+												<div class="col-md-12 col-sm-6 col-xs-12">
+													<label class="label"><span class="t-blue text-bold">{$text_fr_start}</span> &mdash; {$FundraiserDetail.Camp_StartDate|formatDate:'m/d/Y'}</label>
+												</div>                                            
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>	
+						</div>
+					
+					
+					<div class="step step-2">                            
+						<div class="step-content">
+							<h2 class="heading-3 mt-20 pt-20">{$social_media}</h2>                               
+							<div class="row">
+								<div class="col-md-8 col-sm-10 col-xs-12">
+									<p>{$social_explain}</p>
+									<div class="row">
+										<div class="col-md-6 col-sm-6 col-xs-12">
+											<div class="form-group">
+												<i class="icon-prepend fa fa-facebook"></i>
+												<input type="text" class="form-control" name="facebookURL" id="facebookURL" placeholder="{$text_urlfacebook}" value='{$FundraiserDetail.Camp_SocialMediaUrl.facebook}'>
+											</div>
+										</div>
+										<div class="col-md-6 col-sm-6 col-xs-12">
+											<div class="form-group">
+												<i class="icon-prepend fa fa-youtube"></i>
+												<input type="text" class="form-control" name="youtubeURL" id="youtubeURL" placeholder="{$text_urlyoutube}"  value='{$FundraiserDetail.Camp_SocialMediaUrl.youtube}'>
+											</div>
+										</div>
+										<div class="col-md-6 col-sm-6 col-xs-12">
+											<div class="form-group">
+												<i class="icon-prepend fa fa-instagram"></i>
+												<input type="text" class="form-control" name="instagramURL" id="instagramURL" placeholder="{$text_urlinstagram}"  value='{$FundraiserDetail.Camp_SocialMediaUrl.instagram}'>
+											</div>
+										</div>                                              
+										<div class="col-md-6 col-sm-6 col-xs-12">
+											<div class="form-group">
+												<i class="icon-prepend fa fa-twitter"></i>
+												<input type="text" class="form-control" name="twitterURL" id="twitterURL" placeholder="{$text_urltwitter}"  value='{$FundraiserDetail.Camp_SocialMediaUrl.twitter}'>
+											</div>
+										</div>                                    
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<div class="row">
+						<div class="col-md-5 col-sm-5 col-xs-5 text-center mt-25">
+							<input type="submit" class="button-1 large-btn" value='{$btn_save_changes}' />
+						</div>
+					</div>
+							
+				</form>
+				
+	   
+				<form id="form-section-payment" name="form-section-payment" method="post" action='{#URL#}ut1myaccount/UpdateTeamFundraiserBasicDetail' enctype="multipart/form-data">
+					<input type="hidden" name="FR_id" value='{$FundraiserDetail.Camp_ID|keyEncrypt}'>
+					<input type="hidden" name="startFund" id="startFund" value="0">
+					<input type="hidden" name="urlFriendlyName" id="urlFriendlyName" value="{$FundraiserDetail.Camp_UrlFriendlyName}">
+					<input type="hidden" name="Camp_Location_City" id="Camp_Location_City" value='{$FundraiserDetail.Camp_Location_City}'>
+					<input type="hidden" name="Camp_Location_State" id="Camp_Location_State" value='{$FundraiserDetail.Camp_Location_State}'>
+					<input type="hidden" name="Camp_Location_Country" id="Camp_Location_Country" value='{$FundraiserDetail.Camp_Location_Country}'>
+					<input type="hidden" name="Camp_Location_Logitude" value='{$FundraiserDetail.Camp_Location_Logitude}'>
+					<input type="hidden" name="Camp_Location_Latitude" value='{$FundraiserDetail.Camp_Location_Latitude}'>
+					<input type="hidden" name="Camp_Location_Zip" value='{$FundraiserDetail.Camp_Location_Zip}'>
+					<input type="hidden" class="form-control" name="subTitle" id="subTitle" value='{$FundraiserDetail.Camp_ShortDescription}' />
+					<input type="hidden" class="form-control" name="donation" id="donation" value='{function="round($FundraiserDetail.Camp_DonationGoal)"}' />
+					<input type="hidden" name="category" value='{$FundraiserDetail.Camp_Cat_ID}' id="category">
+						
+						
+					<br/><br/><br/><br/><br/><br/>
+						
+						
+					{if="$FundraiserDetail['Camp_PaymentMode']=='INDIVIDUAL-STRIPE-ACCOUNT' && $FundraiserDetail['Camp_Stripe_Status']!=1"}                       
+					<div class="step step-3"> 
+						<h2 class="heading-2"><span class="mark-icon">2</span><span class="step-name">{$section_two_stripe}</span></h2>                      
+						<div class="step-content">                            	
+							<h2 class="heading-3">{$header_strip_form}</h2>
+							<div class="row">
+								<div class="col-md-8 col-sm-10 col-xs-12">
+									{$text_above_strip_button}
+								   <a href='{$STRIPE_TEAM_FUNDARISER_CONNECT_URL}' class="mb-10 db"><img src='{#RESOURCES#}img/stripe.png' /></a>
+								   {$text_below_strip_button}
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-md-8 col-sm-10 col-xs-12">
+									{$text_above_ein_textbox}
+									<span class="note">{$note_ein_number}</span>
+									<div class="form-group">
+										<input type="text" class="form-control" name="UUID" id="UUID" placeholder="{$placeholder_ein_textbox}" />
+									</div>
+								   <p>{$text_bottom}</p>
+								</div>
+							</div>
+						</div>
+					</div>
+					{/if}
+				
+				 
+				
+				
+					{if="($FundraiserDetail['Camp_PaymentMode']=='CAPTAIN-STRIPE-ACCOUNT' || $FundraiserDetail['Camp_PaymentMode']=='INDIVIDUAL-STRIPE-ACCOUNT' || $FundraiserDetail['Camp_PaymentMode']=='NPO-STRIPE-ACCOUNT') && $FundraiserDetail['Camp_Stripe_Status']==1"}
+					<div class="step step-3">
+					 <h2 class="heading-2"><span class="mark-icon">2</span><span class="step-name">{$section_two_stripe}</span></h2>                                    	
+						<div class="step-content">
+							
+							{if="$FundraiserDetail['Camp_PaymentMode']=='CAPTAIN-STRIPE-ACCOUNT' && $FundraiserDetail['Camp_Stripe_Status']==1"}
+							<h2 class="heading-3">{$designated_stripe_captain}</h2>
+							{/if}
+							{if="$FundraiserDetail['Camp_PaymentMode']=='INDIVIDUAL-STRIPE-ACCOUNT' && $FundraiserDetail['Camp_Stripe_Status']==1"}
+							<h2 class="heading-3">{$designated_stripe_indiv} {$FundraiserDetail['Camp_Stripe_ConnectedID']}</h2>
+							{/if}
+							{if="$FundraiserDetail['Camp_PaymentMode']=='NPO-STRIPE-ACCOUNT' && $FundraiserDetail['Camp_Stripe_Status']==1"}
+							<h2 class="heading-3">{$designated_stripe_npo} {$FundraiserDetail['Camp_NPO_EIN']}</h2>
+							{/if}
+						</div>
+					</div> 
+					{/if} 
+					
+					{if="$FundraiserDetail.Camp_Status==31 || $FundraiserDetail.Camp_Status==11"}
+					<div class="col-md-7 col-sm-7 col-xs-7 text-center mt-25">
+						<input type="button" class="button-1 large-btn" id="btnStartFund" value='{$btn_save_start}' />
+					</div>
+					{/if} 
+					
+					{if="$FundraiserDetail.Camp_Status==15"}
+						{$id=keyEncrypt($FundraiserDetail['Camp_ID'])}
+					<div class="col-md-7 col-sm-7 col-xs-7 text-center mt-25" style="padding:20px; background:#cccccc; background-color:#cccccc;">
+						{$text_fr_launched}				
+					</div>
+					<div class="col-md-7 col-sm-7 col-xs-7 text-center">
+						<a href='{#URL#}ut1myaccount/updateStatus/{$id}/{21|keyEncrypt}' title="{$text_stop_it}">{$text_stop_it}</a></li>
+					</div>
+					{/if}
+				</form>                     
+			</div>
+        </div>
+	</div> 
+</div>	
+</section>
+{include="bottom/bottom"}
+</body>
+<script type="text/javascript">
+$(document).ready(function()
+{
+	$("#form-section-payment").validate(
+	{
+		success: function(element)
+		{
+			$("#"+element[0].htmlFor).next("b.tooltip").remove();
+		},
+		errorPlacement: function(error, element)
+		{
+			element.next("b.tooltip").remove();
+			element.after("<b class='tooltip tooltip-top-right'>"+error.text()+"</b>");
+		},
+		rules:
+		{ 
+			UUID:{required:true},
+		},
+		messages:
+		{
+			UUID:{required:"Enter EIN number"},
+		},
+
+	});
+
+});
+</script>
+</html>

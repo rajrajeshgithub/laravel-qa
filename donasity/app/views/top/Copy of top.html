@@ -1,0 +1,95 @@
+<header>
+	<nav class="header navbar navbar-default navbar-fixed-top" role="navigation">
+      <div class="container-fluid">
+		<div class="menu-container page-scroll text-right">
+          <a href='{#URL#}ut1/Login-Popup' class="mobile-login-text visible-xs login-popup" title="Click here to login">{#_LOGIN_#}</a>
+		  <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse"> <span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span> </button>
+		  <a class="navbar-brand" href='{#URL#}home' title="Donasity"><img class="main-logo hidden-xs img-responsive" src='{#RESOURCES#}images/logo.png' alt="Logo image" /><img src='{#RESOURCES#}images/mobilelogo.png' class="visible-xs img-responsive" alt="Logo image" /></a>
+		</div>
+		<div class="collapse navbar-collapse navbar-ex1-collapse col-lg-offset-3 col-md-offset-4">
+		  <div class="top-menu-section">
+          
+          <ul class="nav navbar-nav">
+        
+            {loop="MenuArray"}
+                {if="$value.IsChild!=1"}
+                 <li class="dropdown">
+                    <a href='{#URL#}{$value.link}' class="dropdown-toggle" data-toggle="false" title="{$value.Caption}">{$value.Caption}</a>           
+                 </li>  
+                 {else}               
+                 <li class="dropdown">
+                        <a href='{#URL#}{$value.link}' class="dropdown-toggle" data-toggle="dropdown" title="{$value.Caption}">{$value.Caption}</a>
+                         <div class="dropdown-menu">
+                            <ul class="visible-xs-block">
+                                <li class="back-btn"><a href='javascript://' title="Click here to go back"><i class="fa fa-angle-left"></i><i class="fa fa-angle-left"></i>&nbsp;Back </a> </li>
+                            </ul>
+                            <ul class="col-lg-offset-3 col-md-offset-2">
+                            {loop="value.child"}
+                                <li><a href='{#URL#}{$value.link}' title="{$value.Caption}"><i class="fa fa-angle-right"></i>{$value.Caption}</a></li>
+                                {if="$counter%2 && $counter!=0"}
+                             		</ul>
+                            		<ul>
+                                {/if}
+                            {/loop}
+                            </ul>
+                        </div>
+                    </li>
+                 {/if} 
+              {/loop}
+              <li class="visible-xs-block dropdown"><a href='/donation_checkout' title="Click here to show cart">Donation Basket ( <i class="icmo icmo-basket4"></i> ) </a></li>
+              <!---<li class="visible-xs donate-btn"><a href='javascript://' title="Click here to donate">Donate</a></li>--->
+			</ul>
+		  </div>
+          <div class="top-quick-link hidden-xs">
+        	<ul class="list-inline">
+            	{$UserDetail=getSession('Users')}
+                {if="isset($UserDetail.UserType2)"}
+                {if="$UserDetail.UserType2.is_login"}
+                {$image=GetUT2LoginImage()}
+            	<!-- my account menu -->
+                <li class="my-account">
+                    <a href='javascript://' class="db my-account-a" title="login"><i class="t-green fa fa-angle-down"></i>
+                    <!--<img src='{#RESOURCES#}images/afterloginImg.png' alt="image" />-->
+                    <img src='{function="CheckImage(NPO_IMAGE_DIR,NPO_IMAGE_URL,NO_IMAGE_LOGIN_IMG,$image)"}' width="37" class="imgBorder-1" alt="" title="" rel="lightbox" />
+                    </a>
+                	<ul class="list-unstyled oh my-account-menu">
+                    	<li><a href='{#URL#}ut2myaccount' title="My Dashbord"><i class="t-green fa fa-angle-right f-20"></i> My Dashbord</a></li>
+                        <li><a href='{#URL#}ut2/logout' title="Log out"><i class="t-green fa fa-angle-right f-20"></i> Log out</a></li>
+                    </ul>
+                </li>
+                {else}
+                <!--<li class="login"><a href='{#URL#}ut1/Login-Popup' class="login-popup" title="Click here to login">{#_LOGIN_#}</a></li>   -->             
+                {/if}
+                {/if}
+
+               {if="isset($UserDetail.UserType1)"}
+               {if="$UserDetail.UserType1.is_login"}
+                {$image=GetUT1LoginImage()}
+                <li class="my-account">
+                    <a href='javascript://' class="db my-account-a" title="login"><i class="t-green fa fa-angle-down"></i>
+                    <img src='{function="CheckImage(UT1PROFILE_THUMB_IMAGE_DIR,UT1PROFILE_THUMB_IMAGE_URL,NO_IMAGE_LOGIN_IMG,$image)"}' width="37" class="imgBorder-1" alt="" title="" rel="lightbox" />
+                    <!--<img src='{#RESOURCES#}images/afterloginImg.png' alt="image" />--></a>
+                	<ul class="list-unstyled oh my-account-menu">
+                    	<li><a href='{#URL#}ut1myaccount' title="My Dashbord"><i class="t-green fa fa-angle-right f-20"></i> My Dashbord</a></li>
+                        <li><a href='{#URL#}/donation_checkout' title="Your Basket"><i class="t-green fa fa-angle-right f-20"></i>Donation Basket</a></li>
+                        <li><a href='{#URL#}ut1/logout' title="Log out"><i class="t-green fa fa-angle-right f-20"></i> Log out</a></li>
+                    </ul>
+                </li>
+                {else}
+                <li class="login"><a href='{#URL#}ut1/Login-Popup' class="login-popup" title="Click here to login">{#_LOGIN_#}</a></li>                
+                {/if}
+                {/if}
+                <li class="top-cart-icon"><a href='/donation_checkout' title="Your Basket"><i class="icmo icmo-basket4"></i></a></li>
+                <li class="p-relative top-search-icon"><a href='javascript://' title="Click here to search"><i class="fa fa-search"></i></a>
+                    <div class="top-search">
+                        <!--<form id="top-search-form" action='{#URL#}non-profits-search' method="get">-->
+                            <div class="top-search-input"><input type="text" name="keyword" class="topkeyword" placeholder="{#_SEARCH_CHARITIES_#}" onkeypress="SendUrlOnEnter(event)" /><button class="top-search-btn" type="button" title="Click here to search"  onclick="SendTopSearchUrl()"><i class="fa fa-search"></i></button></div>  	
+                        <!--</form>-->
+                    </div>
+                </li>
+            </ul>
+        </div>
+		</div>
+	  </div>
+	</nav>
+</header>

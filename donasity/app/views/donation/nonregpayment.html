@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+{include="top/head"}
+<link type="text/css" rel="stylesheet" href='{#RESOURCES#}css/payment.css'>
+<link type="text/css" rel="stylesheet" href='{#RESOURCES#}css/popup.css'>
+<script type="text/javascript" src='{#RESOURCES#}js/jquery.magnific-popup.js'></script>
+<script type="text/javascript" src='{#RESOURCES#}js/non-registered-payment.js'></script>
+<script type="text/javascript" src='{#RESOURCES#}js/inputmask.js'></script>
+<script type="text/javascript" src='{#RESOURCES#}js/jquery.inputmask.js'></script>
+<script type="text/javascript">
+$(document).ready(function(){
+$('#phoneNumber').inputmask("999-999-9999");
+$('#altPhoneNumber').inputmask("999-999-9999");	
+});
+
+</script>
+</head>
+<body id="body">
+<div class="gray-fix-nav">
+{include="top/top"}
+</div>
+<section class="fix-first-section">
+</section>
+<section class="section-padding">
+	<form name="billing-form" id="billing-form" method="post" action='{#URL#}donation/process_non_registred_charity_payment'>
+    	<input type="hidden" name="orderid" id="orderid" value="{$EncOrderID}"/>
+        <div class="container">
+        {include="common/message"}
+		<div class="container">
+        	{$pageheading}
+        	<div class="row">
+                <div class="col-md-12 col-sm-12 col-xs-12">
+                	<div class="step-section">
+                    	{if="$Registered_RowCount > 0"}
+                        {$checkoutdonationbasket}
+                        {else}
+                    	{$processcheckoutinformation}
+                        {/if}
+							<div class="step-content">
+                            	<div class="row">
+	                                <div class="col-lg-6 col-md-7 col-sm-8 col-xs-12">
+                                    	{$termscondion1}
+                                        <div class="billing-form-section">
+                                            {$checkout_pageheading}	
+                                            <div class="row">
+                                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                                    <label class="label" for="fname">{#_FIRST_NAME_#}</label>
+                                                    <div class="form-group">
+                                                        <input type="text" class="form-control" name="fname" id="fname" value="{$UserDetail.PD_BillingFirstName}" />
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                                    <label class="label" for="lname">{#_LAST_NAME_#}</label>
+                                                    <div class="form-group">
+                                                        <input type="text" class="form-control" name="lname" id="lname"  value="{$UserDetail.PD_BillingLastName}"/>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!--<div class="row">
+                                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                                    <label class="label" for="streetAddress1">{#_STREET_ADDRESS_1_#}</label>
+                                                    <div class="form-group">
+                                                        <input type="text" class="form-control" name="streetAddress1" id="streetAddress1"  value="{$UserDetail.PD_BillingAddress1}" />
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                                    <label class="label" for="streetAddress2">{#_STREET_ADDRESS_2_#}</label>
+                                                    <div class="form-group">
+                                                        <input type="text" class="form-control" name="streetAddress2" id="streetAddress2"   value="{$UserDetail.PD_BillingAddress2}"/>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                                    <label class="label" for="city">{#_CITY_#}</label>
+                                                    <div class="form-group">
+                                                        <input type="text" class="form-control" name="city" id="city" value="{$UserDetail.PD_BillingCity}" />
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                                    <label class="label" for="zipCode">{#_ZIP_CODE_#}</label>
+                                                    <div class="form-group">
+                                                        <input type="text" class="form-control" name="zipCode" id="zipCode"  value="{$UserDetail.PD_BillingZipCode}"/>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                                    <label class="label" for="country">{#_COUNTRY_#}</label>
+                                                    <div class="select form-group">
+                                                        <select class="form-control" name="country" id="country">
+                                                            <option value="">{#_UT1_REG_SELECT_COUNTRY_#}</option>
+                                                            // {loop="$CountryList"}
+                                                                <option value="{$value.Country_Abbrivation}" {if="$UserDetail.PD_BillingCountry==$value.Country_Abbrivation"} selected="selected"{/if}>
+                                                                	{$value.Country_Title}
+                                                                </option>
+                                                           // {/loop}
+                                                        </select>
+                                                        <span class="errorClass"></span>
+                                                        <i class="arrow fa fa-caret-down"></i>                    
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                                    <label class="label" for="state">{#_UT1_REG_STATE_#}</label>
+                                                    <div class="select form-group">
+                                                        <select class="form-control" name="state" id="state">
+                                                            <option value="">{#_UT1_REG_SELECT_STATE_#}</option>
+                                                          //  {loop="Statelist"}
+                                                            <option value="{$value.State_Value}" {if="$UserDetail.PD_BillingState==$value.State_Value"} selected="selected"{/if}>
+                                                            {$value.State_Name}
+                                                            </option>
+                                                          //  {/loop}
+                                                        </select>
+                                                        <span class="errorClass"></span>
+                                                        <i class="arrow fa fa-caret-down"></i>    
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                                        <label class="label" for="phoneNumber">{#_PHONE_NUMBER_#}</label>
+                                                        <div class="form-group">
+                                                            <input type="text" class="form-control" name="phoneNumber" id="phoneNumber"  value="{$UserDetail.PD_BillingPhone}" />
+                                                        </div>
+                                                    </div>
+                                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                                    <label class="label" for="altPhoneNumber">{#_ALTERNATE_PHONE_NUMBER_#}</label>
+                                                    <div class="form-group">
+                                                        <input type="text" class="form-control" name="altPhoneNumber" id="altPhoneNumber" />
+                                                    </div>
+                                                </div>
+                                            </div>-->
+                                            <div class="row">
+                                                <div class="col-md-12 col-sm-12 col-xs-12">
+                                                    <label class="label" for="emailAddress">{#_EMAIL_ADDRESS_#}</label>
+                                                    <div class="form-group">
+                                                        <input type="text" class="form-control" name="emailAddress" id="emailAddress" value="{$UserDetail.PD_BillingEmailAddress}" />
+                                                        <span class="t-gray f-14">{#_EMAIL_SUPPORT_TEXT_#}</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            {$bankaccountheading}
+                                            
+                                            <div class="row">
+                                                <div class="col-md-12 col-sm-12 col-xs-12">
+                                                    <label class="label" for="bankName">{#_BANK_NAME_#}</label>
+                                                    <div class="form-group">
+                                                        <input type="text" class="form-control" name="bankName" id="bankName" />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-12 col-sm-12 col-xs-12">
+                                                    <label class="label" for="abaRoutNumber">{#_ABA_ROUTINGNUMBER_#}</label>
+                                                    <div class="form-group">
+                                                        <input type="text" class="form-control" name="abaRoutNumber" id="abaRoutNumber"  value="{#ABA_ROUT_NUMBER#}"/>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-12 col-sm-12 col-xs-12">
+                                                    <label class="label" for="ddaNumber">{#_BAN_DN_#}</label>
+                                                    <div class="form-group">
+                                                        <input type="text" class="form-control" name="ddaNumber" id="ddaNumber" value="{#DDA_NUMBER#}" />
+                                                    </div>
+                                                </div>
+                                            </div>                                            
+                                             <div class="row">
+                                                <div class="col-md-12 col-sm-12 col-xs-12">
+                                                    <label class="label" for="confirmddaNumber">{#_RENTER_BAN_DN_#}</label>
+                                                    <div class="form-group">
+                                                        <input type="text" class="form-control" name="confirmddaNumber" id="confirmddaNumber" value="" />
+                                                    </div>
+                                                </div>
+                                            </div>
+											<div class="row">
+                                                <div class="col-md-12 col-sm-12 col-xs-12">
+                                                    <label class="label" for="confirmddaNumber">{#_ACCOUNT_TYPE_#}</label>
+                                                    <div class="form-group">
+														<div class="row">
+															<div class="col-md-3 col-sm-3 col-xs-6">
+																<label class="checkbox"><input type="radio" name="accountType" id="checking" value="Checking" checked><i></i>{#_CHECKING_#}</label>
+															</div>
+															<div class="col-md-3 col-sm-3 col-xs-6">
+																<label class="checkbox"><input type="radio" name="accountType" id="saving" value="Saving"><i></i>{#_SAVING_#}</label>
+															</div>
+														</div>                                                        
+                                                    </div>
+                                                </div>
+                                            </div>     
+                                            <div class="row">
+                                                <div class="col-md-12 col-sm-12 col-xs-12">
+                                                    <label class="label" for="checkNumber">{#_CHECK_NUMBER_#}</label>
+                                                    <div class="form-group">
+                                                        <input type="text" class="form-control" name="checkNumber" id="checkNumber" value="{#CHECK_NUMBER#}" />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                            <input type="hidden"  name="payableAmount" id="payableAmount" value="{$Sum_TransactionFee}" />
+                                            {$bankaccount_payableamount}
+                                                
+                                            </div>
+                                           	<div class="row">
+                                                <div class="col-md-12 col-sm-12 col-xs-12 mt-10">
+                                                	<label class="checkbox"><input type="checkbox" name="checkbox" id="term"><i></i>{#_DBS3_YES_AGREE_#} <a href='#termscondition' class="t-green termsCondition" >{#_DBS3_TERMS_CONDITIONS_#}</a>.</label>
+                                                </div>
+                                                <div class="col-md-12 col-sm-12 col-xs-12">
+                                                	{$termscondition}
+                                                </div>                                                
+                                            </div>
+                                            <div class="row">                                                
+                                                {if="$PaymentFail_RowCount>0"}<div class="col-md-6 col-sm-6 col-xs-12"> <a href="/donation/process_donation/{$EncOrderID}" class="t-blue mt-20 f-18 db">{#_DBS3_SKIP_FAILED_PAYMENT_#}</a> </div>{/if}                                                
+                                            	<div class="col-md-6 col-sm-6 col-xs-12" id="buttonpay"><button type="submit" class="button-1 large-btn col-xs-12 mt-10" title="Click here to Pay Now">{#_PAY_NOW_#}</button></div>
+                                            </div>										
+                                        </div>                                        
+                                    </div>
+    							</div>
+    						</div>
+    					{$nextstep}
+                        </div>                    	
+                    </div>
+                </div>
+            </div>
+	    </div>	
+   	</form>
+</section>
+{include="bottom/bottom"}
+{$donationreadmore}
+{$bankclickhere}
+{$termsandcondition_popcontent}
+{$terms_of_use}
+{$terms_of_service}
+</body>
+</html>

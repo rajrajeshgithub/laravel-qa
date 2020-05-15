@@ -1,0 +1,21 @@
+{include="email/email-top"}
+<div style="padding:10px 5px; font-size:14px; color:#333333;">
+Hello Administrator,<br />
+A new Fundraiser has been created.<br />
+{$FundraiserDetail.['Camp_ID']} {$FundraiserDetail.['Camp_Title']}<br />
+
+<p style="overflow:hidden;"><img src='{$FundraiserDetail[0]['Camp_ThumbImage_Full_Path']}'  alt="image" align="left"></p><br />
+{$FundraiserDetail[0]['Camp_CP_City']}<br />
+{$FundraiserDetail[0]['Camp_Description']}<br />
+{$FundraiserDetail[0]['Camp_Description']}<br />
+<a href="<link to fundraiser page that will allow webmaster to see fundraiser even though it is not approved yet>" title="" style="color:#abc340;">link 1</a>
+<a href='{$link}' title="" style="color:#abc340;">link 2</a>
+This Fundraiser has been linked to a registered NPO.<br />
+{if="npoDetail<>''"}
+	{$npoDetail['NPO_EIN']} {$npoDetail['NPO_Name']} {$npoDetail['NPO_City']}<br />
+	{$npoDetail['RU_FistName']} {$npoDetail['RU_LastName']}
+{/if}
+</div>
+{include="email/email-bottom"}
+
+

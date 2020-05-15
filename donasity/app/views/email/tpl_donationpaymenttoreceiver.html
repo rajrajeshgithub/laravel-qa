@@ -1,0 +1,9 @@
+{include="email/email-top"}
+<div style="padding:10px 5px; font-size:14px; color:#333333;">
+Hello {$detail.Name},<br />
+Someone has donated to your fundraiser: <strong style="color:#002f5b;">{$detail.Title}</strong>.<br />
+<strong style="color:#002f5b;">Amount Donated:</strong> ${$detail.Cost}<br /> 
+<strong>Note</strong>: If the above comment is not desired, you can log into your account, visit your fundraiser and delete it.<br />
+Your fundraiser is now <strong style="color:#002f5b;">{$detail.Percentage}%</strong> funded! Consider logging into your <a href='{#URL#}' title="" style="color:#abc340;">donasity</a> account and add an update to your fundraiser description or comments area.<br />
+</div>
+{include="email/email-bottom"}

@@ -1,0 +1,93 @@
+<script type="text/javascript" src='{#RESOURCES#}js/validateProductDetail.js'></script>
+<div id="rightSection">
+  <div class="rightPannel">
+    <div class="breadcrumb">
+      <ul>
+        <li title="Dashboard"><a href='{#URL#}home/'><img src='{#RESOURCES#}img/dashboard_thumb.png'/>Dashboard</a></li>
+        <li>&nbsp;»&nbsp;</li>
+        <li title="Products"><a href='{#URL#}cms/index/group-list'>Static Page Group</a></li>
+        <li>&nbsp;»&nbsp;</li>
+        {if="$case=='addgroup'"}
+        <li title="Product - Add">Static Page Group - Add</li>
+        {else}
+        <li title="Product - Add">Static Page Group - Edit</li>
+        {/if}
+      </ul>
+    </div>
+    <div class="contentSection">
+      <div class="pageHeader text-left pull-left"><li class="fa fa-fw fa-file-text iColor"></li>&nbsp;Static Page Group - {if="$case=='addgroup'"}Add{else}Edit{/if}</div>
+       <!--button right section -->
+        <div class="pull-right">
+          <a href='{#URL#}cms/index/group-list' class="btn btn-primary" title="Add Product">Group List</a>
+          <a href='{#URL#}cms' class="btn btn-primary" title="Add Product">Static Page List</a>
+        </div>
+        <!--button right section end -->
+       <div id="msgSection">
+                {if condition="$msgValues!=null"}
+            {if condition="$msgValues.msgType==1"}
+        	<div class="alert alert-error" style="line-height:1.5em">
+            	<p>{$msgValues.ErrorMsg}</p>
+        	</div>                            
+        	{elseif condition="$msgValues.msgType==2"}
+        	<div class="alert alert-success">
+            	<p>{$msgValues.ConfirmationMsg}</p>
+        	</div>                             
+        	{/if}
+    		{/if}
+            </div>
+      <div class="">
+         <form role="form" id="cmsgroupform" name="cmsgroupform"  method="post" {if="$case=='addgroup'"}action='{#URL#}cms/index/insert/'{else}action='{#URL#}cms/index/update-group/'{/if} autocomplete="off">
+         <input type="hidden" name="groupid" id="groupid" value="{$groupdetail.0.CMSPageGroupID}"/>
+            <div class="overflow-hidden psTitle pageSubHeader">
+                <div class="pull-left padding-left-10 margin-top-5">Basic Group Details:</div>
+                <div class="pull-right margin-right-10">
+                    {if="$case=='addgroup'"}
+                    <button type="submit" name="Save" value="Save" class="btn btn-primary btn-sm saveBtn"><i class="fa fa-save"></i> Save</button>
+                    {else}
+                    <button type="submit" name="Save" value="Save" class="btn btn-primary btn-sm saveBtn"><i class="fa fa-save"></i> Save Changes</button>
+                    {/if}
+                </div>      
+            </div>
+        <div class="userfrmDiv overflow-hidden">
+            <div class="form-group productfrmDiv detailSection1 pull-left clear-none">
+                <label class="form-label" for="base_sku">Language:</label>
+                <select name="language" id="language" class="form-control pull-left">
+                	{loop="language"}
+                    <option value="{$key}" {if="$groupdetail.0.Language == $key"} selected='selected' {/if}>{$value}</option>
+                    {/loop}
+                </select>
+            </div>
+        </div>
+        
+        <div class="userfrmDiv overflow-hidden">
+            <div class="form-group productfrmDiv detailSection1 pull-left clear-none">
+                <label class="form-label" for="base_sku">Group Name:</label>
+                <input type="text" class="form-control pull-left" id="grouptitle" name="grouptitle"  value="{$groupdetail.0.Title}" >
+            </div>
+            <div class="form-group productfrmDiv detailSection1 pull-left clear-none">
+              <label class="form-label" for="dynamic_sku">Sort Order:</label>
+              <input type="text" class="form-control pull-left" id="sortorder" name="sortorder"  value="{$groupdetail.0.SortingOrder}" >
+            </div>
+        </div>
+        
+        <div class="userfrmDiv overflow-hidden">
+            <div class="form-group productfrmDiv detailSection1 pull-left clear-none">
+                <input type="checkbox" class="" id="status" name="status"   value="1" {if="$groupdetail.0.Status=='1'"}checked="checked"{/if}>
+                <label class="form-label pull-left" >Display this group</label>
+            </div>
+        </div>
+        
+        <div class="overflow-hidden clear-both">
+            <div class="pull-right margin-bottom-10">
+                {if="$case=='addgroup'"}
+                <button type="submit" name="save" value="save" id="saveBtn" class="btn btn-primary saveBtn"><i class="fa fa-save"></i> Save</button>
+                {else}
+                <button type="submit" name="save" value="save" id="saveBtn" class="btn btn-primary saveBtn"><i class="fa fa-save"></i> Save Changes</button>
+                {/if}
+            </div>
+        </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

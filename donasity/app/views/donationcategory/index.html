@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="{#LANG_ID#}">
+<head>
+{include="top/head"}
+<link type="text/css" rel="stylesheet" href='{#RESOURCES#}css/donation-category.css'>
+<script type="text/javascript" src='{#RESOURCES#}js/donation-category.js'></script>
+</head><body>
+<div id="panel"> {include="top/top"}
+  <section class="first-section donation-category">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12 col-sm-12 col-xs-12">
+          <h1 class="page-heading">{if="LANG_ID=='en'"}make a donation{elseif="LANG_ID=='es'"}donar ahora{/if}</h1>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section class="section-padding make-donation-head">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-6 col-sm-6 col-xs-12 hidden-xs"> {$pageheading} </div>
+        <div class="col-md-6 col-sm-6 col-xs-12 mobile-search-section"> 
+          <!--<form  id="search-form" name="search-form" action='{#URL#}non-profits-search' method="get" class="p-relative">-->
+          <div class="main-search hidden-xs">
+            <div class="form-group m-0">
+              <input type="text" name="filter_title" id="filter_title" Placeholder="Search"  class="keyword"/>
+              <button type="button" class="search-btn"  onclick="SendSearchUrl()" ><i class="fa fa-search"></i></button>
+            </div>
+          </div>
+          <div class="search-section visible-xs-block">
+            <div class="form-group clear-mobile-margin">
+              <button class="search-btn" type="submit" title="{#_SEARCH_PLACEHOLDER_ALL_PAGES_#}"><i class="fa fa-search"></i></button>
+              <input type="text" name="searching" placeholder="{#_SEARCH_PLACEHOLDER_ALL_PAGES_#}">
+            </div>
+          </div>
+          <!--</form>--> 
+        </div>
+      </div>
+    </div>
+  </section>
+  <section class="section-padding donation-categories">
+    <div class="container">
+      <h2 class="heading-1 text-center visible-xs-block">{if="LANG_ID=='en'"}Donation Categories {elseif="LANG_ID=='es'"}Categor&iacute;as Donaci&oacute;n{/if}</h2>
+      <div class="row text-center"> {if="$Category!=''"}
+        {loop="Category"}
+        {if="$value.NPOCat_Image_Name!=''"}
+        <div class="col-md-3 col-sm-4 col-xs-6">
+        	<div class="donation-categories-box">
+                <img src='{#RESOURCES#}images/category-images/{$value.NPOCat_Image_Name}' class="img-responsive" alt="image">
+                <span class="donation-categories-name">{if="LANG_ID=='en'"}{$value.NPOCat_DisplayName_EN}{elseif="LANG_ID=='es'"}{$value.NPOCat_DisplayName_ES}{/if}</span> 
+                <span class="categories-quick-link">
+                    <a href='{#URL#}fundraisers-search?filter[category]={$value.NPOCat_ID}' class="button-1" title="Fundraisers">Fundraisers</a>
+                    <a href='{#URL#}non-profits-search?filter[category]={$value.NPOCat_ID}' class="button-1 npo-btn" title="Non Profits">Non Profits</a>
+                </span>
+            </div>
+        </div>
+        {/if}
+        {/loop}
+        {/if} </div>
+    </div>
+  </section>
+  {include="bottom/bottom"} </div>
+</body>
+</html>

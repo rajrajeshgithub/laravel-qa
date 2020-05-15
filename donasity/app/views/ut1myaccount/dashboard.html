@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+{include="top/head"}
+</head>
+<body id="body">
+<div class="gray-fix-nav">
+{include="top/top"}
+</div>
+<link type="text/css" rel="stylesheet" href='{#RESOURCES#}css/donation-dashboard.css' />
+
+
+<section class="fix-first-section fundraiser-page">
+</section>
+<section class="section-padding fundraiser-page-heading">
+	<div class="container">
+    	{include="common/message"}
+		{$pageheading}
+		<!-- user detail -->
+        {$userdetails}
+        <!-- user detail END -->
+    </div>
+</section>
+
+	<section class="section-padding">	
+	<div class="container f-18">
+	  {$ut1contactwphone}
+	</div>
+	</section>
+
+
+<section class="section-padding user-donation-detail">
+	<div class="container">
+        <ul class="donation-category-tab list-inline mb-0">
+            <li class="active-category-tab"><a href='{#URL#}ut1myaccount' title="{$tab_donations}">{$tab_donations}</a></li>
+            <li><a href='{#URL#}ut1myaccount/fundraisers-list' title="{$tab_fundraisers}">{$tab_fundraisers}</a></li>
+			<li><a href='{#URL#}ut1myaccount/RecurringProfiles' title="{$tab_recurring}">{$tab_recurring}</a></li>
+        </ul>
+
+		{if condition="$DonationArrayCount > 0"}
+        <ul class="category-list-option list-inline mb-0">
+            <li class="active-option"><a href='{#URL#}ut1myaccount/viewall?type=Donor&id={function="keyEncrypt($LoggedUserID)"}' title="View All">{$filter_view_all}</a></li>            
+        </ul>
+		{/if}
+	</div>
+
+
+	<div class="user-donation-listing">
+		{if condition="$DonationArrayCount > 0"}
+    	<div class="container">
+			<div class="row listing-heading">        
+                <div class="col-md-6 col-sm-6 col-xs-5">{$header_cause_name} <a href='{#URL#}ut1myaccount/dashboard?sortfrom={$sortfrom}&sortto=CauseName'><i class="fa fa-chevron-circle-down hidden-xs"></i></a></div>
+                <div class="col-md-2 col-sm-2 hidden-xs">{$header_type} <a href='{#URL#}ut1myaccount/dashboard?sortfrom={$sortfrom}&sortto=Type}'><i class="fa fa-chevron-circle-down hidden-xs"></i></a></div>
+                <div class="col-md-2 col-sm-2 col-xs-3">{$header_date} <a href='{#URL#}ut1myaccount/dashboard?sortfrom={$sortfrom}&sortto=Date'><i class="fa fa-chevron-circle-down hidden-xs"></i></a></div>
+                <div class="col-md-2 col-sm-2 col-xs-4">{$header_amount} <a href='{#URL#}ut1myaccount/dashboard?sortfrom={$sortfrom}&sortto=Amount'><i class="fa fa-chevron-circle-down hidden-xs"></i></a></div>
+			</div>
+        </div>
+		{/if}
+    	{if condition="$DonationArrayCount > 0"}
+    	<div class="donation-listing-section">
+        
+        	{loop="$DonationArray"}
+            <div class="donation-listing-row">
+            	<div class="container">
+                	<div class="row">
+                        <div class="col-md-6 col-sm-6 col-xs-5 donation-name {if="$value.PDD_PIItemType=='CD'"}fundraiser-name{else}npo-organization-name{/if}">
+                        {$value.PDD_PIItemName}<br>
+                         <span class="note">{$value.NPO_EIN}</span><br>
+						 <span class="note">{$value.NPOAddress}</span>
+                        </div>
+                        <div class="col-md-2 col-sm-2 donation-type hidden-xs"><span class="type-ntd">{if="$value.PDD_TaxExempt==1"}TD{else}NTD{/if}</span></div>
+                        <div class="col-md-2 col-sm-2 col-xs-3 donation-date">{$value.PDD_DateTime|formatDate:'m/d/Y'}</div>
+                        <div class="col-md-2 col-sm-2 col-xs-4 donation-amount">${$value.PDD_Cost}</div>                    
+                    </div>
+                </div>	
+            </div>
+            {/loop}
+        </div>        
+        
+        {else}
+        	<div class="nrf text-center">{$message_text_no_record_found}</div>
+        {/if}
+    </div>
+</section>
+
+{include="bottom/bottom"}
+</body>
+</html>

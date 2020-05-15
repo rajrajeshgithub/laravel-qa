@@ -1,0 +1,24 @@
+{include="email/email-top"}
+<div style="padding:10px 5px; font-size:14px; color:#333333;">
+  <p>Hello {$UserName},<br /><br />
+    Your recurring subscription with below details, has been canceled<br /><br />
+   <table style="font-size:14px; color:#333333;">
+  	<tr>
+    	<td>Item name </td>
+        <td> : {$DonationDetails.PDD_PIItemName}</td>
+    </tr>
+    <tr>
+    	<td>Item cost </td>
+        <td> : ${$DonationDetails.PDD_Cost}</td>
+    </tr>
+    <tr>
+    	<td>Recurring Mode</td>
+        <td> : {$DonationDetails.RecurringCycle}</td>
+    </tr>
+  </table>
+    <br />
+Using <link https://www.donasity.com>donasity.com</link>. 
+<p>Thank you for using donasity.com</p>
+</div>
+{include="email/email-bottom"}
+

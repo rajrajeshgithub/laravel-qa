@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+{include="top/head"}
+</head>
+<body id="body">
+<div class="gray-fix-nav">
+{include="top/top"}
+</div>
+<!--view all code-->
+<link type="text/css" rel="stylesheet" href='{#RESOURCES#}css/donation-dashboard.css'>
+<script type="text/javascript" src='{#RESOURCES#}js/bootstrap-multiselect.js'></script>
+<script type="text/javascript">
+$(document).ready(function()
+{
+	/*$('.category-list-option .select-all').click(function()
+	{
+		$(this).addClass('active-option');
+		$('.donation-listing-section .donation-listing-row').find('input[type="checkbox"]').prop('checked',true);
+	});
+	
+	$('.category-list-option .select-all').click(function()
+			{
+				if($(this).find('a').text()=="Select All")
+				{
+					$(this).find('a').text('Deselect All');
+					$('.donation-listing-section .donation-listing-row').find('input[type="checkbox"]').prop('checked',true);
+					jQuery(".dn").hide();
+				}
+				else
+				{
+					$(this).find('a').text('Select All');
+					$('.donation-listing-section .donation-listing-row').find('input[type="checkbox"]').prop('checked',false);
+				}
+	});*/
+	
+	$('.category-list-option .select-all').click(function()
+	{
+		$(this).addClass('active-option');
+		$('.donation-listing-section .donation-listing-row').find('input[type="checkbox"]').prop('checked',true);
+	});
+	
+	$('.category-list-option .select-all').click(function()
+			{
+				if($(this).find('a').text()=="Select all records below")
+				{
+					$(this).find('a').text('Deselect all records below');
+					$('.donation-listing-section .donation-listing-row').find('input[type="checkbox"]').prop('checked',true);
+					jQuery(".dn").hide();
+					jQuery(".exportmsg").hide();		
+				}
+				else
+				{
+					$(this).find('a').text('Select all records below');
+					$('.donation-listing-section .donation-listing-row').find('input[type="checkbox"]').prop('checked',false);
+				}
+	});
+	
+    $('#selectBox').multiselect(
+	{
+		nonSelectedText: 'Select values'
+	});
+    
+	jQuery(".ExportDonations").click(function()
+    {
+		var length = jQuery(".chkID:checked").length;
+		//alert(length);
+		if(length==0)
+		{
+			//alert("Please select atleast one to process for print");
+			jQuery(".exportmsg").show();
+			return false;
+		}
+		else
+		{
+			var formurl = SITEURL+"ut2myaccount/exportdonationlist";
+			//alert(formurl);
+			jQuery("#frm_donation").attr('action',formurl);
+			jQuery("#frm_donation").attr('method','post');
+			//jQuery("#frm_donation").attr('target',"_blank");
+			jQuery("#frm_donation").submit();
+		}
+    });
+	
+    jQuery(".PrintDonations").click(function()
+    {
+		var length = jQuery(".chkID:checked").length;
+		if(length==0)
+		{
+			//alert("Please select atleast one to process for print");
+			jQuery(".dn").show();
+			return false;
+		}
+		else
+		{
+			var formurl = SITEURL+"ut2myaccount/printdonationlist";
+			jQuery("#frm_donation").attr('action',formurl);
+			jQuery("#frm_donation").attr('method','post');
+			jQuery("#frm_donation").attr('target',"_blank");
+			jQuery("#frm_donation").submit();
+		}
+    })
+    
+    jQuery(".Taxable").click(function(){
+    	jQuery("#taxable").val(jQuery(this).attr('rel'));
+    	var formurl = SITEURL+"ut2myaccount/viewall";
+    	jQuery("#frm_donation").attr('action',formurl);
+    	jQuery("#frm_donation").attr('method','get');
+		jQuery("#frm_donation").removeAttr('target');
+    	jQuery("#frm_donation").submit();
+    })
+    
+    jQuery(".chkID").click(function(){
+    	
+    	var length = jQuery(".chkID:checked").length;
+    	if(length > 0)
+		{
+    		jQuery(".dn").hide();
+		}
+    })
+    jQuery(".submit").click(function(){
+    	var formurl = SITEURL+"ut2myaccount/viewall";
+    	jQuery("#frm_donation").attr('action',formurl);
+    	jQuery("#frm_donation").attr('method','get');
+    	jQuery("#frm_donation").removeAttr('target');
+    })
+
+});
+</script>
+<section class="fix-first-section fundraiser-page"> </section>
+<section class="section-padding fundraiser-page-heading">
+  <div class="container">
+    <h2 class="heading-1">{$pageheading}</h2>
+  </div>
+</section>
+{$MonthArray = array('1'=>'January','2'=>'February','3'=>'March','4'=>'April','5'=>'May','6'=>'June','7'=>'July','8'=>'August','9'=>'September','10'=>'October','11'=>'November','12'=>'December')}
+{$YearArray = array('2011'=>'2011','2012'=>'2012','2013'=>'2013','2014'=>'2014','2015'=>'2015','2016'=>'2016','2017'=>'2017','2018'=>'2018','2019'=>'2019','2020'=>'2020','2021'=>'2021','2022'=>'2022')}
+<form name="form-section" method="get" action='{#URL#}ut2myaccount/viewall' id="frm_donation">
+<input type="hidden" name="taxable" id="taxable">
+<input type="hidden" name="username" id="username" value='{$UserName}'>
+<input type="hidden" name="id" id="id" value='{$UserID}'>
+<section class="section-padding">
+    <div class="container">
+      <div class="row donation-filter-section">
+        <div class="col-md-3 col-sm-3 col-xs-12">
+          <label class="label" for="month">{$filter_month}</label>
+          <div class="select form-group">
+              <label class="multiselect">
+                    <select id="selectBox" multiple="multiple" size="3" name="month[]">
+                     {loop="MonthArray"}
+                     {$select=''}
+                     {if condition="in_array($key,$Month)"}
+                     	{$select='selected'}
+                     {/if}
+                     	<option value='{$key}' {$select}>{$value}</option>
+                     {/loop}
+                    </select>
+                </label>            
+                <i class="arrow fa fa-caret-down"></i>
+           </div>
+        </div>
+        <div class="col-md-3 col-sm-3 col-xs-12">
+          <label class="label" for="year">{$filter_year}</label>
+          <div class="select form-group">
+            <select class="form-control" name="year" id="year">
+              <option value="">{$filter_select_year}</option>
+               {loop="YearArray"}
+               {$select=''}
+                     {if condition="$Year==$key"}
+                     	{$select='selected'}
+                     {/if}
+               		<option value='{$key}' {$select}>{$value}</option>
+               {/loop}
+            </select>
+            <i class="arrow fa fa-caret-down"></i></div>
+        </div>
+        <div class="col-md-3 col-sm-3 col-xs-12">
+          <label class="label" for="keyword">{$filter_keyword}</label>
+          <div class="form-group">
+            <input type="text" class="form-control" name="keyword" id="keyword" placeholder="{$placeholder_enter_keyword}" value='{$keyword}'>
+          </div>
+        </div>
+        <div class="col-md-3 col-sm-3 col-xs-12">
+          <label class="label">&nbsp;</label>
+          <div class="form-group">
+            <button type="submit" class="button-1 col-xs-12 submit" title="Click here to show">{$text_show}</button>
+          </div>
+        </div>
+      </div>
+    </div>
+</section>
+<section class="section-padding user-donation-detail donation-page">
+  <div class="container"> 
+  	<p class="f-18"><a href='../ut2myaccount' title="Return">&lt; Return to Dashboard</a></p>
+    <ul class="category-list-option list-inline mb-0">
+      <li><a href='javascript://' title="View All" class="Taxable" rel=''>View All Records</a></li>
+      <li><a href='javascript://' title="Non Tax Deductable" class="Taxable" rel=0>{$filter_non_tax_deductable}</a></li>
+      <li><a href='javascript://' title="Tax Deductable" class="Taxable" rel=1>{$filter_tax_deductable}</a></li>
+    </ul>
+  </div>
+  <div class="container">
+	  <ul class="dash-select-link list-inline mb-0 category-list-option">
+		  <li class="select-all"><a href='javascript://' title="Select All">Select all records below</a></li>
+		  <li><a href='javascript://' title="Print" class="PrintDonations">{$hyperlink_print} selected records</a></li>
+		  <li><a href='javascript://' title="Export" class="ExportDonations">Export CSV selected records</a></li>
+	  </ul>  
+	</div> 
+  <div class="container dn"><div class="alert alert-danger mt-20">Please select atleast one to process for print.</div></div>
+  <div class="container exportmsg" style="display:none"><div class="alert alert-danger mt-20">Please select atleast one to process for export.</div></div>
+  <div class="user-donation-listing">
+    <div class="container">
+      <div class="row listing-heading">
+        <div class="col-md-6 col-sm-6 col-xs-5">{$header_donor_name} <a href='{#URL#}ut2myaccount/viewall?sortfrom={$sortfrom}&sortto=DonorName&id={$UserID}'><i class="fa fa-chevron-circle-down hidden-xs"></i></a></div>
+        <div class="col-md-2 col-sm-2 hidden-xs">{$header_type} <a href='{#URL#}ut2myaccount/viewall?sortfrom={$sortfrom}&sortto=Type&id={$UserID}'><i class="fa fa-chevron-circle-down hidden-xs"></i></a></div>
+        <div class="col-md-2 col-sm-2 col-xs-3">{$header_date} <a href='{#URL#}ut2myaccount/viewall?sortfrom={$sortfrom}&sortto=Date&id={$UserID}'><i class="fa fa-chevron-circle-down hidden-xs"></i></a></div>
+        <div class="col-md-2 col-sm-2 col-xs-4">{$header_amount} <a href='{#URL#}ut2myaccount/viewall?sortfrom={$sortfrom}&sortto=Amount&id={$UserID}'><i class="fa fa-chevron-circle-down hidden-xs"></i></a></div>
+      </div>
+    </div>
+    {if condition="$DonationArray!=NULL"}
+    <div class="donation-listing-section">
+      {loop="$DonationArray"}
+      <div class="donation-listing-row">
+        <div class="container">
+          <div class="row">
+          <label class="db">
+            <div class="col-md-6 col-sm-6 col-xs-5 donation-name {if="$value.PDD_PIItemType=='CD'"}fundraiser-name{else}npo-organization-name{/if}">
+                <label class="checkbox"><input type="checkbox" class="chkID" name="PDD_ID[]" id="PDD_ID" value='{$value.PDD_ID}'><i></i></label>{$value.DonorName} <span class="note">{$value.RU_EmailID}</span>
+            </div>
+            <div class="col-md-2 col-sm-2 donation-type hidden-xs"><span class="type-ntd">{if="$value.PDD_TaxExempt==1"}TD{else}NTD{/if}</span></div>
+            <div class="col-md-2 col-sm-2 col-xs-3 donation-date">{$value.PDD_DateTime|formatDate:'m/d/Y'}</div>
+            <div class="col-md-2 col-sm-2 col-xs-4 donation-amount">${$value.PDD_Cost}</div>
+          </label>
+          </div>
+        </div>
+      </div>
+      {/loop}
+    </div>
+    {else}
+    <div class="nrf text-center">{$message_text_no_record_found}</div>
+    {/if}
+    <!--
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12 col-sm-12 col-xs-12">
+          <nav class="fonts-lato-bold pull-right f-16">
+            <ul class="pagination">
+              <li><a href="#" aria-label="Previous"> <span aria-hidden="true">&laquo;</span></a></li>
+              <li class="active"><a href="javascript://" title="Page No 1">1</a></li>
+              <li><a href="#" title="Page No 2">2</a></li>
+              <li><a href="#" title="Page No 3">3</a></li>
+              <li><a href="#" title="Page No 4">4</a></li>
+              <li><a href="#" title="Page No 5">5</a></li>
+              <li><a href="#" title="Page No 6">6</a></li>
+              <li><a href="#" aria-label="Next"><span aria-hidden="true">»</span> </a> </li>
+            </ul>
+          </nav>
+        </div>
+      </div>
+    </div>-->
+     {if condition="$DonationArray!=NULL"}
+    <div class="container mt-20">
+      <div class="oh donation-bottom-menu"> <a href='javascript://' title="Donation Archive">{$hyperlink_donation_archive}</a> <a href='javascript://' title="Print" class="PrintDonations">{$hyperlink_print}</a> </div>
+    </div>
+    {/if}
+  </div>
+</section>
+</form>
+<!--end of code-->
+{include="bottom/bottom"}
+</body>
+</html>

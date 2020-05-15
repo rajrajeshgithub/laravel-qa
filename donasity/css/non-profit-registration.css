@@ -1,0 +1,12 @@
+/* CSS Document */
+section.non-profit-registration{background:url(../images/non-profit-registration-banner.jpg) no-repeat;background-size:cover;background-position:center bottom;}
+.non-profit-registration .page-heading{padding-top:12px; line-height:100px; padding-bottom:13px;}
+.non-profit-content .heading-1{margin-bottom:0px;}
+.non-profit-register-section .button-1, .ambassador-service .button-1{font-family:'quicksandbold',sans-serif; font-size:24px; width:160px; padding:13px 2px; border-radius:5px; border:2px solid #fff;}
+.ambassador-service .button-1{margin-bottom:10px;}
+.ambassador-service .button-1.ambassador-button{width:270px;}
+.or-text{font-family:'quicksandbold',sans-serif; font-size:24px; color:#999999; padding-top:5px; margin-right:5px; margin-left:10px; display:inline-block;}
+.ambassador-service {background: url(../images/ambasador-service.jpg) no-repeat;  background-size: cover; padding:90px 0px 130px 0px;}
+.ambassador-service p, .ambassador-service ul li{color:#fff;}
+.non-profit-register-section{padding:65px 0px 90px 0px; background:#f4f4f4;}
+.get-help-content{margin-top:50px;}

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="{#LANG_ID#}">
+<head>
+{include="top/head"}
+<script type="text/javascript" src='{#RESOURCES#}js/jquery.classyloader.min.js'></script>
+
+</head>
+<body>
+    <div id="panel">    
+    	<div class="gray-fix-nav">{include="top/top"}</div>
+        {include="campaign/middle"}
+         {include="bottom/bottom"}
+      
+   </div>
+</body>
+<script>
+	$(document).ready(function() {
+		$('.loader').ClassyLoader({
+			start: 'top',
+			percentage: 92,
+			speed: 15,
+			fontSize: '50px',
+			diameter: 70,
+			fontFamily:'Quicksand',
+			fontColor: 'rgba(255, 255, 255, 1)',
+			lineColor: '#b1c851',
+			remainingLineColor: 'transparent',
+			lineWidth: 15
+		});
+	});
+</script>
+
+</html>

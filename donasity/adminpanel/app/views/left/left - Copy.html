@@ -1,0 +1,29 @@
+<div id="leftSection">
+{$activeId = getActiveID()}
+<input type="hidden" name="activeTabID" id="activeTabID" value="{$activeId}" />
+  <div class="leftPannel">       
+    <ul class="mainUl">
+      <li id="0"><a href='{#URL#}home/' title="Dashboard"><img src='{#RESOURCES#}img/dashboard_thumb.png'/>&nbsp;<span>Dashboard</span></a></li>
+    {loop="arrModule"}
+    	<li id="{$value.Module_ID}" class=""><a href='{#URL#}{$value.Module_Url}' title="{$value.Module_Caption}"><i class="{$value.Module_Style} fa-lg"></i><span>&nbsp;{$value.Module_Caption}</span></a>
+        {if="$value.children!=''"}
+        	<ul class="subUl">        
+        {loop="value.children"}        	
+            <li><a href='{#URL#}{$value.Module_Url}' title="{$value.Module_Caption}">{$value.Module_Caption}</a>
+            {if="$value.children!=''"}
+        	<ul class="subUl">        
+                {loop="value.children"}        	
+                    <li><a href='{#URL#}{$value.Module_Url}' title="{$value.Module_Caption}">{$value.Module_Caption}</a></li>                    
+                {/loop}
+                    </ul>
+                {/if}
+                </li>                   
+                {/loop}
+        	</ul>
+        {/if}
+        </li>
+    {/loop}
+	<li><a class="leftcollpase"><i class="fa fa-fw fa-arrow-circle-o-left fa-lg"></i><span>Collapse Menu</span></a></li>
+    </ul>
+  </div>
+</div>

@@ -1,0 +1,72 @@
+<script type="text/javascript" src='{#RESOURCES#}js/validatecmsgroup.js'></script>
+<script type="text/javascript">
+	$(document).ready(function() {
+		$('.viewmoreBtn i').click(function() {
+			 $(this).toggleClass("fa-plus fa-minus");
+			 $(this).closest('.row').find('.viewmorSection').slideToggle();
+		});
+	});
+</script>
+<ul class="breadcrumb">
+  <li title="Dashboard"><a href='{#URL#}home/'>Dashboard</a></li>
+  <li title="CMS">CMS</li>
+  <li title="Static Page Group List"><a href='{#URL#}static/index/group-list'>Static Pages Group</a></li>
+  <li title="Group - {if="$case=='addgroup'"}Add{else}Edit{/if}">{if="$case=='addgroup'"}Add {else} Edit{/if}</li>
+</ul>
+{include="common/message"}
+<form class="igs-form" id="cmsgroupform" name="cmsgroupform"  method="post" {if="$case=='addgroup'"}action='{#URL#}static/index/insert/'{else}action='{#URL#}static/index/update-group/'{/if} autocomplete="off">
+  {if="$case!='addgroup'"}
+  <input type="hidden" name="groupid" id="groupid" value="{$groupdetail.0.CMSPageGroupID}" />
+  {/if}
+  <div class="oh">
+    <div class="col col-6">
+      <h1 class="heading-1">&nbsp;Static Pages Group - {if="$case=='addgroup'"}Add{else}Edit{/if}</h1>
+    </div>
+    <div class="col col-6 text-right mt-15"> <a href='{#URL#}static/index/group-list' class="button-2" title="Group List"><i class="fa fa-list-ul"></i>&nbsp;Group List</a> 
+      {if="$case=='addgroup'"}
+      <button type="submit" class="button-1" title="Add Group" value="Save"> <i class="fa fa-save"></i>&nbsp;Save</button>
+      {else}
+      <button type="submit" class="button-1" title="Update Group" value="Save Changes"> <i class="fa fa-save"></i>&nbsp;Save Changes</button>
+      {/if} </div>
+  </div>
+  <div id="content-box" >
+    <div class="section-heading text-left">
+      <li class="fa fa-fw fa-file-text iColor"></li>
+      &nbsp;Basic Group Details<a href='javascript://' class="form-toggle-icon"><i class="fa fa-minus-square-o"></i></a> </div>
+    <input type="hidden" name="language" id="language" value="en"/>
+    <div class="content-section">
+      <fieldset>
+        <div class="row"> 
+          <section class="col col-6">
+            <label class="label">Group Name</label>
+            <label class="input">
+              <input type="text" id="grouptitle" name="grouptitle"  value="{$groupdetail.0.Title}"   placeholder="Enter Group Name" />
+            </label>
+          </section>
+          <section class="col col-6">
+            <label class="label">Sort Order</label>
+            <label class="input">
+              <input type="text" placeholder="Enter sort order" id="sortorder" name="sortorder"  value="{$groupdetail.0.SortingOrder}" />
+            </label>
+          </section>
+          <section class="col col-6">
+            <label class="label">&nbsp;</label>
+            <label class="checkbox">
+              <input type="checkbox" id="status" name="status"   value="1" {if="$groupdetail.0.Status=='1'"}checked="checked"{/if} />
+              <i></i> Display this group </label>
+          </section>
+        </div>
+      </fieldset>
+    </div>
+    <div class="content-section">
+      <fieldset>
+        <div class="row pull-right"> 
+          {if="$case=='addgroup'"}
+          <button type="submit" class="button-1" title="Add Group" value="Save"> <i class="fa fa-save"></i>&nbsp;Save</button>
+          {else}
+          <button type="submit" class="button-1" title="Update Group" value="Save Changes"> <i class="fa fa-save"></i>&nbsp;Save Changes</button>
+          {/if} </div>
+      </fieldset>
+    </div>
+  </div>
+</form>

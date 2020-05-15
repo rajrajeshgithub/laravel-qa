@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+{include="top/head"}
+</head>
+<body id="body">
+<div class="gray-fix-nav"> {include="top/top"} </div>
+<link type="text/css" rel="stylesheet" href='{#RESOURCES#}css/ut1.css' />
+<link type="text/css" rel="stylesheet" href='{#RESOURCES#}css/bootstrap-datepicker.css'>
+<script type="text/javascript" src='{#RESOURCES#}js/inputmask.js'></script> 
+<script type="text/javascript" src='{#RESOURCES#}js/jquery.inputmask.js'></script> 
+<script type="text/javascript" src='{#RESOURCES#}js/ut2manageprofile.js'></script> 
+<script type="text/javascript" src='{#RESOURCES#}js/bootstrap-datepicker.js'></script>
+<section class="fix-first-section fundraiser-page"> </section>
+<section class="section-padding">
+    <div class="container"> 
+    	{include="common/message"}
+        <div class="login-container">
+            <div class="row">
+                <div class="col-md-12 col-sm-12 col-xs-12">
+                    <h2 class="heading-1 login-heading">{$pageheading}</h2>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2 col-xs-12">
+                    <div class="account-section"> 
+                        <!--<h2 class="heading-3 text-center">{#_CREATE_ACCOUNT_#}</h2>-->
+                        <form id="manage-profile-form" name="manage-profile-form" action='{#URL#}ut2myaccount/update-profile' method="post" autocomplete="off" enctype="multipart/form-data">
+                            <div class="row">
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    <label class="label" for="fname">{$caption_first_name}</label>
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" name="fname" id="fname" value="{$UserDetails.RU_FistName}" />
+                                    </div>
+                                </div>
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    <label class="label" for="lname">{$caption_last_name}</label>
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" name="lname" id="lname" value="{$UserDetails.RU_LastName}" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    <label class="label" for="streetAddress1">{$caption_address_1}</label>
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" name="Address1" id="Address1" value="{$UserDetails.RU_Address1}" />
+                                    </div>
+                                </div>
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    <label class="label" for="streetAddress2">{$caption_address_2}</label>
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" name="Address2" id="Address2"  value="{$UserDetails.RU_Address2}" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    <label class="label" for="city">{$caption_city}</label>
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" name="city" id="city" value="{$UserDetails.RU_City}" />
+                                    </div>
+                                </div>
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    <label class="label" for="zipCode">{$caption_zip_code}</label>
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" name="zipCode" id="zipCode" value="{$UserDetails.RU_ZipCode}" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    <label class="label" for="country">{$caption_country}</label>
+                                    <div class="select form-group">
+                                        <select class="form-control" name="country" id="country">
+                                            <option value="">{$caption_select_country}</option>                                           
+                                            {loop="$CountryList"}
+                                            <option value="{$value.Country_Abbrivation}" {if="$UserDetails.RU_Country == $value.Country_Abbrivation"} selected="selected" {/if}> {$value.Country_Title} </option>
+                                            {/loop}
+                                        </select>
+                                        <span class="errorClass"></span> <i class="arrow fa fa-caret-down"></i> </div>
+                                </div>
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    <label class="label" for="state">{$caption_state}</label>
+                                    <div class="select form-group">
+                                        <select class="form-control" name="state" id="state">
+                                            <option value="">{$caption_select_state}</option>
+                                            {loop="$StateList"}
+                                            <option value="{$value.State_Value}" {if="$UserDetails.RU_State == $value.State_Value"} selected="selected" {/if}>{$value.State_Name}</option>
+                                            {/loop}
+                                        
+                                        </select>
+                                        <span class="errorClass"></span> <i class="arrow fa fa-caret-down"></i> </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    <label class="label" for="phoneNumber">Phone Number</label>
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" name="phoneNumber" id="phoneNumber" value="{$UserDetails.RU_Phone}" />
+                                    </div>
+                                </div>
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    <label class="label" for="altPhoneNumber">{$caption_alternate_phone_number}</label>
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" name="altPhoneNumber" id="altPhoneNumber" value="{$UserDetails.RU_Mobile}" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    <label class="label" for="gender">{$caption_gender}</label>
+                                    <div class="select form-group">
+                                        <select class="form-control" name="gender" id="gender">
+                                            <option value="">{$caption_select_gender}</option>
+                                            {loop="$gender"}
+                                            <option value="{$key}" {if="$UserDetails.RU_Gender==$key"} selected="selected" {/if}>{$value}</option>
+                                            {/loop}
+                                        </select>
+                                        <span class="errorClass"></span> <i class="arrow fa fa-caret-down"></i> </div>
+                                </div>
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    <label class="label" for="altPhoneNumber">{$caption_dob}</label>
+                                    <div class="form-group date" id="dob" data-date="12/25/1991" data-date-format="mm/dd/yyyy" data-date-viewmode="years"> <i class="icon-append fa fa-calendar add-on t-gray"></i>
+                                        <input type="text" class="form-control" name="dob" {if="$UserDetails.RU_DOB!='0000-00-00'"} value="{$UserDetails.RU_DOB|formatDate:'m/d/Y'}"{/if} readonly />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    <label class="label" for="phoneNumber">{$caption_company_name}</label>
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" name="company" id="company" value="{$UserDetails.RU_CompanyName}" />
+                                    </div>
+                                </div>
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    <label class="label" for="altPhoneNumber">{$caption_designation}</label>
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" name="designation" id="designation" value="{$UserDetails.RU_Designation}" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-12">
+                                    <label class="label" for="phoneNumber">{$caption_email_address}</label>
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" readonly="true" value="{$UserDetails.RU_EmailID}" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row"> 
+                            	{if="isset($term)"}{$term}{/if}
+                                <div class="col-md-12 col-sm-12 col-xs-12 mt-10 text-center">
+                                    <button type="submit" class="button-1" title="Update">{$text_update}</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{include="bottom/bottom"}
+</body>
+</html>

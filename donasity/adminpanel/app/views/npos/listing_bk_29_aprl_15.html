@@ -1,0 +1,266 @@
+<script>
+function ExportData()
+{
+	var ActionUrl	= SITEURL+'npos/index/export-npos';
+	$('#formSection').attr('action',ActionUrl);	
+	$('#formSection').submit();
+}
+</script>
+<div id="rightSection">
+  <div class="rightPannel">
+    <div class="breadcrumb">
+      <ul>
+        <li title="Dashboard"><a href='{#URL#}home/'><img src='{#RESOURCES#}img/dashboard_thumb.png'/>Dashboard</a></li>
+        <li>&nbsp;»&nbsp;</li>
+        <li title="NPOs">Non-Profit organization</li>
+        <li>&nbsp;»&nbsp;</li>
+        <li title="NPOs List">List</li>
+      </ul>
+    </div>
+    <div class="contentSection">
+      	<div class="pageHeader text-left pull-left"><li class="fa fa-fw fa-file-text iColor"></li>&nbsp;Non-Profit organization - List</div>
+        <!--button right section -->
+        <div class="pull-right">
+          <a href='{#URL#}npocategory' class="btn btn-secondary" title="Manage Categories"><i class="fa fa-list-ul"></i>&nbsp;Manage Categories</a>
+          <a href='{#URL#}npos/index/add-npos' class="btn btn-secondary" title="Add NPOs"><i class="fa fa-edit"></i>&nbsp;Add NPOs</a>
+          <a href='{#URL#}npos/index/import-csvfile' class="btn btn-secondary" title="Import CSV"><i class="fa fa-download "></i>&nbsp;Imoprt CSV</a>
+        </div>
+        {include="common/message"}
+        <div class="pageSubHeader overflow-hidden psTitle">
+            <div class="pull-left margin-left-10">
+                 Filter Result
+            </div>
+        </div>
+       <div class="overflow-hidden">
+       <form class="sky-form" id="formSection" name="formSection" method="post" autocomplete="off" action="{#URL#}npos">
+      		<input type="hidden" name="pageNumber" id="pageNumber" value=""  />
+            <input type="hidden" name="categoryparentid" id="categoryparentid" value="{$categoryparentid}"/>
+             <div class="row">
+					<div class="viewmorSection" >
+                    	<section class="col col-3 pull-left">
+                            <label class="select">
+                            <select name="category" id="category">
+								<option value="">Category</option>
+                                {loop="category"}
+                                <option value="{$value.NPOCat_CodeName}" {if="$searchcategory == $value.NPOCat_CodeName"} selected='selected' {/if} id="{$value.NPOCat_ID}">
+                                	{$value.space} {$value.NPOCat_DisplayName_EN}
+                                </option>
+                                {/loop}
+                            </select>
+                            <i></i>
+                            </label>
+                        </section>
+                        
+                        <section class="col col-2 pull-left">
+                            <label class="select">
+                            <select name="state" id="state">
+								<option value="">State</option>
+                                {loop="state"}
+                                {if="$value.State_Name != ''"}
+                                <option value="{$value.State_Value}" {if="$SearchState === $value.State_Value"} selected='selected' {/if}>{$value.State_Name}</option>
+                                {/if}
+                                {/loop}
+                            </select>
+                            <i></i>
+                            </label>
+                        </section>
+                        
+                        <section class="col col-2 pull-left">
+                            <label class="select">{$city}
+                            <select name="city" id="city">
+								<option value="">City</option>
+                                {loop="CityList"}
+                                <option value="{$value.NPO_City}" {if="$Searchcity == $value.NPO_City"} selected='selected' {/if}>{$value.NPO_City}</option>
+                                {/loop}
+                            </select>
+                            <i></i>
+                            </label>
+                        </section>
+                        
+                        <section class="col col-2 pull-left">
+                            <label class="select">
+                            <select name="status" id="status">
+								<option value="">Status</option>
+                                <option value="1" {if="$status == '1'"} selected='selected' {/if}>Active</option>
+                                <option value="0" {if="$status == '0'"} selected='selected' {/if}>Inactive</option>
+                            </select>
+                            <i></i>
+                            </label>
+                        </section>
+                        
+                        <section class="col col-3 pull-left">
+                            <label class="select">
+                            <select name="deductionmode" id="deductionmode">
+								<option value="">Deduction Mode</option>
+                                {loop="DeductionMode"}
+                                <option value="{$value.NPO_DedCode}" {if="$deductionmode == $value.NPO_DedCode"} selected='selected' {/if}>{$value.NPO_DedDescription}</option>
+                                {/loop}
+                            </select>
+                            <i></i>
+                            </label>
+                        </section>
+                    </div>
+             </div>
+             
+             <div class="row">
+					<div class="viewmorSection" >
+                    	<section class="col col-2">
+                            <label class="select">Text Search</label>
+                            <label class="select">
+                                <select name="fields" id="fields">
+                                    <option value="">-Any Where-</option>
+                                    <option value="N.NPO_Name" {if="$fields=='N.NPO_Name'"} selected='selected' {/if}>Name</option>
+                                    <option value="N.NPO_EIN"  {if="$fields=='N.NPO_EIN'"} selected='selected' {/if}>EIN</option>
+                                    <option value="N.NPO_Street" {if="$fields=='N.NPO_Street'"} selected='selected' {/if}>Street</option>
+                                </select>
+                                <i></i>
+                            </label>
+                        </section>
+                        
+                        <section class="col col-2 margin-top-20">
+                            <label class="select">
+                                <select name="condition" id="condition">
+                                    <option value="0" {if="$comparecondition == 0"} selected='selected' {/if}>Is Like</option>
+                                    <option value="1" {if="$comparecondition == 1"} selected='selected' {/if}>Start With</option>
+                                    <option value="2" {if="$comparecondition == 2"} selected='selected' {/if}>Exact Match</option>
+                                </select>
+                                <i></i>
+                            </label>
+                        </section>
+                        
+                        <section class="col col-4 margin-top-20">
+                            <label class="input">
+                                <input type="text" id="keyword" name="keyword"  value="{$keyword}"   placeholder="Search Keyword"/>
+                            </label>
+                        </section>
+                        
+                        <section class="col col-4 margin-top-20">
+                        <button type="submit" name="search" value="search" id="search" class="btn btn-primary"><i class="fa fa-search"></i>&nbsp;Show Result</button>
+                        <button type="button" name="reset" value="reset" class="btn btn-danger" onClick="reloadPage();"><i class="fa fa-refresh"></i>&nbsp;Reset</button>
+                        <button type="button" name="export" value="Export Result" id="export" class="btn btn-secondary" onclick="ExportData()"><i class="fa fa-search"></i>&nbsp;Export Result</button>
+                        </section>
+                    </div>
+             </div>
+             
+        	</form>
+	   </div>
+       <!--commented code -->
+       {if="$totalnpos > 0"}<!--start total count condition -->
+       <div class="pageSubHeader overflow-hidden psTitle">
+           <div class="pull-left margin-left-10 margin-top-10">
+                 Showing {$startRecord}-{$endRecord} of {$totalnpos} records
+           </div>
+            <div class="pull-right margin-right-10">
+            	{if condition="count($PagingList)>1"}
+                <ul class="pagination pagination-sm margin-top-5">
+                    {if="$PageSelected!=1"}
+                        <li class="paginate_button previous"><a href='javascript://' onClick="return GotoPage(1);"  title="First Page">First</a></li>
+                        <li class="paginate_button previous"><a href='javascript://' onClick="return GotoPage({$PageSelected-1});"  title="Previous">«</a></li>
+                    {/if}
+                    {loop="PagingList"} 
+                        {if="$PageSelected==$value.PageNo"}
+                            <li class="active paginate_button"><a title="Page No {$value.PageNo}">{$value.PageNo}</a></li>
+                        {else}
+                            <li class="paginate_button"><a href='javascript://' onClick="return GotoPage({$value.PageNo});" title="Page No {$value.PageNo}" >{$value.PageNo}</a></li>
+                        {/if} 
+                    {/loop}
+                    {if="$PageSelected!=$lastPage"}
+                        <li class="paginate_button next"><a href='javascript://' onClick="return GotoPage({$PageSelected+1});"  title="Next">»</a></li>
+                        <li class="paginate_button next"><a href='javascript://' onClick="return GotoPage({$lastPage});"  title="Last Page">Last</a></li>
+                    {/if}
+                </ul>
+            {/if}
+            </div>
+       </div>
+       {/if}<!--end total count condition -->
+        <!--<div class="overflow-hidden ">
+        <div class="pull-left margin-top-10"><label class="label">Showing {$startRecord}-{$endRecord} of {$totalnpos} records </label> </div>
+        <div class="overflow-hidden pull-right">
+            {if condition="count($PagingList)>1"}
+                <ul class="pagination pagination-sm">
+                    {if="$PageSelected!=1"}
+                        <li class="paginate_button previous"><a href='javascript://' onClick="return GotoPage(1);"  title="First Page">First</a></li>
+                        <li class="paginate_button previous"><a href='javascript://' onClick="return GotoPage({$PageSelected-1});"  title="Previous">«</a></li>
+                    {/if}
+                    {loop="PagingList"} 
+                        {if="$PageSelected==$value.PageNo"}
+                            <li class="active paginate_button"><a title="Page No {$value.PageNo}">{$value.PageNo}</a></li>
+                        {else}
+                            <li class="paginate_button"><a href='javascript://' onClick="return GotoPage({$value.PageNo});" title="Page No {$value.PageNo}" >{$value.PageNo}</a></li>
+                        {/if} 
+                    {/loop}
+                    {if="$PageSelected!=$lastPage"}
+                        <li class="paginate_button next"><a href='javascript://' onClick="return GotoPage({$PageSelected+1});"  title="Next">»</a></li>
+                        <li class="paginate_button next"><a href='javascript://' onClick="return GotoPage({$lastPage});"  title="Last Page">Last</a></li>
+                    {/if}
+                </ul>
+            {/if}
+        </div>
+        </div>-->
+        <!--commented code -->
+        <table cellpadding="0" cellspacing="0" width="100%" border="0" id="sky-table">
+          <thead>
+            <tr>
+              <th width="10%">EIN</th>
+              <th width="30%">Name</th>
+              <th width="10%">ICO</th>
+              <th width="20%">Street</th>
+              <th width="10%">City</th>
+              <th width="10%">State</th>
+              <th width="10%">Zip</th>
+              <th width="5%">Status</th>
+            </tr>
+          </thead>
+          <tbody>
+         {if="$nposlist"}
+          	{loop="nposlist"}
+                <tr>
+                    <td data-title="EIN" valign="top">
+                    {if="$value.NPO_EIN!=''"}
+                    <a href='{#URL#}npos/index/edit-npos/{$value.NPO_ID|keyEncrypt}' class="page-link" title="Edit NPOs">
+                    {$value.NPO_EIN}
+                    </a>
+                    {else} &nbsp; {/if}</td>
+                    <td data-title="Name" valign="top">
+                    {if="$value.NPO_Name!=''"}
+                    <a href='{#URL#}npos/index/edit-npos/{$value.NPO_ID|keyEncrypt}' class="page-link" title="Edit NPOs">
+                    {$value.NPO_Name}
+                    </a>
+                    {else} &nbsp; {/if}</td>
+                    <td data-title="ICO" valign="top">{if="$value.NPO_ICO!=''"}{$value.NPO_ICO}{else} &nbsp; {/if}</td>
+                    <td data-title="Street" valign="top">{if="$value.NPO_Street!=''"}{$value.NPO_Street}{else} &nbsp; {/if}</td>
+                    <td data-title="City" valign="top">{if="$value.NPO_City!=''"}{$value.NPO_City}{else} &nbsp; {/if}</td>
+                    <td data-title="State" valign="top">{if="$value.State_Name!=''"}{$value.State_Name}{else} &nbsp; {/if}</td>
+                    <td data-title="Zip" valign="top">{if="$value.NPO_Zip!=''"}{$value.NPO_Zip}{else} &nbsp; {/if}</td>
+                    <td data-title="Status" valign="top">{if="$value.NPO_Status=='1'"}<span class="icon active margin-left-15" title="Active"></span>{else}<span class="icon inactive margin-left-15" title="Inactive"></span>{/if}</td>
+                </tr>
+            {/loop}
+          {else}
+				<tr><td colspan="8" class="text-center">No Record Found.</td></tr>
+          {/if}
+        </tbody>
+        </table>
+         <!--<div class="overflow-hidden pull-right">
+            {if condition="count($PagingList)>1"}
+                <ul class="pagination pagination-sm">
+                    {if="$PageSelected!=1"}
+                        <li class="paginate_button previous"><a href='javascript://' onClick="return GotoPage(1);"  title="First Page">First</a></li>
+                        <li class="paginate_button previous"><a href='javascript://' onClick="return GotoPage({$PageSelected-1});"  title="Previous">«</a></li>
+                    {/if}
+                    {loop="PagingList"} 
+                        {if="$PageSelected==$value.PageNo"}
+                            <li class="active paginate_button"><a title="Page No {$value.PageNo}">{$value.PageNo}</a></li>
+                        {else}
+                            <li class="paginate_button"><a href='javascript://' onClick="return GotoPage({$value.PageNo});" title="Page No {$value.PageNo}" >{$value.PageNo}</a></li>
+                        {/if} 
+                    {/loop}
+                    {if="$PageSelected!=$lastPage"}
+                        <li class="paginate_button next"><a href='javascript://' onClick="return GotoPage({$PageSelected+1});"  title="Next">»</a></li>
+                        <li class="paginate_button next"><a href='javascript://' onClick="return GotoPage({$lastPage});"  title="Last Page">Last</a></li>
+                    {/if}
+                </ul>
+            {/if}
+        </div>-->
+    </div>
+  </div>
+</div>

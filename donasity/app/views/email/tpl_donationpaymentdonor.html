@@ -1,0 +1,12 @@
+{include="email/email-top"}
+<div style="padding:10px 5px; font-size:14px; color:#333333;">
+Hello {$UserName},<br /><br />
+Thank you for your donation to<br /><br />
+{loop="$Items"}
+<strong style="color:#002f5b;">{$value.Name}:$</strong>{$value.Cost}<br /><br />
+{/loop}
+<br /><br />
+Login to your Account at any time to view a list of your donations.<br />
+Thank you for using donasity.com
+</div>
+{include="email/email-bottom"}

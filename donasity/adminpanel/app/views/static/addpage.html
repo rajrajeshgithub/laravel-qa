@@ -1,0 +1,238 @@
+<script type="text/javascript" language="javascript" src='{#URL#}app/tinymce/tinymce.min.js'></script>
+<script type="text/javascript" src='{#RESOURCES#}js/includeEditor.js'></script>
+<script type="text/javascript" src='{#RESOURCES#}js/staticpage.js'></script>
+<script type="text/javascript" src='{#RESOURCES#}js/validatecmspage.js'></script>
+<script type="text/javascript">
+	$(document).ready(function()
+	{
+		$(".GenerateUrl").click(function(){
+			var str = $("#pagename").val();
+			str = str.replace(/[^a-z\s]/gi, '');
+			str = $.trim(str);				
+			str = str.replace(/[_\s]/g, '-');	
+			str = str.toLowerCase();
+			$("#friendlyurl").val(str);
+		})
+		
+		$('.tab-section a').click(function()
+		{
+			$('.tab-section a').removeClass('selectedTab');
+			$(this).addClass('selectedTab');
+			var thisHref=$(this).attr('href');
+			$('.tab-section .tabInfo').removeClass('open-tab');
+			$('.tab-section').find('div'+thisHref).addClass('open-tab');
+			return false;
+		});
+	})
+</script>
+
+<ul class="breadcrumb">
+  <li title="Dashboard"><a href='{#URL#}home/'>Dashboard</a></li>
+  <li title="CMS"><a href='{#URL#}static'>CMS</a></li>
+  <li title="Static Pages"><a href='{#URL#}static'>Static Pages</a></li>
+  <li title="Static Page - {if="$case=='editpage'"}Edit{else}Add{/if}">{if="$case=='editpage'"}Edit {else} Add {/if}</li>
+</ul>
+{include="common/message"}
+<form id="cmspageform" name="cmspageform" class="igs-form" method="post"  {if="$case=='editpage'"}action='{#URL#}static/index/update-page/' {else} action='{#URL#}static/index/insertpage/'{/if} autocomplete="off">
+  {if="$case=='editpage'"}
+  <input type="hidden" name="pageid" id="pageid" value="{$pagedetail.CMSPagesID}"/>
+  {/if}
+  <div class="oh">
+    <div class="col col-6">
+      <h1 class="heading-1">Static Pages Detail - {if="$case=='editpage'"}Edit {else}Add{/if}</h1>
+    </div>
+    <div class="col col-6 text-right mt-15"> <a href='{#URL#}static' class="button-2" title="Static Page List"><i class="fa fa-list-ul"></i>&nbsp;Pages List</a> {if="$case=='addpage'"}
+      <button type="submit" class="button-1" title="Add Static Page" value="Save"> <i class="fa fa-save"></i>&nbsp;Save</button>
+      {else}
+      <button type="submit" class="button-1" title="Update Static Page" value="Save Changes"> <i class="fa fa-save"></i>&nbsp;Save Changes</button>
+      {/if} </div>
+  </div>
+  <div id="content-box" >
+    <div class="section-heading text-left">
+      <li class="fa fa-fw fa-file-text iColor"></li>
+      &nbsp;Static Pages Group<a href='javascript://' class="form-toggle-icon"><i class="fa fa-minus-square-o"></i></a> </div>
+    <div class="content-section">
+      <fieldset>
+        <div class="row">
+          <section class="col col-4">
+            <label class="select">
+              <select name="cmsgroup" id="cmsgroup">
+                <option value="">-Select Group-</option>
+                {loop="engroup"}
+                <option value="{$value.CMSPageGroupID}|{$value.Language}" {if="$selectedgroup==$value.CMSPageGroupID"}selected='selected'{/if}> {$value.Title} </option>
+                {/loop}
+              </select><i></i> 
+            </label>
+          </section>
+        </div>
+      </fieldset>
+    </div>
+  </div>
+  <div id="content-box" >
+    <div class="section-heading text-left"> <i class="fa fa-fw fa-file-text iColor"></i>&nbsp;Basic Page Details<a href='javascript://' class="form-toggle-icon"><i class="fa fa-minus-square-o"></i></a> </div>
+    <div class="content-section" >
+      <fieldset>
+        <div class="row">
+          <section class="col col-6">
+            <label class="label">Page Name</label>
+            <label class="input">
+              <input type="text" id="pagename" name="pagename" placeholder="Enter page name "  {if="isset($pagedetail)"} value="{$pagedetail.CMSPagesName}" {/if}>
+            </label>
+          </section>
+          <section class="col col-6">
+            <label class="label pull-left">URL Friendly Page Name</label>
+            <label class="dib GenerateUrl pl-10">
+            <a href='javascript://' class="link">
+            <li class="fa fa-magic">&nbsp;</li>
+            Generate</a>
+            </label>
+            <label class="input">
+              <input type="text" id="friendlyurl" name="friendlyurl"    placeholder="Enter page friendly url " {if="isset($pagedetail)"} value="{$pagedetail.CMSPagesNameINURL}" {/if} />
+            </label>
+          </section>
+          <section class="col col-6">
+            <label class="label">Sort Order</label>
+            <label class="input">
+              <input type="text" id="sortorder" placeholder="Enter sort order" name="sortorder"   {if="isset($pagedetail)"} value="{$pagedetail.SortBy}" {/if} />
+            </label>
+          </section>
+        </div>
+      </fieldset>
+    </div>
+  </div>
+  <div id="content-box" >
+    <div class="section-heading text-left"> <i class="fa fa-fw fa-file-text iColor"></i>&nbsp;Page Preference<a href='javascript://' class="form-toggle-icon"><i class="fa fa-minus-square-o"></i></a> </div>
+    <div class="content-section" >
+      <fieldset>
+        <div class="row">
+          <section class="col col-4">
+            <label class="checkbox">
+              <input type="checkbox" id="requiredlogintoBrowse" name="requiredlogintoBrowse" value="1" {if="isset($pagedetail)"}{if="$pagedetail.LoginRequired=='1'"}checked='checked'{/if}{/if} />
+              <i></i>Login required to browse this page </label>
+          </section>
+          <section class="col col-4">
+            <label class="checkbox">
+              <input type="checkbox" id="displayonWebsite" name="displayonWebsite" value="1" {if="isset($pagedetail)"} {if="$pagedetail.Status==1"}checked="checked"{/if}{/if} />
+              <i></i>Yes, Display on website </label>
+          </section>
+        </div>
+      </fieldset>
+    </div>
+  </div>
+  <div id="content-box" >
+    <div class="section-heading text-left"> <i class="fa fa-fw fa-file-text iColor"></i>&nbsp;Page Type & Content Details<a href='javascript://' class="form-toggle-icon"><i class="fa fa-minus-square-o"></i></a> </div>
+    <div class="content-section">
+      <fieldset>
+        <div class="row">
+          <section class="col col-6">
+            <label class="checkbox">
+              <input type="checkbox" id="externalpageLink" name="externalpageLink" value="1" {if="isset($pagedetail)"} {if="$pagedetail.IsExternalLink=='1'"}checked="checked" {/if}{/if} />
+              <i></i> If this is To mark this page as external link checked it and fill its url </label>
+            <label class="input dn" id="externalid">
+              <input type="text" id="externalpageUrl" name="externalpageUrl" {if="isset($pagedetail)"} value="{$pagedetail.external_url}" {/if} placeholder="External page url" />
+            </label>
+          </section>
+          <section class="col col-6">
+            <label class="checkbox">
+              <input type="checkbox" id="internalpageLink" name="internalpageLink"  value="1" {if="isset($pagedetail)"} {if="$pagedetail.IsInternalLink=='1'"}checked="checked" {/if}{/if} />
+              <i></i> If this is To mark this page as internal link checked it and fill its url </label>
+            <label class="input dn" id="internalid">
+              <input type="text" id="internalpageUrl" name="internalpageUrl" {if="isset($pagedetail)"} value="{$pagedetail.internal_url}" {/if} placeholder="Internal page url" />
+            </label>
+          </section>
+          <section class="col col-12 clear-both">
+            <label class="label">Include Head Tag</label>
+            <label class="textarea">
+              <textarea rows="3" name="CmsPageHead" id="CmsPageHead">{if="isset($pagedetail)"} {$pagedetail.CMSPageHead} {/if}</textarea>
+            </label>
+          </section>
+          <section class="col col-12 clear-both">
+            <div class="content-section mt-15">
+              <div class="tab-section oh"> <a href='#tab1' class="tabOption selectedTab" title="Click to add more additional page meta details"><i class="fa"></i>English</a>
+                <div class="tabInfo open-tab" id="tab1">
+                  <section class="col col-12">
+                    <label class="label">Page Title</label>
+                    <label class="input">
+                      <input type="text" id="pagetitle_EN" name="pagetitle_EN" placeholder="Enter page title english"   {if="isset($pagedetail)"}  value="{$pagedetail.CMSPagesTitleEN}" {/if} />
+                    </label>
+                  </section>
+                  <fieldset>
+                    <div class="row">
+                      <section class="col col-12">
+                        <label class="textarea">
+                          <textarea rows="3" name="landingpageHtml" id="LandingPageHTML">{if="isset($pagedetail)"} {$pagedetail.Content} {/if}</textarea>
+                        </label>
+                      </section>
+                    </div>
+                  </fieldset>
+                </div>
+                <a href='#tab2' class="tabOption" itle="Click to add more additional page meta details"><i class="fa"></i>Spanish</a>
+                <div class="tabInfo" id="tab2">
+                  <section class="col col-12">
+                    <label class="label">Page Title</label>
+                    <label class="input">
+                      <input type="text" id="pagetitle_ES" name="pagetitle_ES" placeholder="Enter page title spanish"   {if="isset($pagedetail)"}  value="{$pagedetail.CMSPagesTitleES}" {/if} />
+                    </label>
+                  </section>
+                  <fieldset>
+                    <div class="row">
+                      <section class="col col-12">
+                        <label class="textarea">
+                          <textarea id="SP_landingpageHtml" class="form-control pull-left editor" name="SP_landingpageHtml" placeholder="Page Meta Text Or Html Spanish" >{if="isset($pagedetail)"} {$pagedetail.ContentES} {/if}</textarea>
+                        </label>
+                      </section>
+                    </div>
+                  </fieldset>
+                </div>
+              </div>
+            </div>
+          </section>
+        </div>
+      </fieldset>
+    </div>
+  </div>
+  <div id="content-box">
+    <div class="section-heading text-left"> <i class="fa fa-fw fa-file-text iColor"></i>&nbsp;Page Meta Details<a href='javascript://' class="form-toggle-icon"><i class="fa fa-minus-square-o"></i></a> </div>
+    <div class="content-section" >
+      <fieldset>
+        <div class="row">
+          <section class="col col-12">
+            <label class="label">Meta Title</label>
+            <label class="input">
+              <input type="text" id="metaTitle" name="metaTitle" placeholder="enter meta title " {if="isset($pagedetail)"} value="{$pagedetail.Metatitle}" {/if} />
+            </label>
+          </section>
+          <section class="col col-12">
+            <label class="label">Meta Description</label>
+            <label class="textarea">
+              <textarea rows="3" id="metaDescription" name="metaDescription"> {if="isset($pagedetail)"} {$pagedetail.Metadesc} {/if}</textarea>
+            </label>
+          </section>
+          <section class="col col-12">
+            <label class="label">Meta Keyword</label>
+            <label class="textarea">
+              <textarea rows="3" id="metaKeyword" name="metaKeyword">{if="isset($pagedetail)"} {$pagedetail.Metakeyword} {/if}</textarea>
+            </label>
+          </section>
+          <section class="col col-12">
+            <label class="label">Google Tracking Code</label>
+            <label class="textarea">
+              <textarea rows="3" id="googletrackingCode" name="googletrackingCode">{if="isset($pagedetail)"} {$pagedetail.GoogleAnalyticCode} {/if}</textarea>
+            </label>
+          </section>
+        </div>
+      </fieldset>
+    </div>
+  </div>
+  <div class="content-section">
+    <fieldset>
+      <div class="row pull-right mr-10 mb-10"> 
+      	{if="$case=='addpage'"}
+        <button type="submit" class="button-1" title="Add Static Page" value="Save"> <i class="fa fa-save"></i>&nbsp;Save</button>
+        {else}
+        <button type="submit" class="button-1" title="Update Static Page" value="Save Changes"> <i class="fa fa-save"></i>&nbsp;Save Changes</button>
+        {/if} 
+      </div>
+    </fieldset>
+  </div>
+</form>

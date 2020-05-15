@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="{#LANG_ID#}">
+<head>
+{include="top/head"}
+{$CMSPageHead}
+</head>
+<body>
+    	{include="top/top"}
+        
+        {if="$LoginRequired == 1"}
+
+		{/if}
+		{$Content}
+        
+         {include="bottom/bottom"}
+      
+  </body>
+
+</html>

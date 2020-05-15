@@ -1,0 +1,230 @@
+<script type="text/javascript">
+$(document).ready(function()
+{
+	var baseUrl = (window.location).href; // You can also use document.URL
+	var UrlLastId = baseUrl.substring(baseUrl.lastIndexOf('#') + 1);
+	
+	if($('#C_NpoCatId').val()!='')
+	{
+		$('.viewmoreBtn i').removeClass('fa-minus').addClass('fa-plus');
+		$('.viewmoreBtn i').closest('.row').find('.viewmorSection').attr( 'style','display:block' );
+	}
+	else
+	{
+		if(UrlLastId==='NpoCategory')
+		{
+			$('.viewmoreBtn i').removeClass('fa-minus').addClass('fa-plus');
+			$('.viewmoreBtn i').closest('.row').find('.viewmorSection').attr( 'style','display:block' );
+			
+		}
+		else
+		{
+			$('.viewmoreBtn i').removeClass('fa-minus').addClass('fa-plus');
+			$('.viewmoreBtn i').closest('.row').find('.viewmorSection').attr( 'style','display:none' );
+		}
+	}
+		
+	
+	$('#addCategory').click(function()
+	{
+			$('.viewmoreBtn i').removeClass('fa-plus').addClass('fa-minus');
+			$('.viewmoreBtn i').closest('.row').find('.viewmorSection').attr( 'style','display-block' );
+			window.location(SITEURL+"npocategory#NpoCategory")
+			
+	})
+	$(".GenerateUrl").click(function()
+	{
+		var str = $("#C_CategoryNameEn").val();
+		str = str.replace(/[^a-z\s]/gi, '');
+		str = $.trim(str);				
+		str = str.replace(/[_\s]/g, '-');				
+		$("#C_urlFriendlyName").val(str);
+			
+	})
+});
+
+
+function GotoPage(pageNo)
+{
+	$('#pageNumber').val(pageNo);
+	$('#formSection').attr('action', '');
+	document.formSection.submit();
+	return false;
+}
+</script>
+<div id="rightSection">
+  <div class="rightPannel">
+    <div class="breadcrumb">
+      <ul>
+        <li title="Dashboard"><a href='{#URL#}home/'><img src='{#RESOURCES#}img/dashboard_thumb.png'/>Dashboard</a></li>
+        <li>&nbsp;»&nbsp;</li>
+        <li title="CMS">Users</li>
+        <li>&nbsp;»&nbsp;</li>
+        <li title="Donor">Npo Category - List</li>
+      </ul>
+    </div>
+    <div class="contentSection">
+        <div class="sky-form">
+           <div class="pageHeader text-left"><li class="fa fa-fw fa-bars iColor"></li>&nbsp;Npo Category - List</div>
+            <div class="pull-right  margin-right-10">
+                      <a href='{#URL}npocategory#NpoCategory' id="addCategory" class="btn btn-primary" title="Add Registered User"><i class="fa fa-bars"></i>&nbsp; Add Category</a>
+                </div>
+           {include="common/message"}
+           {if="$totalRecords>0"}
+               <div class="pageSubHeader overflow-hidden psTitle">
+                    <div class="pull-left margin-left-10">
+                         {$totalRecords} Results Found 
+                    </div>
+                    <!--<div class="pull-right margin-right-10">
+                        <a href='{#URL#}metadetail/addMetaDetail' class="btn btn-primary btn-sm" title="Add Product"><i class="fa fa-edit"></i>&nbsp;Add MetaDetail</a>
+                    </div>-->
+                </div>
+            {/if}
+             <fieldset>
+            <table  id="sky-table" cellpadding="0" cellspacing="0" width="100%" align="center">
+              <thead>
+                <tr>
+                    <th width="60%">Name English | Spanish</th>
+                    <th width="20%">Code Name</th>
+                    <th width="20%">Show On Website</th>
+                </tr>
+              </thead>
+              <tbody>
+                 {if condition="$NCategoryList!=NULL"}
+                     {loop="NCategoryList"}
+                  <tr>
+                    <td>                                                  	
+                        {$value.space}
+                        <i class="fa fa-arrows-v color-grey-light"></i>&nbsp;
+                        <a href='{#URL#}npocategory/index/edit/{$value.NPOCat_ID|keyEncrypt}' class="page-link" title="Edit static page">
+                        {$value.NPOCat_DisplayName_EN} | {$value.NPOCat_DisplayName_ES}                    
+                        </a>
+                     </td>
+                    <td>{$value.NPOCat_CodeName}</td>
+                    <td>{if="$value.NPOCat_ShowOnWebsite==1"}<span class="icon active margin-left-15" title="Active"></span>{else}<span class="icon inactive margin-left-15" title="Inactive"></span>{/if}</td>
+                   <!-- <td>
+                        <a href='{#URL#}npocategory/index/edit/{$value.ID|keyEncrypt}' class="btn btn-primary btn-sm" title="Edit"><i class="fa fa-edit"></i>&nbsp;Edit</a>
+                    </td>-->
+                   </tr>
+                  {/loop}
+                  {else}
+                    <tr><td class="text-center" colspan="4">No Record Found!</td></tr> 
+                 {/if}
+            </tbody>
+            </table>
+            </fieldset>
+             <div class="overflow-hidden pull-right">
+                {if condition="count($PagingList)>1"}
+                    <ul class="pagination pagination-sm">
+                        {if="$PageSelected!=1"}
+                            <li class="paginate_button previous"><a href='javascript://' onclick="return GotoPage(1);"  title="First Page">First</a></li>
+                            <li class="paginate_button previous"><a href='javascript://' onclick="return GotoPage({$PageSelected-1});"  title="Previous">«</a></li>
+                        {/if}
+                        {loop="PagingList"} 
+                            {if="$PageSelected==$value.PageNo"}
+                                <li class="active paginate_button"><a title="Page No {$value.PageNo}">{$value.PageNo}</a></li>
+                            {else}
+                                <li class="paginate_button"><a href='javascript://' onclick="return GotoPage({$value.PageNo});" title="Page No {$value.PageNo}" >{$value.PageNo}</a></li>
+                            {/if} 
+                        {/loop}
+                        {if="$PageSelected!=$lastPage"}
+                            <li class="paginate_button next"><a href='javascript://' onclick="return GotoPage({$PageSelected+1});"  title="Next">»</a></li>
+                            <li class="paginate_button next"><a href='javascript://' onclick="return GotoPage({$lastPage});"  title="Last Page">Last</a></li>
+                        {/if}
+                    </ul>
+                {/if}
+            </div>
+        </div>
+        <div class="sky-form">
+                   <form id="formSection" name="formSection"   method="post" action='{#URL#}npocategory/index/{$action}' >
+                  {include="common/message"}           
+                      <div id="NpoCategory">
+                                   <input type="hidden" name="C_NpoCatId" id="C_NpoCatId" value="{$NpoCatDetail.NPOCat_ID}"/>
+                              <fieldset>
+                                <div class="row">
+                                    <div class="sky-form-headingsection psTitle">
+                                        <div class="sky-form-heading pull-left">Basic Category Detail</div>
+                                        <div class="viewmoreBtn pull-right margin-right-10">
+                                            <i class="fa fa-plus"></i>
+                                         </div>
+                                    </div>
+                                    
+                                    <div class="viewmorSection" >
+                                         <section class="col col-2">
+                                                <label class="label">Parent Category</label>
+                                                <label class="select">
+                                                    <select name="C_parentCategory" id="C_parentCategory" class="form-control-select form-control pull-left" >
+                                                        <option value="0">None</option>
+                                                         {loop="NCategoryList"}
+                                                            <option value='{$value.NPOCat_ID}' {if="$action=='update'"}{if="$value.NPOCat_ID==$NpoCatDetail.NPOCat_ParentID && $NpoCatDetail.NPOCat_ParentID!=0"}selected{/if}{/if}>{$value.space}{$value.NPOCat_DisplayName_EN}|{$value.NPOCat_DisplayName_ES}</option>
+                                                         {/loop}
+                                                        
+                                                    </select><i></i>
+                                                </label>
+                                        </section>
+                                        
+                                        <section class="col col-2">
+                                                <label class="label">Category Code</label>
+                                                <label class="input">
+                                                    <input type="text"  id="C_categoryCode" name="C_categoryCode"  placeholder="Category Code" value="{$NpoCatDetail.NPOCat_CodeName}" >
+                                                </label>
+                                        </section>
+                                        
+                                        <section class="col col-2">
+                                                <label class="label">Category Name (English)</label>
+                                                <label class="input">
+                                                    <input type="text"  id="C_CategoryNameEn" name="C_CategoryNameEn"  placeholder="Category Name" value="{$NpoCatDetail.NPOCat_DisplayName_EN}" >
+                                                </label>
+                                        </section>
+                                        
+                                        <section class="col col-2">
+                                                <label class="label">Category Name (Spanish)</label>
+                                                <label class="input">
+                                                    <input type="text"  id="C_CategoryNameEs" name="C_CategoryNameEs"  placeholder="Category Name" value="{$NpoCatDetail.NPOCat_DisplayName_ES}" >
+                                                </label>
+                                        </section>
+                                        
+                                        
+                                         <section class="col col-3">
+                                                <label class="label pull-left">Url Friendly Name</label>
+                                                <label class="display-inline-block GenerateUrl padding-left-10"><a href='javascript://' class="link"><li class="fa fa-magic">&nbsp;</li>Generate</a></label>
+                                                <label class="input">
+                                                    <input type="text"  id="C_urlFriendlyName" name="C_urlFriendlyName"  placeholder="Url Friendly Name" value="{$NpoCatDetail.NPOCat_URLFriendlyName}" >
+                                                </label>
+                                        </section>
+                                      
+                                        <section class="col col-2 display-block">
+                                            <label class="label"></label>
+                                             <label class="checkbox margin-right-10">
+                                                <input type="checkbox" name="C_status" id="C_status" {if="$NpoCatDetail.NPOCat_ShowOnWebsite=='1'"} checked="checked" {/if}  value="1" /><i></i>Show on Website
+                                             </label>
+                                        </section>
+                                        
+                                      <fieldset>
+                                        <section>
+                                            {if="$action=='insert'"}
+                                                <div class="pull-right margin-bottom-10">
+                                                    <button type="submit" name="Save" value="Save" class="btn btn-primary" ><i class="fa fa-save"></i> Save</button>
+                                                </div>
+                                            {else}
+                                                <div class="pull-right margin-bottom-10">
+                                                    <button type="submit" name="Save" value="Save Changes" class="btn btn-primary" ><i class="fa fa-save"></i> Save Changes</button>
+                                                </div>
+                                            {/if}        
+                                            <!--<div class="pull-right margin-bottom-10">
+                                                  <button type="submit" name="Save" value="Save Changes" class="btn btn-primary"><i class="fa fa-save"></i> Save Changes</button>
+                                            </div>-->
+                                        </section>
+                                     </fieldset>
+                                    </div>       
+                               </div> 
+                              </fieldset>                 
+                      </div>
+                  </form>
+                </div>
+    </div>        
+  </div>
+  
+  
+</div>
+

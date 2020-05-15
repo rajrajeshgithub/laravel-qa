@@ -1,0 +1,17 @@
+{include="email/email-top"}
+<div style="padding:10px 5px; font-size:14px; color:#333333;">
+Hello,
+<p><strong>You</strong> have been invited to join:  <i><strong> {$CampUrl} </strong></i>!<br /><strong>{$CampCode}</strong><br />
+The code above is your unique <strong>Team Code</strong> that will allow you to join the team.<br/>
+Click here > {$TeamFundreaiserUrl} to join.</p>
+<p>You will directed to log in or create a new account on donasity.com in order to set up your Team Member Fundraiser</p>
+
+{if="$MailContent!='' && $MailContent!='none'"}
+	<br /><br />
+	<table border="0" cellpadding="10" style="padding:10px; background-color:#dddddd; padding:10px; width:450px;"><tr><td>
+	<strong>The Sender of this invitation also sends this comment:</strong><br />
+	<p>{$MailContent}</p>
+	</td></tr></table>
+{/if}
+</div>
+{include="email/email-bottom"}

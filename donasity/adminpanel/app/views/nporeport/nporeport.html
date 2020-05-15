@@ -1,0 +1,138 @@
+<link type="text/css" rel="stylesheet" href='{#RESOURCES#}css/bootstrap-datepicker.css'>
+<script type="text/javascript" src='{#RESOURCES#}js/bootstrap-datepicker.js'></script>
+<script type="text/javascript" src="https://www.google.com/jsapi?autoload={'modules':[{'name':'visualization','version':'1.1','packages':['corechart']}]}"></script>
+<script type="text/javascript">
+	$(function() {	
+		$('#StartDate').datepicker();
+		$('#StartDate').datepicker().on('changeDate', function (ev) {
+			if(ev.viewMode == "days") {
+				$('#StartDate').datepicker('hide');
+				maxDate: jQuery('#StartDate').datepicker("getDate");
+			}
+		});
+		
+		$('#EndDate').datepicker();
+		$('#EndDate').datepicker().on('changeDate', function (ev) {
+			if(ev.viewMode == "days") {
+				$('#EndDate').datepicker('hide');
+				maxDate: jQuery('#EndDate').datepicker("getDate");
+			}
+		});
+	});	
+</script>
+<script type="text/javascript">
+	google.setOnLoadCallback(drawChart);
+    function drawChart() {
+        var data = google.visualization.arrayToDataTable([
+			['Creteria', 'Count'],
+		  	['Registered', '{$npoSummary.registredNpo}'],
+			//['Deleted', 2000],
+			//['Updated', 5000],
+			//['Added', 7000],
+        ]);
+
+        var options = {
+          pieHole: 0.5,
+		  is3D: true,
+          pieSliceTextStyle: {
+            color: 'black',
+          },
+          legend: {position: 'bottom'},
+	    };
+
+        var chart = new google.visualization.PieChart(document.getElementById('report'));
+        chart.draw(data, options);
+    }
+</script>
+<style type="text/css">
+	.bg-darkblue {background-color:#09426A}
+</style>
+<ul class="breadcrumb">
+  <li title="Dashboard"><a href='{#URL#}home/'>Dashboard</a></li>
+  <li title="NPO Summary">NPO Summary</li>
+</ul>
+{include="common/message"}
+<div class="oh">
+  <div class="col col-12">
+    <h1 class="heading-1">NPO Summary</h1>
+  </div>
+</div>
+<form id="formSection" name="formSection" method="get" autocomplete="off" action=''>
+  <div class="content-section">
+    <fieldset>
+      <div class="row">
+        <section class="col col-2 ">
+          <label class="label">Form</label>
+          <div class="input-append date" id="StartDate" data-date="" data-date-format="mm/dd/yyyy">
+            <label class="input"> <i class="icon-append fa fa-calendar add-on"></i>
+              <input type="text" class="datepickerInput" name="fromDate" id="FromDate"  value='{$fromDate}' readonly />
+            </label>
+          </div>
+        </section>
+        <section class="col col-2 ">
+          <label class="label">To</label>
+          <div class="input-append date" id="EndDate" data-date="" data-date-format="mm/dd/yyyy">
+            <label class="input"> <i class="icon-append fa fa-calendar add-on"></i>
+              <input type="text" class="datepickerInput" name="toDate" id="ToDate" value='{$toDate}' readonly />
+            </label>
+          </div>
+        </section>
+        <section class="col col-8 mt-20">
+          <div class="form-footer">
+            <button type="submit" name="" value="" id="filter_donation" class="button-1"><i class="fa fa-search"></i>&nbsp;Show Result</button>
+            &nbsp; <a href='{#URL#}nporeport' class="button-2"><i class="fa fa-refresh"></i>&nbsp;Reset</a> &nbsp; </div>
+        </section>
+      </div>
+    </fieldset>
+  </div>
+</form>
+<div id="content-box">
+  <div class="section-heading listingmoreBtn"> NPO Criteria <a href='javascript://' class="form-toggle-icon "><i class="fa fa-minus-square-o"></i></a> </div>
+  <div class="content-section">
+    <fieldset>
+      <div class="col col-8">
+        <table border="0" id="igs-table">
+          <thead>
+            <tr>
+              <th width="50%">Criteria Between {$fromDate} - {$toDate}</th>
+              <th width="50%">Count</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td data-title="Registered">
+              	<a href='{#URL#}nporeport/index/npo-registered?fromDate={$fromDate}&toDate={$toDate}' class="title-link">
+                	<div class="text-bold">Registered NPO</div>
+                </a>
+              </td>
+              <td data-title="Count">{$npoSummary.registredNpo}</td>
+            </tr>
+            <!--<tr>
+              <td data-title="Status"><a href='{#URL#}nporeport/index/nporeportlist' class="title-link">
+                <div class="text-bold">Marked Deleted</div>
+                </a></td>
+              <td data-title="Count of fundraiser">20</td>
+            </tr>
+            <tr>
+              <td data-title="Status"><a href='{#URL#}nporeport/index/nporeportlist' class="title-link">
+                <div class="text-bold">Updated</div>
+                </a></td>
+              <td data-title="Count of fundraiser">20</td>
+            </tr>
+            <tr>
+              <td data-title="Status"><a href='{#URL#}nporeport/index/nporeportlist' class="title-link">
+                <div class="text-bold">Added</div>
+                </a></td>
+              <td data-title="Count of fundraiser">20</td>
+            </tr>-->
+          </tbody>
+        </table>
+      </div>
+      <div class="col col-4">
+        <div class="p-10 text-center text-bold bg-darkblue t-white">Chart</div>
+        <div id="report"></div>
+      </div>
+    </fieldset>
+  </div>
+</div>
+</div>

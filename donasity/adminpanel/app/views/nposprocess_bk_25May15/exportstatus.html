@@ -1,0 +1,42 @@
+<html>
+<head>
+<link rel="stylesheet" href='{#REFRENCES#}css/style.css' type="text/css" />
+<script type="text/javascript">
+var SITEURL = '{#URL}';
+</script>
+<script type="text/javascript" src='{#RESOURCES#}js/jquery-1.11.1.js'></script>
+<script>
+{if="$Pstatus==1"}
+$(document).ready(function()
+{
+	window.location.href='http://pdc/donasity/adminpanel/nposprocess/ExportNPOsData';
+}); 
+{else}
+$(document).ready(function()
+{
+	window.location.href='http://pdc/donasity/adminpanel/nposprocess/DownloadCSVFile';
+}); 
+{/if}
+</script>
+</head>
+<body>
+<div id="middleSection" >
+	<div class="npo-process">
+    	<div class="rowCounter">
+            <img src='{#RESOURCES#}img/logologin.png' alt="Welcome to Ultra folders Admin Panel" width="220px" title="Welcome to Admin Panel" />
+        </div>
+        <div class="progress-bar">
+          <p>Processing {$totalPer}% Completed</p>
+          <div style="width:{$totalPer}%"><p>Processing {$totalPer}% Completed</p></div>
+        </div>
+        {if="$rowProcessed >0"}
+        <div class="rowCounter">{$rowProcessed} Rows Processed</div>
+        {/if}
+        {if="$Pstatus==0"}
+        <div class="rowCounter">goto&nbsp;<a href='{#URL#}home' class="btn btn-primary" title="goto home page"><i class="fa fa-home"></i>&nbsp;Home</a>&nbsp;or&nbsp;<a href='{#URL#}npos' class="btn btn-primary" title="NPO import/export page"><i class="fa fa-arrow-left"></i>&nbsp;Go Back</a></div>
+        {/if}
+    </div>
+</div>
+</body>
+</html>
+    

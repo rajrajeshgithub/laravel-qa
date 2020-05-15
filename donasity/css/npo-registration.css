@@ -1,0 +1,55 @@
+/* CSS Document */
+.npo-reg-section{font-family:'latoregular',sans-serif; color:#666}
+.registration-container .heading-2{color:#002f5b;}
+.save-change-btn .button-1{font-size:20px;}
+.npo-register-page .npo-reg-section, .account-setup-page .npo-reg-section, .confirmation-page .npo-reg-section{padding:0px 0px 250px 0px;}
+.forget-password-section{padding-bottom:76px;}
+/* ambassador dashboard */
+.brdred{border:1px solid #ff0000;}
+.hrgray{height: 1px; background: #aaa; border:0px;}
+
+.btntileleft{float:left; cursor:pointer; width:5%; height:30px; margin-right:2px; margin-top:2px;}
+.btntileclear{clear:both; float:left; cursor:pointer; width:5%; height:30px; margin-right:2px; margin-top:2px;}
+.btc0a{background-color:#000000;}
+.btc1a{background-color:#5f3f02;}
+.btc2a{background-color:#680b0b;}
+.btc2b{background-color:#6d3110;}
+.btc2c{background-color:#e21212;}
+.btc3a{background-color:#f96616;}
+.btc3b{background-color:#d2a12f;}
+.btc3c{background-color:#edf916;}
+.btc4a{background-color:#edf916;}
+.btc5a{background-color:#abc345;}
+.btc5b{background-color:#666d10;}
+.btc5c{background-color:#476d10;}
+.btc5d{background-color:#547a17;}
+.btc5e{background-color:#187c26;}
+.btc5f{background-color:#106d3b;}
+.btc5g{background-color:#9bf916;}
+.btc5h{background-color:#16f981;}
+.btc5i{background-color:#16f981;}
+.btc6a{background-color:#09426a;}
+.btc6b{background-color:#10666d;}
+.btc6c{background-color:#055d9c;}
+.btc6d{background-color:#1d2d64;}
+.btc6e{background-color:#160f59;}
+.btc6f{background-color:#16edf9;}
+.btc6g{background-color:#4093cd;}
+.btc6h{background-color:#3521d1;}
+.btc7a{background-color:#3e1d64;}
+.btc7b{background-color:#641d5f;}
+.btc7c{background-color:#641d47;}
+.btc7d{background-color:#641d25;}
+.btc7e{background-color:#7421d1;}
+.btc7f{background-color:#d121c7;}
+.btc8a{background-color:#848484;}
+.btc8b{background-color:#505050;}
+.btc8c{background-color:#111;}
+.btc8d{background-color:#111;}
+.btc9a{background-color:#ffffff;}
+
+/* button size */
+.bsiz{cursor:pointer; height:36px; background-color:#bbbbbb; padding:10px; margin-left:5px; text-align:center; font-weight:bold; -webkit-border-radius:16px;
+ -moz-border-radius:16px; border-radius:16px;}
+.flft{float:left;}
+.brdgray{border:1px solid #888;}

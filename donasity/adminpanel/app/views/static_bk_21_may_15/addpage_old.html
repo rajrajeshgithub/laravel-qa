@@ -1,0 +1,346 @@
+<!--<link rel="stylesheet" media="screen" href="http://jqueryvalidation.org/files/demo/css/screen.css">-->
+<script src="{#RESOURCES#}js/latest/jquery.js"></script>
+<script src="{#RESOURCES#}js/latest/jquery.validate.js"></script>
+<script>
+$(document).ready(function(){
+	$('input[type=checkbox][name=externalpageLink]').change(function()
+	{
+		var parentdiv = $(this).parent().parent().parent();
+		if($(this).is(':checked'))
+		{
+			$('#externalid').removeClass('display-none');
+			$('#internalid').addClass('display-none');
+			$('#internalpageLink').prop('checked',false);
+			
+		}
+		else
+		  $('#externalid').addClass('display-none');
+	});
+	
+	
+	$('input[type=checkbox][name=internalpageLink]').change(function()
+	{
+		var parentdiv = $(this).parent().parent().parent();
+		if($(this).is(':checked'))
+		{
+			$('#internalid').removeClass('display-none');
+			$('#externalid').addClass('display-none');
+			$('#externalpageLink').prop('checked',false);
+		}
+		else
+		  $('#internalid').addClass('display-none');
+	});	
+	
+	$('input[type=checkbox][name=internalpageLink],input[type=checkbox][name=externalpageLink]').trigger('change');
+});
+</script>
+<style>
+	.cmxform fieldset p.error label {
+		color: red;
+	}
+	div.container {
+		background-color: #f4f4f4;
+		border: 1px solid red;
+		margin: 5px;
+		padding: 5px;
+	}
+	div.container ol li {
+		list-style-type: disc;
+		margin-left: 20px;
+		color:red;
+		line-height:1.5em;
+	}
+	div.container {
+		display: none
+	}
+	.container label.error {
+		display: inline;
+	}
+	/*form.cmxform {
+		width: 30em;
+	}*/
+	form.cmxform label.error {
+		display: block;
+		margin-left: 1em;
+		width: auto;
+	}
+	</style>
+<script type="text/javascript" src='{#RESOURCES#}js/validateProductDetail.js'></script>
+<script>
+	// only for demo purposes
+	$.validator.setDefaults({
+		submitHandler: function() {
+			alert("submitted! (skipping validation for cancel button)");
+		}
+	});
+
+	/*$().ready(function() {
+		var container = $('div.container');
+		// validate the form when it is submitted
+		var validator = $("#cmspageform").validate({
+			errorContainer: container,
+			errorLabelContainer: $("ol", container),
+			wrapper: 'li'
+		});
+	});*/
+	</script>
+<div id="rightSection">
+  <div class="rightPannel">
+    <div class="breadcrumb">
+      <ul>
+        <li title="Dashboard"><a href='{#URL#}home/'><img src='{#RESOURCES#}img/dashboard_thumb.png'/>Dashboard</a></li>
+        <li>&nbsp;»&nbsp;</li>
+        <li title="Products"><a href='{#URL#}cms'>CMS Page</a></li>
+        <li>&nbsp;»&nbsp;</li>
+        <li title="Product - Add">CMS Page - {if="$case=='editpage'"}Edit {else} Add {/if}</li>
+      </ul>
+    </div>
+    <div class="contentSection">
+      <div class="pageHeader text-left"><li class="fa fa-fw fa-file-text iColor"></li>&nbsp;CMS Page - {if="$case=='editpage'"}Edit {else}Add{/if}</div>
+       <div id="msgSection">
+                {if condition="$msgValues!=null"}
+            {if condition="$msgValues.msgType==1"}
+        	<div class="alert alert-error">
+            	<p>{$msgValues.ErrorMsg}</p>
+        	</div>                            
+        	{elseif condition="$msgValues.msgType==2"}
+        	<div class="alert alert-success">
+            	<p>{$msgValues.ConfirmationMsg}</p>
+        	</div>                             
+        	{/if}
+    		{/if}
+       </div>
+       
+       <!--new code from here-->
+       	<div class="container">
+			<h2>There are some errors in your form submission, please see below for details.</h2>
+			<ol>
+				<li>
+					<label for="pagename" class="error">Please enter page name</label>
+				</li>
+				<li>
+					<label for="friendlyurl" class="error">Please enter friendlyurl</label>
+				</li>
+                <li>
+					<label for="pagetitle" class="error">Please enter page title</label>
+				</li>
+                <li>
+					<label for="sortorder" class="error">Please enter sort order</label>
+				</li>
+			</ol>
+		</div>
+       <!--end of code here -->
+       
+       
+      <div class="">
+         <form role="form" id="cmspageform" name="cmspageform"  method="post"  {if="$case=='editpage'"}action='{#URL#}cms/index/update-page/'{else}action='{#URL#}cms/index/insertpage/'{/if} autocomplete="off" class="cmxform" >
+            {if="$case=='editpage'"}
+            <input type="hidden" name="pageid" id="pageid" value="{$pagedetail.CMSPagesID}"/>
+            {/if}
+            <div class="overflow-hidden psTitle pageSubHeader">
+                <div class="pull-left padding-left-10 margin-top-5">CMS Page</div>
+                <div class="pull-right margin-right-10">
+                    {if="$case=='addpage'"}
+                    <button type="submit" name="Save" value="Save" class="btn btn-primary btn-sm saveBtn"><i class="fa fa-save"></i> Save</button>
+                    {else}
+                    <button type="submit" name="Save" value="Save" class="btn btn-primary btn-sm saveBtn"><i class="fa fa-save"></i> Save Changes</button>
+                    {/if}
+                </div>      
+            </div>
+            
+             <div class="userfrmDiv overflow-hidden">
+                <div class="form-group productfrmDiv detailSection2 pull-left clear-none">
+                    <span>CMS Group:</span>
+                    <select name="cmsgroup" id="cmsgroup" class="form-control ">
+                        <option value="">-Select Group-</option>
+                        <optgroup label="English">
+                        {loop="engroup"}
+                        <option value="{$value.CMSPageGroupID}|{$value.Language}" {if="$selectedgroup==$value.CMSPageGroupID"}selected='selected'{/if}>{$value.Title}</option>
+                        {/loop}
+                        </optgroup>
+                        <optgroup label="Spanish">
+                        {loop="esgroup"}
+                        <option value="{$value.CMSPageGroupID}|{$value.Language}" {if="$selectedgroup==$value.CMSPageGroupID"}selected='selected'{/if}>{$value.Title}</option>
+                        {/loop}
+                        </optgroup>
+                    </select>
+                </div>
+            </div>
+            
+            <div class="overflow-hidden psTitle pageSubHeader">
+                <div class="pull-left padding-left-10 margin-top-5">Basic Page Details</div>
+            </div>
+       
+        <div class="userfrmDiv overflow-hidden">
+            <div class="form-group productfrmDiv detailSection1 pull-left clear-none">
+                <p>
+                <label class="form-label" for="pagename">Page Name:</label>
+                <input type="text" class="form-control pull-left" id="pagename" name="pagename" placeholder="enter page name "  value="{$pagedetail.CMSPagesName}">
+                </p>
+            </div>
+            <div class="form-group productfrmDiv detailSection1 pull-left clear-none">
+              <label class="form-label" for="friendlyurl">URL Friendly Page Name:</label>
+              <input type="text" class="form-control pull-left" id="friendlyurl" name="friendlyurl"    placeholder="enter page friendly url "    value="{$pagedetail.CMSPagesNameINURL}">
+            </div>
+        </div>
+        
+        <div class="userfrmDiv overflow-hidden">
+            <div class="form-group productfrmDiv detailSection1 pull-left clear-none">
+                <label class="form-label" for="pagetitle">Page Title:</label>
+                <input type="text" class="form-control pull-left" id="pagetitle" name="pagetitle" placeholder="enter page title "   value="{$pagedetail.CMSPagesTitle}">
+            </div>
+            <div class="form-group productfrmDiv detailSection1 pull-left clear-none">
+              <label class="form-label" for="sortorder">Sort Order:</label>
+              <input type="text" class="form-control pull-left" id="sortorder" name="sortorder"   value="{$pagedetail.SortBy}"  >
+            </div>
+        </div>
+        
+        <div class="overflow-hidden psTitle pageSubHeader">
+        	<div class="pull-left padding-left-10 margin-top-5">Page Preference</div>
+        </div>
+        
+        <div class="userfrmDiv overflow-hidden">
+            <div class="form-group productfrmDiv detailSection2 pull-left">
+                <div class="pull-left" >
+                <input type="checkbox" class="pull-left" id="requiredlogintoBrowse" name="requiredlogintoBrowse" value="1"  {if="$pagedetail.LoginRequired=='1'"}checked='checked'{/if} />
+                </div>
+                <div class="pull-left">
+                Login Required to browse this page
+                </div>
+            </div>
+            
+            <div class="form-group productfrmDiv detailSection2 pull-left">
+                <div class="pull-left" >
+                <input type="checkbox" class="pull-left" id="displayonWebsite" name="displayonWebsite" value="1"  {if="$pagedetail.Status==1"}checked="checked"{/if}/>
+                </div>
+                <div class="pull-left">
+                Yes, Display on website
+                </div>
+            </div>
+            
+            <div class="form-group productfrmDiv detailSection2 pull-left">
+                <div class="pull-left" >
+                <input type="checkbox" class="pull-left" id="displayonbottom" name="displayonbottom"  value="1"  {if="$pagedetail.ShowLink==1"}checked="checked"{/if}/>
+                </div>
+                <div class="pull-left">
+                Yes, Display on bottom
+                </div>
+            </div>
+        </div>
+        
+        
+        <div class="overflow-hidden psTitle pageSubHeader">
+        	<div class="pull-left padding-left-10 margin-top-5">Page Type & Content Detail</div>
+        </div>
+        
+        
+         <div class="userfrmDiv overflow-hidden">
+            <div class="form-group productfrmDiv detailSection2 pull-left">
+                <div class="pull-left" >
+                <input type="checkbox" class="pull-left" id="externalpageLink" name="externalpageLink" value="1" {if="$pagedetail.IsExternalLink=='1'"}checked="checked" {/if}/>
+                </div>
+                <div class="pull-left">
+                If this is To mark this page as external link checked it and fill its url
+                </div>
+            </div>
+            
+            <div class="userfrmDiv overflow-hidden display-none" id="externalid">
+                <div class="form-group productfrmDiv detailSection2 pull-left clear-none">
+                    <span>External Page URL:</span>
+                    <input type="text" class="form-control pull-left" id="externalpageUrl" name="externalpageUrl"  value="{$pagedetail.external_url}"  >
+                </div>
+            </div>
+            
+             <div class="form-group productfrmDiv detailSection2 pull-left">
+                <div class="pull-left" >
+                <input type="checkbox" class="pull-left" id="internalpageLink" name="internalpageLink"  value="1" {if="$pagedetail.IsInternalLink=='1'"}checked="checked" {/if}/>
+                </div>
+                <div class="pull-left">
+                If this is To mark this page as internal link checked it and fill its url
+                </div>
+            </div>
+            
+            <div class="userfrmDiv overflow-hidden display-none" id="internalid">
+                <div class="form-group productfrmDiv detailSection2 pull-left clear-none">
+                    <span>Internal Page URL:</span>
+                    <input type="text" class="form-control pull-left" id="internalpageUrl" name="internalpageUrl" value="{$pagedetail.internal_url}"  >
+                </div>
+            </div>
+            
+            <div class="form-group productfrmDiv detailSection2 pull-left">
+                <div class="pull-left" >
+                <textarea name="landingpageHtml" id="landingpageHtml" cols="115" rows="20">{$pagedetail.Content}</textarea>
+                </div>
+            </div>
+         </div>  
+         
+         
+          <div class="overflow-hidden psTitle pageSubHeader">
+        	<div class="pull-left padding-left-10 margin-top-5">Page Meta Detail</div>
+          </div>
+          
+         <div class="userfrmDiv overflow-hidden">
+            <div class="form-group productfrmDiv detailSection2 pull-left clear-none">
+                <span>Meta Title:</span>
+                <input type="text" class="form-control pull-left" id="metaTitle" name="metaTitle" placeholder="enter meta title "  value="{$pagedetail.Metatitle}">
+            </div>
+        </div>
+        
+        <div class="userfrmDiv overflow-hidden">
+            <div class="form-group productfrmDiv detailSection2 pull-left clear-none">
+                <span>Meta Description:</span>
+                <textarea cols="115" rows="6" id="metaDescription" name="metaDescription"  >{$pagedetail.Metadesc}</textarea>
+            </div>
+        </div>
+        
+        <div class="userfrmDiv overflow-hidden">
+            <div class="form-group productfrmDiv detailSection2 pull-left clear-none">
+                <span>Meta Keyword:</span>
+                <textarea cols="115" rows="6" id="metaKeyword" name="metaKeyword"  >{$pagedetail.Metakeyword}</textarea>
+            </div>
+        </div>
+        
+        <div class="userfrmDiv overflow-hidden">
+            <div class="form-group productfrmDiv detailSection2 pull-left clear-none">
+                <span>Google Tracking Code:</span>
+                <textarea cols="115" rows="6" id="googletrackingCode" name="googletrackingCode"  >{$pagedetail.GoogleAnalyticCode}</textarea>
+            </div>
+        </div>
+        
+         <div class="overflow-hidden psTitle pageSubHeader">
+        	<div class="pull-left padding-left-10 margin-top-5">Page Other Detail</div>
+         </div>
+         
+         <div class="userfrmDiv overflow-hidden">
+            <div class="form-group productfrmDiv detailSection2 pull-left clear-none">
+                <span>Page Permission:</span>
+                <select name="pagePermission" id="pagePermission" class="form-control ">
+                    <option value="">-Select Page Permissions-</option>
+                    <option value="1" {if="$pagedetail.Permission=='1'"}selected='selected'{/if}>Administrative Rights</option>
+                    <option value="2" {if="$pagedetail.Permission=='2'"}selected='selected'{/if}>Only Update HTML Content &amp; Page Name</option>
+                    <option value="3" {if="$pagedetail.Permission=='3'"}selected='selected'{/if}>Not Allowed To Delete</option>
+                </select>
+            </div>
+        </div>
+         
+          <div class="userfrmDiv overflow-hidden">
+            <div class="form-group productfrmDiv detailSection2 pull-left clear-none">
+                <span>Developer Notes:</span>
+                <textarea cols="115" rows="6" id="developerNotes" name="developerNotes"  >{$pagedetail.DevelopersNote}</textarea>
+            </div>
+          </div>
+        
+        <div class="overflow-hidden clear-both">
+            <div class="pull-right margin-bottom-10">
+                {if="$case=='addpage'"}
+                <button type="submit" name="save" value="save" id="saveBtn" class="btn btn-primary saveBtn"><i class="fa fa-save"></i> Save</button>
+                {else}
+                <button type="submit" name="save" value="save" id="saveBtn" class="btn btn-primary saveBtn"><i class="fa fa-save"></i> Save Changes</button>
+                {/if}
+            </div>
+        </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,26 @@
+.step-section .heading-2{font-family: 'quicksandregular',sans-serif; font-size:28px; color:#666666; overflow:hidden;}
+.step-section .current-step .heading-2{color:#abc340;}
+.step-section .step{overflow:hidden;}
+.step-section .heading-2 .mark-icon{float:left; font-size:22px; padding-top:6px; background:#9E9E9E; color:#FFF; width:40px; height:40px; border-radius:50%; display:inline-block; margin-right:10px; text-align:center; border:1px solid #abc340;}
+.step-section .heading-2 i.fa{margin-left:5px;}
+.step-section .current-step .heading-2 .mark-icon{background:url(../images/numberbg.png) no-repeat; border:none; border-radius:0%; height:52px;}
+.step-section .heading-2 .step-name{vertical-align:middle;}
+.step-content{font-family: 'latoregular',sans-serif; padding-left:50px; color:#666; border-bottom:1px solid #666; padding-bottom:25px;}
+.step-content .heading-3{font-size:21px; margin:25px 0px;}
+.step-content .amount{font-size:28px; color:#002f5b;}
+.payment-process-section > div{background:#e5e5e5; padding:10px; margin-bottom:10px; color:#000;}
+.heading-3.bank-info-heading{margin-bottom:0px;}
+.receipt-list-heading{font-family: 'latobold',sans-serif; background:#e5e5e5; padding:10px; font-size:15px;}
+.receipt-list-detail .row{margin-top:10px; margin-bottom:20px;}
+.receipt-list-detail .row:last-child{margin-bottom:10px;}
+.receipt-list-detail .row div span{display:block; line-height:20px;}
+.receipt-list-detail .row div a{margin:0px 10px;}
+.step-section .step-4 .step-content{border-bottom:none; padding-bottom:0px;}
+.receipt-list-section{border-bottom:1px solid #666;}
+.total-amount-section{font-size:18px; color:#002f5b; font-weight:bold; padding-top:15px;}
+.total-amount{text-align:right;}
+.total-amount .row{padding-top:10px; padding-bottom:10px;}
+.print-page-content{text-align:center; margin-top:50px;}
+.receipt-list-detail .fundraisers-name{color:#abc340; font-size:16px; margin-bottom:5px;}
+.receipt-list-detail .npo-name{color:#D0719B; font-size:16px; margin-bottom:5px;}
+.processing-containt{display:none;}

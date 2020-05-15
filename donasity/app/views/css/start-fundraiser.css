@@ -1,0 +1,12 @@
+/* CSS Document */
+section.fundraiser-page{background:url(../images/pricing-banner.jpg) no-repeat;background-size:cover;background-position:center bottom;}
+.fundraiser-page .page-heading{padding-top:64px;}
+.start-fundraiser .heading-1{margin-bottom:0px;}
+.how-it-works .heading-2{font-size:40px; color:#fff; margin-bottom:0px;}
+.how-it-works a:hover{text-decoration:none;}
+.how-it-works i{-webkit-transition:all; -o-transition:all; transition:all; -webkit-transition-duration:300ms; transition-duration:300ms;}
+.how-it-works .content-collapse i{-webkit-transform:rotate(180deg); -ms-transform:rotate(180deg); -o-transform:rotate(180deg); transform:rotate(180deg);}
+.how-it-works-content .bg-content{background:#f4f4f4;}
+.how-it-works-content .heading-2{font-size:30px; color:#0d2946; text-align:center; padding:30px 0px 20px 0px; margin-bottom:0px;}
+.choose-fundraiser{background:#afc73f; font-family: 'quicksandbold',sans-serif; font-size:30px; padding:25px 0px;}
+.no-sw-purchase{background:#81952b; font-family: 'quicksandbold',sans-serif; font-size:24px; padding:20px 0px;}

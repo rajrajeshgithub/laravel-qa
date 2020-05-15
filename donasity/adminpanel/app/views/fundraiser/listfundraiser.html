@@ -1,0 +1,257 @@
+<link type="text/css" rel="stylesheet" href='{#RESOURCES#}css/bootstrap-datepicker.css'>
+<script type="text/javascript" src='{#RESOURCES#}js/bootstrap-datepicker.js'></script>
+<ul class="breadcrumb">
+  <li title="Dashboard"><a href='{#URL#}home/'>Dashboard</a></li>
+  <li title="Fundraiser"><a href='{#URL#}fundraiser/'>Fundraiser</a></li>
+  <li title="Fundraiser">Fundraiser Status</li>
+</ul>
+{include="common/message"}
+<script type="text/javascript">
+	function ExportData() {
+		var actionUrl = SITEURL + 'fundraiser/ExportFundraiser';
+		$('#formSection').attr('action', actionUrl);
+		$('#formSection').submit();
+		$('#formSection').attr('action', '');
+	}
+	
+	function show_result() {
+		var actionUrl = SITEURL + 'fundraiser/Report';
+		$('#formSection').attr('action', actionUrl);
+		$('#pageNumber').val('');
+		$('#formSection').submit();
+		$('#formSection').attr('action', '');
+	}
+	/*function change_status(f_status) {
+		window.location.href = SITEURL + 'fundraiser/index/view/' + f_status;
+	}*/
+	$(function() {	
+		$('#StartDate').datepicker();
+		$('#StartDate').datepicker().on('changeDate', function (ev) {
+			if(ev.viewMode == "days") {
+				$('#StartDate').datepicker('hide');
+				maxDate: jQuery('#StartDate').datepicker("getDate");
+			}
+		});
+		
+		$('#EndDate').datepicker();
+		$('#EndDate').datepicker().on('changeDate', function (ev) {
+			if(ev.viewMode == "days") {
+				$('#EndDate').datepicker('hide');
+				maxDate: jQuery('#EndDate').datepicker("getDate");
+			}
+		});
+	});	
+	
+	$(document).ready(function(){
+		/*$('#formSection').submit(function(){
+			var actionUrl = SITEURL + 'fundraiser/Report';
+			$('#formSection').attr('action', actionUrl);
+		});*/
+	});
+</script>
+<style type="text/css">
+	.button-4
+	{
+		border:2px solid #246e9f; 
+		border-radius:5px;
+		padding:10px;
+		font-weight:bold;
+		text-align:center;
+		color:#2196F3;
+		font-size:14px;
+	}
+	.button-4:hover
+	{
+		color:white;
+		background:#246e9f;
+	}
+</style>
+
+<form id="formSection" name="formSection" method="get" autocomplete="off" action=''>
+    <div class="oh">
+      <div class="col col-12">
+        <h1 class="heading-1">{$fundraiserStatus} Fundraiser</h1>
+      </div>
+      <!--<div class="col col-6">
+        <a href='{#URL#}fundraiser' class="button-1 pull-right m-15" title="Back to fundraiser list">Fundraiser List</a>&nbsp;
+        <a href='javascript://' id="export" class="button-1 pull-right m-15" onclick="ExportData()"><i class="fa fa-file-excel-o"></i>&nbsp;Export</a>
+        </div>-->
+    </div>
+    
+    <div class="content-section">
+          <fieldset>
+            <div class="row">
+              <section class="col col-4"> 
+                <label class="select label">Fundraiser by status</label>
+                <label class="select">
+                    <select name="status" id="fundraiser_status" class="form-control">
+                    	<option value="{'0'|keyEncrypt}" {if condition="$fundraiserStatus=='Initiated'"}selected{/if} >Initiated</option>
+                        <option value="{'1'|keyEncrypt}" {if condition="$fundraiserStatus=='Step 1 completed'"}selected{/if} >Step 1 completed</option>
+                        <option value="{'2'|keyEncrypt}" {if condition="$fundraiserStatus=='Step 2 completed'"}selected{/if} >Step 2 completed</option>
+                        <option value="{'5'|keyEncrypt}" {if condition="$fundraiserStatus=='Step 5 completed'"}selected{/if} >Step 5 completed</option>
+                        <option value="{'6'|keyEncrypt}" {if condition="$fundraiserStatus=='Setup completed'"}selected{/if} >Setup completed</option>
+                        <option value="{'11'|keyEncrypt}" {if condition="$fundraiserStatus=='Waiting for verification'"}selected{/if} >Waiting for verification</option>
+                        <option value="{'15'|keyEncrypt}" {if condition="$fundraiserStatus=='Ended'"}selected{/if} >Ended</option>
+                        <option value="{'21'|keyEncrypt}" {if condition="$fundraiserStatus=='Stoped'"}selected{/if} >Stoped</option>
+                        <option value="{'eitw'|keyEncrypt}" {if condition="$fundraiserStatus=='Ending in Two Weeks'"}selected{/if} >Ending in two Weeks</option>
+                    </select><i></i>
+                </label>
+              </section>
+              <section class="col col-4"> 
+              	<label class="label">Form</label>
+                <div class="input-append date" id="StartDate" data-date="" data-date-format="mm/dd/yyyy">
+                    <label class="input"> <i class="icon-append fa fa-calendar add-on"></i>
+                        <input type="text" class="datepickerInput" name="fromDate" id="StartDate"  value='{$fromDate}' readonly />
+                    </label>
+                </div>
+              </section>
+              <section class="col col-4"> 
+              	<label class="label">To</label>
+                <div class="input-append date" id="EndDate" data-date="" data-date-format="mm/dd/yyyy">
+                    <label class="input"> <i class="icon-append fa fa-calendar add-on"></i>
+                        <input type="text" class="datepickerInput" name="toDate" id="EndDate"  value='{$toDate}' readonly />
+                    </label>
+                </div>
+              </section>
+            </div>
+            <div class="form-footer">
+                <a href='javascript://' class="button-1" onclick="show_result()" title="Export fundraiser details"><i class="fa fa-search"></i>&nbsp;Show Result</a> &nbsp; 
+            	<a href='{#URL#}fundraiser/Report?status={$hddncampStatus}&from={$fromDate}&to={$toDate}' class="button-2" title="Back to fundraiser Summary"><i class="fa fa-refresh"></i>&nbsp;Reset</a> &nbsp; 
+                {if condition="$totalRecords>0"}
+                <a href='javascript://' id="export" class="button-1" onclick="ExportData()"><i class="fa fa-file-excel-o"></i>&nbsp;Export</a> &nbsp; 
+                {/if}
+                <a href='{#URL#}fundraiser' class="button-2" title="Back to fundraiser Summary">Fundraiser Summary</a>
+            </div>
+          </fieldset>
+    </div>          
+    
+    <div id="content-box" class="igs-form">
+        <input type="hidden" name="pageNumber" id="pageNumber" value="{$pageNumber}" />
+        <input type="hidden" name="fund_status" id="fund_status" value="{$hddncampStatus}" />
+        <div class="section-heading listingmoreBtn"> Fundraiser List<a href='javascript://' class="form-toggle-icon "><i class="fa fa-minus-square-o"></i></a> </div>
+        <div class="content-section">
+          <fieldset>
+            <div class="row">
+              <section class="col col-12"> 
+              {if condition="$totalRecords>0"}
+                <div class="record-found pull-left">Showing {$startRecord}-{$endRecord} of {$totalRecords} records</div>
+                {/if}
+                <table border="0" id="igs-table">
+                  <thead>
+                    <tr>
+                      <th>Date</th>
+                      <th>Fundraiser</th>
+                      <th>Start Date</th>
+                      <th>End Date</th>
+                      <th>State</th>
+                      <th>Goal ($)</th>
+                      <th>Category</th>
+                      <th>Level</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                  {if condition="$totalRecords>0"}
+                  {loop="fundraiserList"}
+                  <tr>
+                    <td data-title="Date">{if condition="$value.lastUpdated!='0000-00-00'"} {function="formatDate($value.lastUpdated, 'm/d/Y')"}{/if}</td>
+                    <td data-title="Fundraiser">
+                    	{if condition="$value.f_status=='15'"}
+                    	<a href='{#FRONTURL#}fundraiser/{$value.campId|keyEncryptFront}/{$value.url}' target="_new" class="title-link" >{$value.fundraiser}</a>
+                        {else}
+                        {$value.fundraiser}
+                        {/if}
+                    </td>
+                    <td data-title="Start Date">
+                    {if condition="$value.startDate!=0000-00-00"} {function="formatDate($value.startDate, 'm/d/Y')"}{/if}
+                    </td>
+                    <td data-title="End Date">
+                    {if condition="$value.endDate!=0000-00-00"} {function="formatDate($value.endDate, 'm/d/Y')"}{/if}
+                    </td>
+                    <td data-title="State">{$value.state}</td>
+                    <td data-title="Goal ($)">{$value.goal}</td>
+                    <td data-title="Category">{$value.CatName}</td>
+                    <td data-title="Level">{$value.campLevel}</td>
+                  </tr>
+                  {/loop}
+                  {else}
+                  <tr>
+                    <td class="text-center" colspan="8">No Record Found!</td>
+                  </tr>
+                  {/if}
+                 </tbody>
+                </table>
+              </section>
+            </div>
+            {if condition="$totalRecords > $pageLimit"}
+            <!-- pagination start-->
+            <div class="row">
+              <div class="col col-12">
+                <nav>
+                  <ul class="pagination">
+                    {if="$pageSelected!=1"}
+                    <li> <a href='javascript://' onclick="return GotoPage(1);"  title="First Page" aria-label="Previous"> <span aria-hidden="true">First</span> </a> </li>
+                    <li> <a href='javascript://' onclick="return GotoPage({$pageSelected-1});"  title="Previous" aria-label="Previous"> <span aria-hidden="true">&laquo;</span> </a> </li>
+                    {/if}
+                    {loop="pagingList"} 
+                    {if="$pageSelected==$value.PageNo"}
+                    <li class="active"><a href='javascript://' title="Page No {$value.PageNo}">{$value.PageNo}</a></li>
+                    {else}
+                    <li><a href='javascript://' onclick="return GotoPage({$value.PageNo});" title="Page No {$value.PageNo}">{$value.PageNo}</a></li>
+                    {/if}   
+                    {/loop}
+                    {if="$pageSelected!=$lastPage"}
+                    <li> <a href='javascript://' onclick="return GotoPage({$pageSelected+1});" aria-label="Next"> <span aria-hidden="true">&raquo;</span> </a> </li>
+                    <li> <a href='javascript://' onclick="return GotoPage({$lastPage});" aria-label="Last Page"> Last </a> </li>
+                    {/if}
+                  </ul>
+                </nav>
+                </div>
+            </div>
+            <!-- pagination end-->
+            {/if}
+          </fieldset>
+        </div>
+    </div>
+    
+    <div id="content-box" class="igs-form">
+        <div class="section-heading listingmoreBtn"> Fundraiser by status<a href='javascript://' class="form-toggle-icon "><i class="fa fa-minus-square-o"></i></a> </div>
+        <div class="content-section">
+          <fieldset>
+            <div class="row">
+              <section class="col col-3">
+              	<a href='{#URL#}fundraiser/Report?status={'0'|keyEncrypt}&fromDate={$fromDate}&toDate={$toDate}'><div class="button-4">Initiated</div></a>
+              </section>
+              <section class="col col-3">
+              	<a href='{#URL#}fundraiser/Report?status={'1'|keyEncrypt}&fromDate={$fromDate}&toDate={$toDate}' ><div class="button-4">Step 1 completed</div></a>
+              </section>
+              <section class="col col-3">
+              	<a href='{#URL#}fundraiser/Report?status={'2'|keyEncrypt}&fromDate={$fromDate}&toDate={$toDate}'><div class="button-4">Step 2 completed</div></a>
+              </section>
+              <section class="col col-3">
+              	<a href='{#URL#}fundraiser/Report?status={'5'|keyEncrypt}&fromDate={$fromDate}&toDate={$toDate}'><div class="button-4">Step 5 completed</div></a>
+              </section>
+            </div>
+            <div class="row">
+              <section class="col col-3">
+              	<a href='{#URL#}fundraiser/Report?status={'6'|keyEncrypt}&fromDate={$fromDate}&toDate={$toDate}' ><div class="button-4">Setup completed</div></a>
+              </section>
+              <section class="col col-3">
+              	<a href='{#URL#}fundraiser/Report?status={'11'|keyEncrypt}&fromDate={$fromDate}&toDate={$toDate}' ><div class="button-4">Waiting for verification</div></a>
+              </section>
+              <section class="col col-3">
+              	<a href='{#URL#}fundraiser/Report?status={'15'|keyEncrypt}&fromDate={$fromDate}&toDate={$toDate}' ><div class="button-4">Ended</div></a>
+              </section>
+              <section class="col col-3">
+              	<a href='{#URL#}fundraiser/Report?status={'21'|keyEncrypt}&fromDate={$fromDate}&toDate={$toDate}' ><div class="button-4">Stoped</div></a>
+              </section>
+            </div>
+            <div class="row">
+              <section class="col col-3">
+              	<a href='{#URL#}fundraiser/Report?status={'eitw'|keyEncrypt}&fromDate={$fromDate}&toDate={$toDate}'><div class="button-4">Ending in two Weeks</div></a>
+              </section>
+            </div>  
+          </fieldset>
+        </div>
+    </div>
+    
+</form>

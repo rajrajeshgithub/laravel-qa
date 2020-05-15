@@ -1,0 +1,118 @@
+<ul class="breadcrumb">
+        <li><a href='{#URL#}home/' class="dashboard">Dashboard</a></li>
+		<li>CMS</li>
+        <li class="active">Programmed Pages</li>
+</ul>
+<div class="oh">
+	<div class="col col-12">
+        <h1 class="heading-1">Programmed Page</h1>
+    </div>
+</div>
+<div id="content-box" class="igs-form">
+	<form id="formSection" name="formSection" method="post" autocomplete="off" action="{#URL}programmedpages/index/listing">
+		<input type="hidden" name="pageNumber" id="pageNumber" value=""  />
+		<div class="section-heading"> Filter Result<a href='javascript://' class="form-toggle-icon"><i class="fa fa-minus-square-o"></i></a></div>
+		<div class="content-section">
+			 <fieldset>
+			 	<div class="row">
+                        <section class="col col-4">
+							<label class="select">Enter search keyword</label>
+                            <label class="input">
+                                <input type="text" id="searchValues" name="searchValues" placeholder="Enter search keyword"  value="{$Search}">
+                            </label>
+                        </section>
+                        
+                        <section class="col col-4">
+                            <label class="select">Search keyword in</label>
+                            <label class="select">
+                                <select name="searchFields" id="searchFields">
+                                    <option {if condition="$Field=='PMV.PMV_pagenameEN'"} selected="selected" {/if} value="PMV.PMV_pagenameEN ">Page Name</option>
+                                </select>
+                                <i></i>
+                            </label>
+                        </section>
+                    </div>
+			 </fieldset>
+             <div class="form-footer">
+             		<button type="submit" name="search" value="search" id="search" class="button-1"><i class="fa fa-search"></i>&nbsp;Search</button>
+                    <button type="button" name="reset" value="reset" class="button-2" onClick="reloadPage();"><i class="fa fa-refresh"></i>&nbsp;Reset</button>
+             </div>
+		</div>
+        <div class="content-section">
+        <fieldset>
+         <div class="row">
+            <section class="col col-12">
+            {if condition="count($PageList)>0"} <div class="record-found pull-left">Showing {$startRecord}-{$endRecord} of {$totalRecords} records</div>{/if}
+                <table border="0" id="igs-table">
+                   
+                    <tr>
+                      <th width="50%">Page Name</th>
+                      <th width="50%">No. Of Editable Text</th>
+                    </tr>
+                    
+                        {if condition="$PageList!= NULL"}
+                        {loop="PageList"} 
+                      <tr>
+                        <td data-title="Page Name"> 
+                            <a href='{#URL#}programmedpages/index/edit/{$value.PMV_id|keyEncrypt}' class="title-link" title="Edit Programmed Page">{$value.PMV_pagenameEN}</a>
+                        </td>
+                        <td data-title="No.Of Editable Text">
+                        {if condition="$value.PMT_PMVIds==0"}
+                            No Contents Found
+                        {else}
+                            {$value.PMT_PMVIds}
+                        {/if}
+                        </td>
+                      </tr>
+                      {/loop}
+                      {else}
+                      <tr><td class="text-center" colspan="3">No Record Found!</td></tr> 
+                     {/if}
+
+                </table>
+                
+                <div class="col col-12">
+                 {if condition="count($PagingList)>1"}
+                    <nav>
+                      <ul class="pagination">
+                      {if="$PageSelected!=1"}
+                        <li>
+                          <a href='javascript://' onclick="return GotoPage(1);"  title="First Page" aria-label="Previous">
+                            <span aria-hidden="true">First</span>
+                          </a>
+                        </li>
+                        <li>
+                          <a href='javascript://' onclick="return GotoPage({$PageSelected-1});"  title="Previous" aria-label="Previous">
+                            <span aria-hidden="true">&laquo;</span>
+                          </a>
+                        </li>
+                       {/if}
+                       {loop="PagingList"} 
+                             {if="$PageSelected==$value.PageNo"} 
+                                <li class="active"><a href='javascript://' title="Page No {$value.PageNo}">{$value.PageNo}</a></li>
+                              {else}
+                                <li><a href='javascript://' onclick="return GotoPage({$value.PageNo});" title="Page No {$value.PageNo}">{$value.PageNo}</a></li>
+                              {/if}   
+                        {/loop}
+                         {if="$PageSelected!=$lastPage"}
+                            <li>
+                              <a href='javascript://' onclick="return GotoPage({$PageSelected+1});" aria-label="Next">
+                                <span aria-hidden="true">&raquo;</span>
+                              </a>
+                            </li>
+                            <li>
+                              <a href='javascript://' onclick="return GotoPage({$lastPage});" aria-label="Last Page">
+                               Last
+                              </a>
+                            </li>
+                        {/if}
+                      </ul>
+                    </nav>
+                  {/if}  
+                </div>
+            </section>
+        </div>
+        </fieldset>
+   </div>
+	</form>
+</div>

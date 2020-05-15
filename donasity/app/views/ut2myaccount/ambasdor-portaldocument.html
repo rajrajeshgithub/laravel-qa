@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+{include="top/head"}
+
+<script type="text/javascript">
+$(document).ready(function()
+{
+	var featuredBoxHeight=0;
+	var nameMinHight=0;	
+	setTimeout(function()
+	{
+		$('.fundraiser-section .featured-box').each(function()
+		{
+			//-- box height
+			var thisHeight = $(this).innerHeight();
+			if(thisHeight > featuredBoxHeight)
+			{
+				featuredBoxHeight = thisHeight;
+			}		
+			$('.fundraiser-section .featured-box').css('height',featuredBoxHeight);
+			//-- name height
+			var nameHeight = $(this).find('.fundraisers-name').innerHeight();
+			if(nameHeight > nameMinHight)
+			{
+				nameMinHight = nameHeight;
+			}		
+			$('.fundraiser-section .featured-box .fundraisers-name').css('height',nameMinHight);			
+		});
+
+	},1000);
+});
+</script>
+
+
+
+</head>
+<body id="body">
+<div class="gray-fix-nav">
+{include="top/top"}
+</div>
+<link type="text/css" rel="stylesheet" href='{#RESOURCES#}css/fundraiser-dashboard.css' />
+
+
+<section class="fix-first-section fundraiser-page">
+{include="ut2myaccount/ambassador_top"}
+</section>
+<section class="section-padding fundraiser-detail">
+	<div class="container">
+        <ul class="donation-category-tab list-inline mb-0">
+             <li><a href='{#URL#}ut2myaccount/ambassador-portal' title="Donations">DONATIONS</a></li>
+             <li class="active-category-tab"><a href='{#URL#}ut2myaccount/ambassador-documents' title="Fundraisers">DOCUMENTS</a></li> 
+        </ul>        
+        <div >
+    	<div class="container">       
+        	{loop="$documentList"}
+    			<div class="col-md-1 col-sm-3 col-xs-6">
+                	<div class="featured-box">
+                    <span class="text-center">
+                        <img src='{#RESOURCES#}img/pdficon.jpg' alt="pdf" class="img-responsive">
+                    </span>
+                    <span class="db text-center">
+                        <a href='{#DOCUMENT_URL#}{$value.DocName}' class="dib" title="Click to open">
+                            <span class="pl-5"><i class="fa fa-folder-open"></i></span>
+                        </a>
+                        <a href='{#DOCUMENT_URL#}{$value.DocName}' class="dib" download="{$value.DocName}" title="Click to download">
+                            <span class="pl-15"><i class="fa fa-download"></i></span>
+                        </a>
+                    </span>
+                </div>
+        		</div>
+        	{/loop}
+        </div>
+    </div>               
+    </div>
+</section>
+{include="bottom/bottom"}
+</body>
+</html>

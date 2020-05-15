@@ -1,0 +1,299 @@
+<script type="text/javascript" language="javascript" src='{#URL#}app/tinymce/tinymce.min.js'></script>
+<script type="text/javascript" src='{#RESOURCES#}js/includeEditor.js'></script>
+<script type="text/javascript" src='{#RESOURCES#}js/staticpage.js'></script>
+<script type="text/javascript" src='{#RESOURCES#}js/validatecmspage.js'></script>
+<link rel="stylesheet" type="text/css" href='{#RESOURCES#}css/style.css'>
+<script type="text/javascript">
+
+	$(document).ready(function()
+	{
+		/*$('.viewmoreBtn i').click(function()
+		{
+			 $(this).toggleClass("fa-plus fa-minus");
+			 $(this).closest('.row').find('.viewmorSection').slideToggle();
+			
+		});*/
+		
+		$(".GenerateUrl").click(function(){
+				var str = $("#pagename").val();
+				str = str.replace(/[^a-z\s]/gi, '');
+				str = $.trim(str);				
+				str = str.replace(/[_\s]/g, '-');	
+				str = str.toLowerCase();			
+				$("#friendlyurl").val(str);
+			
+			})
+	})
+</script>
+<div id="rightSection">
+  <div class="rightPannel">
+    <div class="breadcrumb">
+      <ul>
+        <li title="Dashboard"><a href='{#URL#}home/'><img src='{#RESOURCES#}img/dashboard_thumb.png'/>Dashboard</a></li>
+        <li>&nbsp;»&nbsp;</li>
+        <li title="CMS">CMS</li>
+        <li>&nbsp;»&nbsp;</li>
+        <li title="Static Pages"><a href='{#URL#}static'>Static Pages</a></li>
+        <li>&nbsp;»&nbsp;</li>
+        <li title="Static Page - {if="$case=='editpage'"}Edit{else}Add{/if}">{if="$case=='editpage'"}Edit {else} Add {/if}</li>
+      </ul>
+    </div>
+    <div class="contentSection">
+    <form id="cmspageform" name="cmspageform" class="sky-form" method="post"  {if="$case=='editpage'"}action='{#URL#}static/index/update-page/' {else}
+     action='{#URL#}static/index/insertpage/'{/if} autocomplete="off">
+     {if="$case=='editpage'"}
+            <input type="hidden" name="pageid" id="pageid" value="{$pagedetail.CMSPagesID}"/>
+            {/if}
+      <div class="pageHeader text-left">
+      <li class="fa fa-fw fa-file-text iColor"></li>&nbsp;Static Pages- {if="$case=='editpage'"}Edit {else}Add{/if}
+      <div class="pull-right margin-right-20">
+          <a href='{#URL#}static' class="btn btn-secondary" title="Static Page List"><i class="fa fa-list-ul"></i>&nbsp;Static Pages List</a>
+          {if="$case=='addpage'"}
+          <button type="submit" class="btn btn-primary" title="Add Static Page" value="Save">
+          <i class="fa fa-save"></i>&nbsp;Save</button>
+          {else}
+          <button type="submit" class="btn btn-primary" title="Update Static Pages" value="Save Changes">
+          <i class="fa fa-save"></i>&nbsp;Save Changes</button>
+          {/if}
+      </div>
+      </div>
+      {include="common/message"}
+      <div class="">
+            <fieldset>
+				<div class="row">
+                	<div class="sky-form-headingsection  psTitle">
+						<div class="sky-form-heading pull-left">Static Pages Group</div>
+                        <div class="viewmoreBtn pull-right">
+							<i class="fa fa-minus"></i>
+						 </div>
+					</div>
+                    <div class="viewmorSection" >
+					<section class="col col-4">
+						<label class="select">
+							<select name="cmsgroup" id="cmsgroup">
+								<option value="">-Select Group-</option>
+                                    <optgroup label="English">
+                                    {loop="engroup"}
+                                    <option value="{$value.CMSPageGroupID}|{$value.Language}" {if="$selectedgroup==$value.CMSPageGroupID"}selected='selected'{/if}>
+                                    	{$value.Title}
+                                    </option>
+                                    {/loop}
+                                    </optgroup>
+                                    <optgroup label="Spanish">
+                                    {loop="esgroup"}
+                                    <option value="{$value.CMSPageGroupID}|{$value.Language}" {if="$selectedgroup==$value.CMSPageGroupID"}selected='selected'{/if}>
+                                    	{$value.Title}
+                                    </option>
+                                    {/loop}
+                                    </optgroup>
+							</select>
+							<i></i>
+						</label>
+					</section>
+                    </div>
+				</div>
+				</fieldset>
+				<fieldset>
+				<div class="row">
+					<div class="sky-form-headingsection psTitle">
+						<div class="sky-form-heading pull-left">Basic Page Details</div>
+						<div class="viewmoreBtn pull-right">
+							<i class="fa fa-minus"></i>
+						 </div>
+					</div>
+					<div class="viewmorSection" >
+					<!--<div class="sky-form-subheading">Sub Heading</div>-->
+					<section class="col col-6">
+						<label class="label">Page Name</label>
+						<label class="input">
+							<input type="text" id="pagename" name="pagename" placeholder="Enter page name "  {if="isset($pagedetail)"} value="{$pagedetail.CMSPagesName}" {/if}>
+						</label>
+					</section>
+					<section class="col col-6">
+						<label class="label pull-left">URL Friendly Page Name</label>
+                        <label class="display-inline-block GenerateUrl padding-left-10"><a href='javascript://' class="link"><li class="fa fa-magic">&nbsp;</li>Generate</a></label>
+						<label class="input">
+							<input type="text" id="friendlyurl" name="friendlyurl"    placeholder="Enter page friendly url "
+                             {if="isset($pagedetail)"}  value="{$pagedetail.CMSPagesNameINURL}"> {/if}
+						</label>
+					</section>
+					<section class="col col-6">
+						<label class="label">Page Title</label>
+						<label class="input">
+							<input type="text" id="pagetitle" name="pagetitle" placeholder="Enter page title "   {if="isset($pagedetail)"}  value="{$pagedetail.CMSPagesTitle}" {/if}>
+						</label>
+					</section>
+					<section class="col col-6">
+						<label class="label">Sort Order</label>
+						<label class="input">
+							<input type="text" id="sortorder" placeholder="Enter sort order" name="sortorder"   {if="isset($pagedetail)"}  value="{$pagedetail.SortBy}" {/if}>
+						</label>
+					</section>
+				</div>
+				</div>
+				
+				</fieldset>
+				<fieldset>
+				<div class="row">
+                	<div class="sky-form-headingsection psTitle">
+						<div class="sky-form-heading pull-left">Page Preference</div>
+                        <div class="viewmoreBtn pull-right">
+							<i class="fa fa-minus"></i>
+						 </div>
+					</div>
+                    <div class="viewmorSection" >
+					<section class="col col-4">
+                    <label class="checkbox">
+                    <input type="checkbox" id="requiredlogintoBrowse" name="requiredlogintoBrowse" value="1"  {if="isset($pagedetail)"}{if="$pagedetail.LoginRequired=='1'"}checked='checked'{/if}>{/if}<i></i>Login required to browse this page
+                    </label>
+                    </section>
+					<section class="col col-4">
+                    <label class="checkbox">
+                    <input type="checkbox" id="displayonWebsite" name="displayonWebsite" value="1" {if="isset($pagedetail)"} {if="$pagedetail.Status==1"}checked="checked"{/if}{/if}><i></i>
+                    Yes, Display on website
+                    </label>
+                    </section>
+					<section class="col col-4">
+                    <label class="checkbox">
+                    <input type="checkbox" id="displayonbottom" name="displayonbottom"  value="1" {if="isset($pagedetail)"} {if="$pagedetail.ShowLink==1"}checked="checked"{/if}>{/if}<i></i>
+                    Yes, Display on bottom
+                    </label>
+                    </section>
+                    </div>
+				</div>
+				</fieldset>
+				<fieldset>
+				<div class="row">
+                	<div class="sky-form-headingsection psTitle">
+						<div class="sky-form-heading pull-left">Page Type & Content Details</div>
+                        <div class="viewmoreBtn pull-right">
+							<i class="fa fa-minus"></i>
+						 </div>
+					</div>
+                    <div class="viewmorSection" >
+					<div class="row">
+                    <section class="col col-6">
+                    <label class="checkbox">
+                    <input type="checkbox" id="externalpageLink" name="externalpageLink" value="1" {if="isset($pagedetail)"} {if="$pagedetail.IsExternalLink=='1'"}checked="checked" {/if}> 
+                    {/if}<i></i>
+                    If this is To mark this page as external link checked it and fill its url
+                    </label>
+                    <label class="input display-none" id="externalid">
+							<input type="text" id="externalpageUrl" name="externalpageUrl" {if="isset($pagedetail)"} value="{$pagedetail.external_url}" {/if} placeholder="External page url">
+					</label>
+                    </section>
+					<section class="col col-6">
+                    <label class="checkbox">
+                    <input type="checkbox" id="internalpageLink" name="internalpageLink"  value="1" {if="isset($pagedetail)"}{if="$pagedetail.IsInternalLink=='1'"}checked="checked" {/if}{/if}><i></i>
+                    If this is To mark this page as internal link checked it and fill its url
+                    </label>
+                    <label class="input display-none" id="internalid">
+							<input type="text" id="internalpageUrl" name="internalpageUrl" {if="isset($pagedetail)"} value="{$pagedetail.internal_url}" {/if} placeholder="Internal page url">
+					</label>
+                    </section>
+                    </div>
+                    
+					<section>
+                            <label class="textarea">
+                                <textarea rows="3" name="landingpageHtml" id="LandingPageHTML">{if="isset($pagedetail)"} {$pagedetail.Content} {/if}</textarea>
+                            </label>
+                    </section>
+                    </div>
+                </div>
+                
+				</fieldset>
+               
+                <fieldset>
+                <div class="row">
+					<div class="sky-form-headingsection psTitle">
+						<div class="sky-form-heading pull-left">Page Meta Details</div>
+                        <div class="viewmoreBtn pull-right">
+							<i class="fa fa-minus"></i>
+						 </div>
+					</div>
+                    
+                    <div class="viewmorSection">
+                    <section class="">
+                        <label class="label">Meta Title</label>
+                        <label class="input">
+                            <input type="text" id="metaTitle" name="metaTitle" placeholder="enter meta title " {if="isset($pagedetail)"} value="{$pagedetail.Metatitle}" {/if}>
+                        </label>
+                    </section>
+                    
+                    <section class="">
+                        <label class="label">Meta Description</label>
+                        <label class="textarea">
+							<textarea rows="3" id="metaDescription" name="metaDescription"> {if="isset($pagedetail)"} {$pagedetail.Metadesc} {/if}</textarea>
+						</label>
+                    </section>
+                    
+                    <section>
+						<label class="label">Meta Keyword</label>
+                        <label class="textarea">
+							<textarea rows="3" id="metaKeyword" name="metaKeyword">{if="isset($pagedetail)"} {$pagedetail.Metakeyword} {/if}</textarea>
+						</label>
+					</section>
+                    
+                    <section>
+						<label class="label">Google Tracking Code</label>
+                        <label class="textarea">
+							<textarea rows="3" id="googletrackingCode" name="googletrackingCode">{if="isset($pagedetail)"} {$pagedetail.GoogleAnalyticCode} {/if}</textarea>
+						</label>
+					</section>
+                    </div>
+                </div>  
+                
+                </fieldset>
+                
+                <fieldset>
+                <div class="row">
+					<div class="sky-form-headingsection psTitle">
+						<div class="sky-form-heading pull-left">Page Other Details</div>
+                        <div class="viewmoreBtn pull-right">
+							<i class="fa fa-minus"></i>
+						 </div>
+                    </div>
+                    
+                    <div class="viewmorSection" >
+                    <section class="">
+						<label class="select">
+							<select name="pagePermission" id="pagePermission">
+								<option value="">-Select Page Permissions-</option>
+                                <option value="1" {if="isset($pagedetail)"}{if="$pagedetail.Permission=='1'"}selected='selected'{/if}{/if}>Administrative Rights</option>
+                                <option value="2" {if="isset($pagedetail)"}{if="$pagedetail.Permission=='2'"}selected='selected'{/if}{/if}>Only Update HTML Content &amp; Page Name</option>
+                                <option value="3" {if="isset($pagedetail)"}{if="$pagedetail.Permission=='3'"}selected='selected'{/if}{/if}>Not Allowed To Delete</option>   
+							</select>
+							<i></i>
+						</label>
+					</section>
+                    
+                    <section>
+						<label class="label">Developer Notes</label>
+                        <label class="textarea">
+							<textarea rows="3" id="developerNotes" name="developerNotes">{if="isset($pagedetail)"} {$pagedetail.DevelopersNote} {/if}</textarea>
+						</label>
+					</section>
+                    </div>
+                </div>
+                </fieldset>
+                
+                
+                
+                <fieldset>
+                	<section class="pull-right">
+						{if="$case=='addpage'"}
+                        	<button type="submit" class="btn btn-primary" title="Add Static Page" value="Save">
+                            <i class="fa fa-save"></i>&nbsp;Save</button>
+                        {else}    
+                        	<button type="submit" class="btn btn-primary" title="Add Static Page" value="Save Changes">
+                            <i class="fa fa-save"></i>&nbsp;Save Changes</button>
+                        {/if}
+					</section>
+                </fieldset>
+                
+		 
+      </div>
+      </form>
+    </div>
+  </div>
+</div>

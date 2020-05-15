@@ -1,0 +1,79 @@
+<ul class="breadcrumb">
+    <li title="Dashboard"><a href='{#URL#}home/'>Dashboard</a></li>
+     <li title="CMS">Settings</li>
+    <li title="Programmed Pages">Configuration - List</li>
+</ul>
+<div class="oh">
+   <div class="col col-6">
+        <h1 class="heading-1">Configuration - List</h1>
+    </div>
+</div>
+{include="common/message"}
+<div id="content-box" >
+	 <div class="section-heading text-left">	
+    <li class="fa fa-fw fa-file-text iColor"></li>&nbsp;Filter Result<a href='javascript://' class="form-toggle-icon"><i class="fa fa-minus-square-o"></i></a>
+  </div>
+  <form id="formSection" class="igs-form" name="formSection" method="post" autocomplete="off">
+  		 <div class="content-section">
+         		<fieldset>
+                	<div class="row">
+                    	<section class="col col-6 pull-left mt-20">
+                        <label class="input">
+                            <input type="text" name="searchKeyword" id="searchKeyword" class="form-control" value="{$keyword}"  placeholder="Search keyword" />
+                        </label>
+                    </section>
+                    <section class="col col-6">
+                       <label class="select">Search Keyword In</label>
+                        <label class="select">
+                            <select name="searchFields" id="searchFields" class="form-control">
+                            <option {if condition="$searchFields=='code'"} selected="selected" {/if} value="code">Code</option>
+                            <option {if condition="$searchFields=='value'"} selected="selected" {/if} value="value">Caption Value</option>
+                       </select>
+                            <i></i>
+                        </label>
+                     </section>
+                    </div>
+                </fieldset>
+                <div class="form-footer">
+                	<button type="submit" name="search" value="search" id="search" class="button-2"><i class="fa fa-search"></i>&nbsp;Search</button>
+					    <button type="button" name="reset" value="reset" class="button-2" onclick="reloadPage();"><i class="fa fa-refresh"></i>&nbsp;Reset</button>
+                </div>
+         </div>
+  </form>
+</div>
+<div id="content-box" class="igs-form">
+	<div class="row">
+    	<section class="col col-12">
+        	{if condition="count($arrConfigList)>0"}<div class="record-found pull-left">{$totalRecords} Results Found </div>{/if}
+            <table border="0" id="igs-table">
+                <tr>
+                 <th width="30%">Token</th>
+                  <th width="30%">Code</th>
+                  <th width="40%">Caption Value</th>
+                  <!--<th width="10%">Action</th>-->
+                </tr>
+             {if condition="$arrConfigList!= NULL"}
+                        {loop="arrConfigList"} 
+                      <tr>
+                      <td data-title="Code">{$value.ConfigCode|ConfigToken}</td>
+                        <td data-title="Code"><a href='{#URL#}configuration/index/edit/{$value.ConfigID|keyEncrypt}' class="title-link" title="Edit"> {$value.ConfigCode}</a></td>
+                        <td data-title="Caption Value">{if condition="$value.ConfigValue==''"}
+                                                No Contents Found
+                                            {else}
+                                                {$value.ConfigValue}
+                                            {/if}
+                        </td>
+                        <!--<td data-title="Action">
+                            <a href='{#URL#}configuration/index/edit/{$value.ConfigID|keyEncrypt}' class="btn btn-primary btn-sm" title="Edit"><i class="fa fa-edit"></i>&nbsp;Edit</a>
+                        </td>-->
+    
+                      </tr>
+                      {/loop}
+                      {else}
+                      <tr><td class="text-center" colspan="3">No Record Found!</td></tr> 
+                     {/if}
+            </table>
+            
+        </section>
+    </div>
+</div>

@@ -1,0 +1,29 @@
+<ul class="breadcrumb">
+     <li title="Dashboard"><a href='{#URL#}home/'>Dashboard</a></li>
+</ul>
+<div class="oh">
+   <div class="col col-12">
+     <h1 class="heading-1">Welcome to the Administrator Panel for {$GLOBALS.companyname}.</h1>
+   </div>
+</div>
+ <div id="content-box">
+ 		<div class="section-heading">Dashboard <a href='javascript://' class="form-toggle-icon"><i class="fa fa-minus-square-o"></i></a></div>
+         <div class="content-section">
+            <div class="row">
+                {loop="arrModule"}
+                    {if="$value.Module_ParentID=='0'"}
+                    <div class="col col-3">
+                        <div class="column-box1">
+                            <span class="column-box-img"><i class="{$value.Module_Style}"></i></span>
+                            <div class="box-heading">{$value.Module_Caption}</div>
+                            <div class="oh">{$value.Module_Desc}</div>
+                            <div class="column-box1-bottom">
+                                 <a href='{#URL#}{$value.Module_Url}' title="{$value.Module_Caption}">view page</a>
+                            </div>
+                         </div>   
+                     </div>
+                    {/if}
+                {/loop}
+            </div>
+         </div>   
+  </div>

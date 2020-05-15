@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+{include="top/head"}
+<script type="text/javascript" src='{#RESOURCES#}js/fundraiser-payment.js'></script>
+<link type="text/css" rel="stylesheet" href='{#RESOURCES#}css/fundraiser-payment.css'>
+<link type="text/css" rel="stylesheet" href='{#RESOURCES#}css/popup.css'>
+<link type="text/css" rel="stylesheet" href='{#RESOURCES#}css/responsive.css'>
+<script type="text/javascript" src='{#RESOURCES#}js/inputmask.js'></script>
+<script type="text/javascript" src='{#RESOURCES#}js/jquery.inputmask.js'></script>
+<script type="text/javascript">
+$(document).ready(function(){
+$('#cardNumber').inputmask({placeholder:" ",mask: "[9999][-9999][-9999][-9999]",greedy: false});
+});
+</script>
+</head>
+<body id="body">
+<div class="gray-fix-nav">
+{include="top/top"}
+</div>
+<section class="fix-first-section">
+</section>
+<section class="section-padding payment-page">
+	<div class="container">
+    	{include="common/message"}        
+    	<div class="row">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                <h2 class="heading-1">{$pageheading}</h2>
+            </div>
+        </div>
+        <div class="row">
+         	<div class="col-md-5 col-sm-6 col-xs-12">
+            	<div class="heading-2">{$productDetails.PI_ItemName_EN}</div>
+                <p>{$productDetails.PI_ItemDescription_EN}</p>
+                <p class="f-20">{#_FP_PRICE_#} ${$productDetails.PI_ItemCost}</p>
+                <div class="total-amount-section">
+                    <div class="row">
+                        <div class="col-lg-6 col-md-6 col-sm-8 col-xs-12 pull-right">
+                            <div class="total-amount">
+                                <div class="row">
+                                    <div class="col-xs-7">{#_FP_SUB_TOTAL_#}</div>
+                                    <div class="col-xs-5">${$productDetails.PI_ItemCost}</div>
+                                </div>
+                                
+                                <div class="row t-green you-pay-amount">
+                                    <div class="col-xs-7">{#_FP_YOU_PAY#}</div>
+                                    <div class="col-xs-5">${$productDetails.PI_ItemCost}</div>
+                                </div> 
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+           
+           	<div class="col-md-6 col-md-offset-1 col-sm-6 col-xs-12">
+                <form id="billing-form" name="billing-form" action="{#URL#}purchase/Payment/{$productDetails.PI_ItemCode|keyEncrypt}/{$PurchaseOrderID|keyEncrypt}" method="post" autocomplete="off" novalidate="novalidate">
+                		   {if="$productDetails.PI_ItemCost>0"}
+                            <div class="billing-form-section">
+                            <div class="heading-2">{#_BILLING_INFORMATION_#}</div>	
+                            <div class="row">
+                                <div class="col-md-6 col-sm-7 col-xs-12 mb-15">
+									<img src='{#RESOURCES#}images/cardSprite.png' class="img-responsive" alt="card image">
+                                </div>
+                            </div>
+							
+							 <div class="row">
+                                <div class="col-md-12 col-sm-12 col-xs-12">
+                                    <label class="label" for="ccName">{#_CREDIT_CARD_#}</label>
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" name="ccName" id="ccName" maxlength="75">
+                                    </div>
+                                </div>
+                            </div>
+							
+							
+                            <div class="row">
+                                <div class="col-md-7 col-sm-7 col-xs-12">
+                                    <label class="label" for="cardNumber">{#_CARD_NUMBER_#}</label>
+                                    <div class="form-group">                                   
+                                        <input type="text" class="form-control" name="cardNumber" id="cardNumber" value="{#CC_NUMBER#}">
+                                    </div>
+                                </div>
+                                <div class="col-md-5 col-sm-5 col-xs-12">
+                                    <label class="label" for="sqCode">{#_SECURITY_CODE_#}</label>
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" maxlength="6" name="sqCode" id="sqCode">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    <label class="label" for="expMonth">{#_EXPIRY_MONTH_#}</label>
+                                    <div class="select form-group">
+                                        <select class="form-control" name="expMonth" id="expMonth">
+                                            <option value="">{#_FP_SELECT_MONTH_#}</option>
+                                            <option value="1">1</option>
+                                            <option value="2">2</option>
+                                            <option value="3">3</option>
+                                            <option value="4">4</option>
+                                            <option value="5">5</option>
+                                            <option value="6">6</option>
+                                            <option value="7">7</option>
+                                            <option value="8">8</option>
+                                            <option value="9">9</option>
+                                            <option value="10">10</option>
+                                            <option value="11">11</option>
+                                            <option value="12">12</option>
+                                        </select>
+                                        <span class="errorClass"></span>
+                                        <i class="arrow fa fa-caret-down"></i>                    
+                                    </div>
+                                </div>
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    <label class="label" for="expYear">{#_FP_EXPIRY_YEAR_#}</label>
+                                    <div class="select form-group">
+                                        <select class="form-control" name="expYear" id="expYear">
+                                            <option value="">{#_FP_SELECT_YEAR_#}</option>
+                                            {loop="$yearRange"}
+                                            	<option value="{$value}">{$value}</option>
+                                            {/loop}                                            
+                                        </select>
+                                        <span class="errorClass"></span>
+                                        <i class="arrow fa fa-caret-down"></i>                    
+                                    </div>
+                                </div>
+                            </div>
+                           
+                            
+                            <div class="row">
+                                <div class="col-md-12 col-sm-12 col-xs-12 text-center">
+                                    <button type="submit" class="button-1 large-btn mt-15" title="Click here to Pay Now">{#_PAY_NOW_#}</button>
+                                </div>
+                            </div>
+                            <div class="row mt-25">
+                                <div class="col-md-12 col-sm-12 col-xs-12">
+                                    {$text_bottom}
+                                </div>
+                            </div>
+                 		</div>
+                        {else}
+                        <div class="row">
+                                <div class="col-md-12 col-sm-12 col-xs-12 text-center">
+                                    <button type="submit" class="button-1 large-btn mt-15" title="Continue">{#_CONTINUE_#}</button>
+                                </div>
+                        </div>
+                        {/if}
+                 </form>
+            </div> 
+        </div>
+    </div>	
+</section>
+{$terms_of_use}
+{$terms_of_service}
+{include="bottom/bottom"}
+</body>
+</html>

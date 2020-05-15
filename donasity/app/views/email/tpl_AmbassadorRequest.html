@@ -1,0 +1,52 @@
+{include="email/email-top"}
+<div style="padding:10px 5px; font-size:14px; color:#333333;">
+<p>Hello Administrator,</p><br />
+<p>You have a Ambassador request from {$contactName} with below details</p>
+<table width="60%">
+<tbody>
+<tr>
+<td>Organizations Name :</td>
+<td>&nbsp;{$organizationsName}</td>
+</tr>
+<tr>
+<td>EIN Number :</td>
+<td>&nbsp;{$einNumber}</td>
+</tr>
+<tr>
+<td>Contact Name :</td>
+<td>&nbsp;{$contactName}</td>
+</tr>
+<tr>
+<td>Billing Address :</td>
+<td>&nbsp;{$billingAddress}</td>
+</tr>
+<tr>
+<td>City, ST Zip Code :</td>
+<td>&nbsp;{$zipCode}</td>
+</tr>
+<tr>
+<td>Contact Number :</td>
+<td>&nbsp;{$contactNumber}</td>
+</tr>
+<tr>
+<td>Email Address :</td>
+<td>&nbsp;{$emailAddress}</td>
+</tr>
+<tr>
+<td>Registered with Donasity</td>
+<td>&nbsp;{$currently_registered}</td>
+</tr>
+<tr>
+<td>NPO Linked with Sripe Account&nbsp;</td>
+<td>&nbsp;{$linked_payment}</td>
+</tr>
+<tr>
+<td>Best Contact Time</td>
+<td>&nbsp;{$contact_time}</td>
+</tr>
+</tbody>
+</table>
+<p>&nbsp;</p>
+<p>Thank you,&nbsp;</p>
+</div>
+{include="email/email-bottom"}

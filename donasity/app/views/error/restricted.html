@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+{include="top/head"}
+</head>
+<body id="body">
+<div class="gray-fix-nav">
+{include="top/top"}
+</div>
+<section class="fix-first-section fundraiser-page">
+</section>
+<section class="section-padding">
+	<div class="container">
+    	<div class="row">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                <h2 class="heading-1">{$pageheading}</h2>
+            </div>
+        </div>
+        {if="$msgValues!=NULL"}
+             <div id="msgSection" class="margin-top-10">
+                {if condition="$msgValues!=null"}
+                    {if condition="$msgValues.msgType==1"}
+                        <div class="alert alert-danger text-center">
+                            <span>{$msgValues.ErrorMsg}</span>
+                        </div>                            
+                        {elseif condition="$msgValues.msgType==2"}
+                        <div class="alert alert-success text-center">
+                            <span>{$msgValues.ConfirmationMsg}</span>
+                        </div>
+                    {/if}                                          
+                {/if}
+            </div>
+        {/if}
+        <div class="row">
+        	<div class="col-md-12 col-sm-12 col-xs-12 t-blue text-bold fonts-lato-regular f-20">
+            	{$Restricted}
+            </div>
+        </div>
+    </div>	
+</section>
+{include="bottom/bottom"}
+</body>
+</html>

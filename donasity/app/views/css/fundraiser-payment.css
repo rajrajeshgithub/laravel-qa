@@ -1,0 +1,7 @@
+/* CSS Document */
+.payment-page{font-family:'latoregular',sans-serif; color:#666;}
+.total-amount-section{font-size:18px; color:#002f5b; font-weight:bold; padding-top:15px;  text-align:right;}
+.total-amount .row{padding-top:10px; padding-bottom:10px;}
+.total-amount .sub-amount-text{font-size:12px; font-weight:normal; display:block; color:#404040;}
+.total-amount-section{border-top:1px solid #b1b1b1;}
+.payment-page .billing-form-section .heading-2{margin-bottom:20px;}

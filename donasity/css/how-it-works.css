@@ -1,0 +1,7 @@
+/* CSS Document */
+section.how-it-work-page{background:url(../images/static-banner.jpg) no-repeat;background-size:cover;background-position:center bottom;}
+
+.how-it-works-content .heading-1{margin-bottom:10px;}
+.how-it-works-content p{font-family: 'latoregular',sans-serif; font-size:18px; color:#333333;}
+.package-container .heading-1{font-size:35px;}
+.packages .ol-list{font-size:60px; text-align:center; padding:0px 0px; color:#abc340; font-family:'latoheavy',sans-serif; line-height:1;}

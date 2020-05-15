@@ -1,0 +1,161 @@
+<script type="text/javascript" src='{#RESOURCES#}js/validateCompaignVideo.js'></script>
+<script type="text/javascript" src='{#RESOURCES#}js/colorbox-video.js'></script>
+<script type="text/javascript" src='{#RESOURCES#}js/jquery.colorbox.js'></script>
+<link href='{#RESOURCES#}css/magnific-popup.css' type="text/css" rel="stylesheet" />
+<link href='{#RESOURCES#}css/jquery.colorbox.css' type="text/css" rel="stylesheet" />
+<script type="text/javascript">
+	jQuery(function() {
+		$(".youtube").colorbox({iframe:true, innerWidth:640, innerHeight:390});	
+	})
+</script>
+
+<ul class="breadcrumb">
+  <li title="Dashboard"><a href='{#URL#}home/'>Dashboard</a></li>
+  <li title="Compaign"><a href='{#URL#}campaign/'>Campaign</a></li>
+  <li title="Compaign Video">Campaign Video List</li>
+</ul>
+{include="common/message"}
+<div class="oh">
+  <div class="col col-6">
+    <h1 class="heading-1">Campaign Video List</h1>
+  </div>
+  <div class="col col-6 text-right mt-15"> <a href='{#URL}campaignvideo/index/list-videos/{$CV_CID|keyEncrypt}/#Compaignvideo' class="button-2" title="Add Video"><i class="fa fa-video-camera"></i>&nbsp; Add Video</a> </div>
+</div>
+<form id="formSection" name="formSection"  class="igs-form" method="post" action='{#URL#}campaignvideo/index/{$action}' enctype="multipart/form-data" >
+  <input type="hidden" name="CV_ID" id="CV_ID" {if="isset($CV_ID) && $CV_ID!=NULL"}value="{$CV_ID}"{/if}/>
+  <input type="hidden" name="CV_CampaignID" id="CV_CampaignID" value="{$CV_CID}"/>
+  <input type="hidden" name="action" id="action" value="{$action}"/>
+  <input type="hidden" name="textarea" id="textarea" value=""/>
+  <input type="hidden" name="Hdn_Camp_Video_File" value='{if="isset($VideoDetail.Camp_Video_File)"}{$VideoDetail.Camp_Video_File}{/if}' />
+  <div id="content-box"  >
+    <div class="section-heading listingmoreBtn">Campaign Video List <a href='javascript://' class="form-toggle-icon "><i class="fa fa-minus-square-o"></i></a></div>
+    <div class="content-section">
+      <fieldset>
+        <div class="row"> 
+          {if condition="count($PagingList)>1"}
+          <nav>
+            <ul class="pagination">
+              {if="$PageSelected!=1"}
+              <li> <a href='javascript://' onclick="return GotoPage(1);"  title="First Page" aria-label="Previous"> <span aria-hidden="true">First</span> </a> </li>
+              <li> <a href='javascript://' onclick="return GotoPage({$PageSelected-1});"  title="Previous" aria-label="Previous"> <span aria-hidden="true">&laquo;</span> </a> </li>
+              {/if}
+              {loop="PagingList"} 
+              {if="$PageSelected==$value.PageNo"}
+              <li class="active"><a href='javascript://' title="Page No {$value.PageNo}">{$value.PageNo}</a></li>
+              {else}
+              <li><a href='javascript://' onclick="return GotoPage({$value.PageNo});" title="Page No {$value.PageNo}">{$value.PageNo}</a></li>
+              {/if}   
+              {/loop}
+              {if="$PageSelected!=$lastPage"}
+              <li> <a href='javascript://' onclick="return GotoPage({$PageSelected+1});" aria-label="Next"> <span aria-hidden="true">&raquo;</span> </a> </li>
+              <li> <a href='javascript://' onclick="return GotoPage({$lastPage});" aria-label="Last Page"> Last </a> </li>
+              {/if}
+            </ul>
+          </nav>
+          {/if}
+          {if condition="$CVList!=NULL"}
+          {loop="CVList"}
+          <section class="col col-3 pull-left video " >
+            <div class="db mb-5"> <a href='{#URL#}campaignvideo/index/edit-video/{$value.Camp_Video_CampID|keyEncrypt}/{$value.ID|keyEncrypt}' class="title">{$value.Camp_Video_Title }</a> {if="$value.Camp_Video_ShowOnWebsite==1"} <span class="icon active ml-15" title="Active"></span> {else} <span class="icon inactive ml-15" title="Inactive"></span> {/if} </div>
+            <div class="db" id="video"> 
+            {if="$value.Camp_Video_EmbedCode!=''"}
+            {if="isset($value.EmbedCodeImg) && $value.EmbedCodeImg != ''"}
+            <img src='{$value.EmbedCodeImg}' title="click video" class="img-responsive" height="160" width="260" />
+            {/if}
+            {else}
+            <div class="video">{$value.Camp_Video_EmbedCode}</div>
+            {/if} 
+            </div>
+            <div class="db ml-5" id="video"> 
+            {if="isset($value.EmbedCodeImg) && $value.EmbedCodeImg!=''"} <a href='{$value.Camp_Video_EmbedCode}' class='youtube' ><i class="fa fa-youtube-play">&nbsp;</i> Click to view</a> 
+            {/if} 
+            </div>
+            {if="$value.Camp_Video_File!=''"}
+            <div class="db"> <img src='{#RESOURCES#}img/videothumb.jpg' title="click video" class="img-responsive" height="160" width="260"></br>
+              <a class="popup-modal" href='#video1'><i class="fa fa-youtube-play">&nbsp;</i>Click to view</a> </div>
+            <div id="video1" class="white-popup-block mfp-hide text-center" >
+              <video width="100%" height="315" controls>
+                <source src='{#CAMPAIGN_VIDEO_URL#}{$value.Camp_Video_File}' type="video/mp4" >
+              </video>
+            </div>
+            {/if}
+          </section>
+          {/loop}
+          {else}
+          <section class="col col-12 text-center" >No video found.</section>
+          {/if} 
+          
+        </div>
+      </fieldset>
+    </div>
+  </div>
+  <div id="Compaignvideo">
+    <div id="content-box">
+      <div class="section-heading text-left viewmoreBtn">
+        <li class="fa fa-fw fa-file-text iColor"></li>
+        &nbsp;Video Details - {if="$action==='add-video'"}Add{else}Edit{/if}<a href='javascript://' class="form-toggle-icon"><i class="fa fa-minus-square-o"></i></a> </div>
+      <div class="content-section ">
+        <fieldset>
+          <div class="row">
+            <div class="col col-6">
+              <label class="label">Title</label>
+              <label class="input">
+                <input type="text"  id="CV_Title" name="CV_Title"  placeholder="Video Title" {if="isset($VideoDetail) && $VideoDetail!=NULL"}value="{$VideoDetail.Camp_Video_Title}"{/if} >
+              </label>
+            </div>
+            <div class="col col-6">
+              <label class="label">Sort Order</label>
+              <label class="input">
+                <input type="text"  id="CV_sorting" name="CV_sorting"  placeholder="Sorting" {if="isset($VideoDetail) && $VideoDetail!=NULL"}value="{$VideoDetail.Camp_Video_SortOrder}"{/if} >
+              </label>
+            </div>
+            <div class="col col-6">
+              <label class="label">Embed Code</label>
+              <label class="textarea">
+                <textarea class="form-control pull-left" name="CV_embedCode" id="CV_embedCode" placeholder="Enter embed code" rows="4" >{if="isset($VideoDetail.Camp_Video_EmbedCode)"}{$VideoDetail.Camp_Video_EmbedCode}{/if}</textarea>
+              </label>
+            </div>
+            <div class="col col-6">
+              <label class="label">Upload Video</label>
+              <label for="file" class="input input-file">
+              <div class="button">
+                <input type="file"  name="CV_File" id="CV_File"  onchange="this.parentNode.nextSibling.value = this.value" />
+                &nbsp;Browse</div>
+              <input name="file" id="file"  type="text" placeholder="Click here to upload video from your computer" value='{if="isset($VideoDetail.Camp_Video_File)"}{$VideoDetail.Camp_Video_File}{/if}' />
+              <div class="note"><strong>Note :</strong> Please make sure video, you are uplaoded should not be bigger than 5MB. </div>
+              </label>
+            </div>
+            <div class="col col-6">
+              <label class="label"></label>
+              <label class="checkbox mr-10">
+                <input type="checkbox" name="CV_status" id="CV_status" {if="isset($VideoDetail) && $VideoDetail!=NULL"}{if="$VideoDetail.Camp_Video_ShowOnWebsite=='1'"} checked="checked" {/if} {/if} value="1" />
+                <i></i>Show On Website </label>
+            </div>
+            <section class="col col-12"> {if="$action=='add-video'"}
+              <div class="pull-right mb-10">
+                <button type="submit" name="Save" value="Save" class="button-1" ><i class="fa fa-save"></i> Save</button>
+              </div>
+              {else}
+              <div class="pull-right mb-10 ml-5">
+                <button type="submit" name="Save" id="Save" value="Save Changes" class="button-1" ><i class="fa fa-save"></i> Save Changes</button>
+              </div>
+              <div class="pull-right mb-10">
+                <button type="button" name="Delete" value="Delete" class="button-warning ml-10" onclick="return Delete_Video('{$CV_ID|keyEncrypt}','{$CV_CID|keyEncrypt}')" ><i class="fa fa-trash-o"></i> Delete</button>
+              </div>
+              {/if} </section>
+          </div>
+        </fieldset>
+      </div>
+    </div>
+  </div>
+</form>
+<script type="text/javascript" src='{#RESOURCES#}js/jquery.magnific-popup.js'></script> 
+<script type="text/javascript">
+	$('.iframe-popup').magnificPopup({
+		type: 'iframe',
+	});
+	$('.popup-modal').magnificPopup({
+		type: 'inline',
+		return:false
+	});
+</script>

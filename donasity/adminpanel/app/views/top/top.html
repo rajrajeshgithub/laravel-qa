@@ -1,0 +1,59 @@
+<header id="header">
+    <ul class="header-inner list-inline">
+      <li id="menu-trigger"><a href='javascript://'></a></li>
+      <li class="logo ml-10"><a href='{#URL#}home'><img src='{#RESOURCES#}img/logo.png' height="50px"></a></li>
+      <li class="pull-right">
+      	<ul class="top-menu list-inline">
+        	<li class="top-date">{$Date|formatDate:'M d, Y'}</li>
+        	<li class="signUser"><a href='javascript://'>
+            <img src='{#RESOURCES#}img/pro-user.jpg' alt="User Image"></a>
+                <ul class="main-menu" id="topProfileInfo">
+                    <li><a href='{#URL#}adminusers/index/edit-admin-user/{$loginDetail.admin_id|keyEncrypt}'><i class="fa fa-user"></i>View Profile</a></li>
+                    <li><a href='{#URL#}adminusers/index/edit-admin-user/{$loginDetail.admin_id|keyEncrypt}'><i class="fa fa-exclamation-triangle"></i> Privacy Settings</a></li>
+                    <li><a href='{#URL#}configuration'><i class="fa fa-cog"></i> Settings</a></li>
+                    <li><a href='{#URL#}logout'><i class="fa fa-power-off"></i> Logout</a></li>
+                </ul>
+            </li>
+		</ul>
+      </li>
+    </ul>
+</header>
+<aside id="sidebar" class="sidebarOpen">
+    <div class="sidebar-inner">
+        <div class="si-inner">
+            <div class="profile-menu">
+                <a href='javascript://' class="hidden-xs">
+                    <div class="profile-pic">
+                        <img src='{#RESOURCES#}img/pro-user.jpg' alt="User Image">
+                    </div>
+                    <div class="profile-info">{|getSession:"DonasityAdminLoginDetail","admin_fullname"}<span class="pull-right"><i class="fa fa-caret-down"></i></span></div>
+                </a>
+                <ul class="main-menu" id="profileInfo">
+                    <li><a href='{#URL#}adminusers/index/edit-admin-user/{$loginDetail.admin_id|keyEncrypt}'><i class="fa fa-user"></i> View Profile</a></li>
+                    <li><a href='{#URL#}adminusers/index/edit-admin-user/{$loginDetail.admin_id|keyEncrypt}'><i class="fa fa-exclamation-triangle"></i> Privacy Settings</a></li>
+                    <li><a href='{#URL#}configuration'><i class="fa fa-cog"></i> Settings</a></li>
+                    <li><a href='{#URL#}logout'><i class="fa fa-power-off"></i> Logout</a></li>
+                </ul>
+            </div>
+            <ul class="main-menu">
+                <li class="active"><a href='{#URL#}home/'><i class="fa fa-home dashboard"></i><span>Dashboard</span></a></li>
+               
+                {loop="arrModule"}
+                <li id="{$value.Module_ID}" class="sub-menu"><a href='javascript://' title="{$value.Module_Caption}">
+                <i class="{$value.Module_Style} fa-lg t-black"></i><span>{$value.Module_Caption}</span></a>
+                {if="$value.children!=''"}
+                    <ul>        
+                {loop="value.children"}
+                    	<li>
+                        	<a href='{#URL#}{$value.Module_Url}' title="{$value.Module_Caption}"><i class="{$value.Module_Style} fa-lg t-black"></i><span>{$value.Module_Caption}</span></a>
+                        </li>                   
+                {/loop}
+                    </ul>
+                {/if}
+                </li>
+            {/loop}
+            <!--<li><a href='{#URL#}donationpayment/'><i class="fa fa-usd donationpayment"></i><span>Donation Payment</span></a></li>
+            </ul>-->
+        </div>
+    </div>
+</aside>

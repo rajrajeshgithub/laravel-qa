@@ -1,0 +1,207 @@
+<script type="text/javascript" src='{#RESOURCES#}js/document.js'></script>
+<script type="text/javascript" src='{#RESOURCES#}js/jquery.colorbox.js'></script>
+<link href='{#RESOURCES#}css/jquery.colorbox.css' type="text/css" rel="stylesheet" />
+<script type="text/javascript">
+	jQuery(function() {jQuery(".viewImage").colorbox({rel:'viewImage'})})
+	jQuery(function() {jQuery(".listingImage").colorbox({rel:'listingImage'})})
+	jQuery(document).ready(function(){
+		
+		$('.listingmoreBtn i').click(function() {
+			 $(this).toggleClass("fa-plus fa-minus");
+			 $(this).closest('.row').find('.listingmoreSection').slideToggle();
+		});
+	
+		var baseUrl = (window.location).href;
+		var UrlLastId = baseUrl.substring(baseUrl.lastIndexOf('#') + 1);
+		//alert($('#doc_ID').val());
+		if($('#doc_ID').val() != '') {
+			$('.viewmoreBtn i').removeClass('fa-plus-square-o').addClass('fa-minus-square-o');
+			$('.viewmoreBtn i').closest('#content-box').find('.content-section').attr( 'style','display:block' );
+			$('.listingmoreBtn i').removeClass('fa-minus-square-o').addClass('fa-plus-square-o');
+			$('.listingmoreBtn i').closest('#content-box').find('.content-section').attr( 'style','display:none' );
+		} else {
+			//alert(UrlLastId);
+			if(UrlLastId === 'add_document') {
+				$('.viewmoreBtn i').removeClass('fa-plus-square-o').addClass('fa-minus-square-o');
+				$('.viewmoreBtn i').closest('#content-box').find('.content-section').attr( 'style','display:block' );
+				$('.listingmoreBtn i').removeClass('fa-minus-square-o').addClass('fa-plus-square-o');
+				$('.listingmoreBtn i').closest('#content-box').find('.content-section').attr( 'style','display:none' );
+				
+			} else {
+				$('.viewmoreBtn i').removeClass('fa-minus-square-o').addClass('fa-plus-square-o');
+				$('.viewmoreBtn i').closest('#content-box').find('.content-section').attr( 'style','display:none' );
+				$('.listingmoreBtn i').removeClass('fa-plus-square-o').addClass('fa-minus-square-o');
+				$('.listingmoreBtn i').closest('#content-box').find('.content-section').attr( 'style','display:block' );
+			}
+		}
+	});
+</script>
+<ul class="breadcrumb">
+    <li title="Dashboard"><a href='{#URL#}home/'>Dashboard</a></li>
+    <li title="Documents"><a href='{#URL#}reguser/index/edit/{$doc_user_ID}-'>User</a></li>
+    <li title="Documents List">Documents</li>
+</ul>
+{include="common/message"}
+<div class="oh">
+    <div class="col col-6">
+        <h1 class="heading-1">Documents</h1>
+    </div>
+    <div class="col col-6 text-right mt-15"> <a href='{#URL}documents/index/list/{$doc_user_ID}/#add_document' class="button-2" title="Add more document"><i class="fa fa-file-text"></i>&nbsp; Add Document</a> </div>
+</div>
+
+<form id="form_section" name="formSection" autocomplete="off" method="post" action='{#URL#}documents/index/{$action}' enctype="multipart/form-data" class="igs-form">
+
+    <input type="hidden" name="doc_ID" id="doc_ID" {if="isset($doc_ID) && $doc_ID!=NULL"} value="{$doc_ID}" {/if} />
+    <input type="hidden" name="action" id="action" value="{$action}"/>
+    <input type="hidden" name="doc_user_ID" id="doc_user_ID" value="{$doc_user_ID}" />
+    <div id="documents">
+        <div id="content-box">
+            <div class="section-heading text-left viewmoreBtn">
+                <li class="fa fa-fw fa-file-text iColor"></li>
+                &nbsp;Document Details - {if="$action==='add'"}Add{else}Edit{/if}<a href='javascript://' class="form-toggle-icon"><i class="fa fa-minus-square-o"></i></a> </div>
+            <div class="content-section ">
+                <fieldset>
+                    <div class="row">
+                        <section class="col col-6">
+                        	<div class="pull-left col-12"> 
+                                <label class="label">Upload Document</label>
+                                <input type="hidden" id="oldDocName" name="oldDocName" {if="isset($docDetail) && $docDetail!=NULL"} value="{$docDetail.DocName}"{/if} />
+                                <label for="file" class="input input-file col-12 pull-left clear-padding" />
+                                <div class="button">
+                                    <input type="file" name="DocName" id="DocName" multiple="" onchange="filePath.value = this.value" /> Browse 
+                                </div>
+                                <input type="text" id="filePath" name="filePath" placeholder="Upload document file" readonly="" {if="isset($docDetail) && $docDetail!=NULL"} value="{$docDetail.DocName}"{/if} />
+                                </label>
+                                
+                            </div>
+                            {if="isset($docDetail) && $docDetail.docName != ''"}
+                            <div class="pull-right mt-20">
+                                <label class="db">{if="$docDetail.docName != ''"} <a href='javascript://' onclick="confirmDeleteMainFile('{$doc_ID|keyEncrypt}','{$docDetail.ID|keyEncrypt}');" class="DeleteFile"><i class="fa fa-trash-o"></i>&nbsp; Delete</a>{/if}
+                                </label>
+                            </div>
+                            {/if}
+                            </section>
+                            <section class="col col-6">
+                                <label class="label">Title</label>
+                                <label class="input">
+                                    <input type="text"  id="DocTitle" name="DocTitle" placeholder="Document Title" value="{$docDetail.DocTitle}" />
+                                </label>
+                            </section>
+                            
+                            <section class="col col-6">
+                                <label class="label"> &nbsp;Description </label>
+                                <label class="textarea">
+                                	<textarea name="docDescription" id="docDescription" rows="4">{$docDetail.Description}</textarea></label>
+                            </section>
+                            <section class="col col-6">
+                                <label class="label"> &nbsp;Web Master Comment </label>
+                                <label class="textarea">
+                                	<textarea name="WebmasterComment" id="WebmasterComment" rows="4">{$docDetail.WebmasterComment}</textarea></label>
+                            </section>
+                            <section class="col col-6">
+                                <label class="label">Sort Order</label>
+                                <label class="input">
+                                    <input type="text"  id="DocSorting" name="DocSorting"  placeholder="Sorting" {if="isset($docDetail) && $docDetail!=NULL"}value="{$docDetail.DocSorting}"{/if} />
+                                </label>
+                            </section>
+                            <section class="col col-6">
+                                <label class="label"> &nbsp; </label>
+                                <!--<label class="checkbox mr-10">
+                                    <input type="checkbox" name="DocShowOnWebsite" id="DocShowOnWebsite" {if="isset($docDetail) && $docDetail!=NULL"}{if="$docDetail.DocShowOnWebsite=='1' && $docDetail.DocShowOnWebsite==''"} checked="checked" {/if}{else}checked="checked"{/if} {if="$doc_ID==0"}checked="checked"{/if} value="1" />
+                                    <i></i>Show On Website 
+                                </label>-->
+                                <label class="checkbox mr-10">
+                                    <input type="checkbox" name="DocShowOnWebsite" id="DocShowOnWebsite" value="1" {if="$docDetail.DocShowOnWebsite=='1' || $docDetail.DocShowOnWebsite==''"} checked="checked" {/if} />
+                                    <i></i>Show On Website 
+                                </label>
+                            </section>
+                            
+                            <section class="col col-12"> 
+                            	<div class="pull-right">
+                                	<button type="submit" name="Save" value="Save" class="button-1" ><i class="fa fa-save"></i> Save</button>
+                                	{if="$action=='update'"}
+                                    <button type="button" name="Delete" value="Delete" class="button-warning" onclick="return DeleteDocument('{$doc_user_ID}','{$doc_ID|keyEncrypt}')" ><i class="fa fa-trash-o"></i> Delete</button>
+                                	{/if} 
+                            	</div>
+                            </section>
+                    </div>
+                </fieldset>
+            </div>
+        </div>
+    </div>
+</form>
+{if condition="$doc_ID>0"}
+<div id="content-box" class="igs-form">
+    <div class="section-heading listingmoreBtn"> Document Log Details<a href='javascript://' class="form-toggle-icon "><i class="fa fa-minus-square-o"></i></a> </div>
+    <div class="content-section">
+        <fieldset>
+            <div class="row">
+                <section class="col col-6">
+                    <label class="label">Added Date</label>
+                    <label class="label text-bold">{function="formatDate($docDetail.CreatedDate, 'm/d/Y - h:i a')"}</label>
+                </section>
+                <section class="col col-6">
+                    <label class="label">Last Modified Date</label>
+                    <label class="label text-bold">{function="formatDate($docDetail.LastUpdatedDate, 'm/d/Y - h:i a')"}</label>
+                </section>
+            </div>
+        </fieldset>
+    </div>
+</div>
+{/if}
+<div id="content-box" class="igs-form">
+    <div class="section-heading listingmoreBtn"> Document List<a href='javascript://' class="form-toggle-icon "><i class="fa fa-minus-square-o"></i></a> </div>
+    <div class="content-section">
+        <fieldset>
+            <div class="row">
+                <section class="col col-12"> {if condition="count($docList)>0"}
+                    <div class="record-found pull-left">Showing {$startRecord}-{$endRecord} of {$docList|count} records</div>
+                    {/if}
+                    <table border="0" id="igs-table">
+                        <thead>
+                            <tr>
+                                <th width="30%">Title</th>
+                                <th width="10%">Sort Order</th>
+                                <th width="20%">Show on Web</th>
+                                <th width="15%">Added On</th>
+                                <th width="15%">Updated On</th>
+                                <th width="10%">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        {if condition="$docList!=NULL"}
+                        {loop="docList"}
+                            <tr>
+                            	<td data-title="Title">
+                                	<a href='{#URL#}documents/index/edit/{$value.DocUserID|keyEncrypt}/{$value.ID|keyEncrypt}' class="link-text" title="Edit">{$value.DocTitle}</a>
+                                </td>
+                            	<td data-title="Sort Order"> 
+                                	{$value.DocSorting}
+                                </td>
+                            	<td data-title="Show on Website">{if="$value.DocShowOnWebsite==1"}<span class="icon active ml-15" title="Active"></span>{else}<span class="icon inactive ml-15" title="Inactive"></span>{/if}
+                                </td>
+                                <td data-title="Added On"> 
+                                	{function="formatDate($value.CreatedDate, 'm/d/Y - h:i a')"}
+                                </td>
+                                <td data-title="Updated On"> 
+                                	{function="formatDate($value.LastUpdatedDate, 'm/d/Y - h:i a')"}
+                                </td>
+                                <td data-title="Action">
+                                	<a href='{#DOCUMENT_URL#}{$value.DocName}' download='{$value.DocRealName}' title="Download document"><i class="fa fa-download"></i> &nbsp; </a>
+                                    <a href='{#DOCUMENT_URL#}{$value.DocName}' target="_blank" title="View document"><i class="fa fa-eye"></i> &nbsp; </a>
+                                    <a href='javascript://' title="Delete document" onclick="return DeleteDocument('{$doc_user_ID}','{$value.ID|keyEncrypt}')" ><i class="fa fa-trash-o"></i> &nbsp; </a>
+                                </td>
+                            </tr>
+                        {/loop}
+                        {else}
+                        <tr>
+                            <td class="text-center" colspan="6">No Record Found!</td>
+                        </tr>
+                        {/if}
+                        </tbody>
+                    </table>
+                </section>
+            </div>
+        </fieldset>
+    </div>
+</div>

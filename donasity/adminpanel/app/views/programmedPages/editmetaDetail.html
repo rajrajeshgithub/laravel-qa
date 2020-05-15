@@ -1,0 +1,189 @@
+<script type="text/javascript" language="javascript" src='{#URL#}app/tinymce/tinymce.min.js'></script>
+<script type="text/javascript" src='{#RESOURCES#}js/includeEditor.js'></script>
+<script type="text/javascript" src='{#RESOURCES#}js/validatemetaDetails.js'></script>
+
+   <ul class="breadcrumb">
+        <li title="Dashboard"><a href='{#URL#}home/'>Dashboard</a></li>
+        <li title="CMS">CMS</li>
+        <li title="Programmed Page"><a href='{#URL#}programmedpages'>Programmed Pages</a></li>
+        <li title="Edit">Edit</li>
+   </ul>
+ {include="common/message"}      
+	<form id="formSection" name="formSection" class="igs-form"  method="post" action='{#URL#}programmedpages/index/{$action}' >
+        <div class="oh">
+           <div class="col col-6">
+                <h1 class="heading-1">Programmed Pages Detail - View / Edit</h1>
+            </div>
+            
+            <div class="col col-6 text-right mt-15">
+            	<a href='{#URL#}programmedpages' class="button-2" title="Programmed Page List"><li class="fa fa fa-fw fa-file-text"></li>Pages List</a>
+            	<button type="submit" name="Save" value="Save Changes" class="button-1"><i class="fa fa-save"></i> Save Changes</button>
+                
+            </div>
+        </div>
+          <input type="hidden" name="keyId" id="keyId" value="{$PageId}" /> 
+          <input type="hidden" name="rowcount" id="rowcount" value="{$PageContents|count}"/>
+       <div id="content-box" >  
+           <div class="section-heading text-left">	
+            <li class="fa fa-fw fa-file-text iColor"></li>&nbsp;Basic Page Meta Details (ENGLISH)<a href='javascript://' class="form-toggle-icon"><i class="fa fa-plus-square-o"></i></a>
+          </div>
+           <div class="content-section" style="display:none;">
+                <fieldset>
+                    <div class="row">
+                        <section class="col col-12">
+                                <label class="label">Page Name</label>
+                                <label class="input">
+                                    <input type="text"  id="pageName" name="pageName" value="{$PageValues.PMV_pagenameEN}" placeholder="Page Name" >
+                                </label>
+                        </section>
+                       
+                        <section class="col col-12">
+                                <label class="label clear-both">Page Description</label>
+                                <label class="textarea">
+                                        <textarea rows="2" name="pageDescription" placeholder="Additional info" id="pageDescription">{$PageValues.PMV_descEN}</textarea>
+                                </label>
+                        </section>
+                        
+                        <section class="col col-12">
+                                <label class="label">Meta Title</label>
+                                <label class="input">
+                                    <input type="text" id="metaTitle" name="metaTitle" value="{$PageValues.PMV_metaTitleEN}" placeholder="Meta Title" >
+                                </label>
+                        </section>
+                        
+                        <section class="col col-12">
+                                <label class="label clear-both">Meta Keyword</label>
+                                <label class="textarea">
+                                    <textarea rows="2" id="metaKeyword" name="metaKeyword" placeholder="Meta Keyword" >{$PageValues.PMV_metaKeywordEN}</textarea>
+                                </label>
+                        </section>
+                        
+                        <section class="col col-12">
+                                <label class="label clear-both">Meta Description</label>
+                                <label class="textarea">
+                                    <textarea id="metaDescription" name="metaDescription" placeholder="Meta Description" rows="4">{$PageValues.PMV_metaDescEN}</textarea>
+                                </label>
+                        </section>
+                        
+                    </div>
+                </fieldset>        
+           </div>
+       </div>
+       
+       <div id="content-box" >
+        <div class="section-heading text-left">	
+      	<i class="fa fa-fw fa-file-text iColor"></i>&nbsp;Basic Page Meta Details (SPANISH)<a href='javascript://' class="form-toggle-icon"><i class="fa fa-plus-square-o"></i></a>
+      </div>
+       	<div class="content-section" style="display:none;">
+       		<fieldset>
+                <div class="row">
+                        <section class="col col-6">
+                                <label class="label">Page Name Spanish</label>
+                                <label class="input">
+                                    <input type="text" id="pageNameSpanish" name="pageNameSpanish" value="{$PageValues.PMV_pagenameES}" placeholder="Page Name Spanish" >
+                                </label>
+                        </section>
+                        <section class="col col-6">
+                                <label class="label">Meta Title Spanish</label>
+                                <label class="input">
+                                    <input type="text" id="metaTitleSpanish" name="metaTitleSpanish" value="{$PageValues.PMV_metaTitleES}" placeholder="Meta Title" >
+                                </label>
+                        </section>
+                         <section class="col col-12">
+                                <label class="label">Page Description Spanish</label>
+                                <label class="textarea">
+                                        <textarea id="pageDescriptionSpanish " name="pageDescriptionSpanish" placeholder="Page Description" >{$PageValues.PMV_descES}</textarea>
+                                </label> 
+                        </section>
+                        
+                        <section class="col col-12">
+                                <label class="label">Meta Keyword Spanish</label>
+                                <label class="textarea">
+                                    <textarea id="metaKeywordSpanish" name="metaKeywordSpanish" placeholder="Meta Keyword" >{$PageValues.PMV_metaKeywordES}</textarea>
+                                </label>
+                        </section>
+                        
+                        <section class="col col-12">
+                                <label class="label">Meta Description Spanish</label>
+                                <label class="textarea">
+                                    <textarea id="metaDescriptionSpanish" name="metaDescriptionSpanish" placeholder="Meta Description" rows="4">{$PageValues.PMV_metaDescES}</textarea>
+                                </label>
+                        </section>
+                </div>
+            </fieldset>        
+       </div>
+       </div>
+       
+       <div id="content-box" >
+            <div class="section-heading text-left">	
+                <li class="fa fa-fw fa-file-text iColor"></li>&nbsp;Page Meta Text Detail<a href='javascript://' class="form-toggle-icon"><i class="fa fa-minus-square-o"></i></a>
+              </div>
+           <div class="content-section mt-15">
+           		 <div class="tab-section oh">
+                 	 <a href='#tab1' class="tabOption selectedTab" title="Click to add more additional page meta details"><i class="fa"></i>English</a>
+                     <div class="tabInfo open-tab" id="tab1">
+                     	<fieldset>
+                            <div class="row">
+                                {loop="PageContents"}
+                                     <div class="col col-12">
+                                        <input type="hidden" name="metaPageValuesId[]" value="{$PageId}" />
+                                        <input type="hidden" name="metaPageContentId[]" value="{$value.PMT_id}" id="metaPageContentId" />
+                                        <label class="label pull-left text-bold">{$value.PMT_captionEN|ucwords}&nbsp;:</label>
+                                        <label class="label pull-left ">&nbsp;{$value.PMT_descEN}</label>
+                                       
+                                        <input type="hidden" class="form-control pull-left" id="caption" name="caption[]" placeholder="Caption" value="{$value.PMT_captionEN}">
+                                     </div>
+                                     
+                                     <section class="col col-12">
+                                                
+                                                <label class="label ">Page Meta Text Or HTML {$value.PMT_Keyword}
+                                               <!-- <a href='javascript://' class="action-delete pull-right"  title="delete" onclick="DeleteMetaContent({$PageId},{$value.PMT_id})"><i class="fa fa-trash-o fa-lg"></i></a>--> 
+                                                <!--<button type="button" class="btn btn-danger btn-sm pull-right margin-right-10" title="delete" name="delete" onclick="DeleteMetaContent({$PageId},{$value.PMT_id})"><i class="fa fa-trash-o"></i>&nbsp;Delete</button>-->
+                                                </label>
+                                                
+                                                <label class="textarea">
+                                                    <textarea class="form-control pull-left" id="metadetail{$counter+1}" name="metadetail[]" placeholder="Page Meta Text Or Html" >{$value.PMT_contentEN}</textarea>
+                                                </label>
+                                    </section>
+                                 {/loop}   
+                            </div>
+                        </fieldset>
+                     </div>
+                     <a href='#tab2' class="tabOption" itle="Click to add more additional page meta details"><i class="fa"></i>Spanish</a>
+                      <div class="tabInfo" id="tab2">
+                      		<fieldset>
+                                <div class="row">
+                                    {loop="PageContents"}
+                                         <div class="col col-12">
+                                                <input type="hidden" name="metaPageValuesId[]" value="{$PageId}" />
+                                                <input type="hidden" name="metaPageContentId[]" value="{$value.PMT_id}" id="metaPageContentId" />
+                                                <input type="hidden" id="captionspanish" name="captionspanish[]" placeholder="Caption" value="{$value.PMT_captionES}">
+                                                <label class="label pull-left text-bold">{$value.PMT_captionES|ucwords}&nbsp;:</label>
+                                                <label class="label pull-left ">&nbsp;{$value.PMT_descES}</label>
+                                         </div>
+                                         <section class="col col-12">
+                                                <label class="label clear">Page Meta Text Or HTML Spanish
+                                               <!-- <a href='javascript://' class="action-delete pull-right"  title="delete" onclick="DeleteMetaContent({$PageId},{$value.PMT_id})"><i class="fa fa-trash-o fa-lg"></i></a>-->
+                                                </label>
+                                                <label class="textarea">
+                                                    <textarea id="metadetailspanish{$counter+1}" class="form-control pull-left editor" name="metadetailspanish[]" placeholder="Page Meta Text Or Html Spanish" >{$value.PMT_contentES}</textarea>
+                                                </label>
+                                        </section>
+                                    {/loop}   
+                                </div>
+                            </fieldset>
+                      </div>
+                     
+                 </div>
+           </div>
+      </div>
+      <div class="content-section">
+       		<fieldset>
+                <div class="row mr-10 mb-10">
+                	<button type="submit" name="Save" value="Save Changes" class="button-1 pull-right"/><i class="fa fa-save"></i> Save Changes</button>
+                </div>
+            </fieldset>
+      </div>      
+      
+    </form>  
+

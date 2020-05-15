@@ -1,0 +1,5 @@
+/* CSS Document */
+section.testimonials{background:url(../images/testimonial-banner.jpg) no-repeat;background-size:cover;background-position:center bottom;}
+.testimonial-content-box{overflow:hidden; padding:65px 0px 35px 0px;}
+.testimonial-content-box img{border:1px solid #ffffff;}
+.testimonial-content-box:nth-child(even){background:#f6f6f6;}

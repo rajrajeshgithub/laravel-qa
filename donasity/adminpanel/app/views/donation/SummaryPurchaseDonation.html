@@ -1,0 +1,181 @@
+<link type="text/css" rel="stylesheet" href='{#RESOURCES#}css/bootstrap-datepicker.css'>
+<script type="text/javascript" src='{#RESOURCES#}js/bootstrap-datepicker.js'></script>
+<script type="text/javascript" src="https://www.google.com/jsapi?autoload={'modules':[{'name':'visualization','version':'1.1','packages':['corechart']}]}"></script>
+<script type="text/javascript">
+	$(function() {	
+		$('#StartDate').datepicker();
+		$('#StartDate').datepicker().on('changeDate', function (ev) {
+			if(ev.viewMode == "days") {
+				$('#StartDate').datepicker('hide');
+				maxDate: jQuery('#StartDate').datepicker("getDate");
+			}
+		});
+		
+		$('#EndDate').datepicker();
+		$('#EndDate').datepicker().on('changeDate', function (ev) {
+			if(ev.viewMode == "days") {
+				$('#EndDate').datepicker('hide');
+				maxDate: jQuery('#EndDate').datepicker("getDate");
+			}
+		});
+	});	
+	
+	//Donation
+	  google.setOnLoadCallback(drawChart);
+      function drawChart() {
+
+        var data = google.visualization.arrayToDataTable([
+			['Type', 'Amount'],
+          {loop="$arrDonation"}
+		  	['{$key}', {$value.totalDonation}],
+		  {/loop}
+        ]);
+
+        var options = {
+          pieHole: 0.5,
+		  is3D: true,
+          pieSliceTextStyle: {
+            color: 'black',
+          },
+          legend: {position: 'bottom'},
+        };
+
+        var chart = new google.visualization.PieChart(document.getElementById('donation'));
+        chart.draw(data, options);
+      }
+</script>
+<script type="text/javascript">
+	//Purchase
+	google.setOnLoadCallback(drawChart);
+      function drawChart() {
+
+        var data = google.visualization.arrayToDataTable([
+			['level', 'Amount'],
+          {loop="$arrLevel"}
+		  	['{$key}', {$value.totalDonation}],
+		  {/loop}
+        ]);
+
+        var options = {
+          pieHole: 0.5,
+		  is3D: true,
+          pieSliceTextStyle: {
+            color: 'black',
+          },
+          legend: {position: 'bottom'},        };
+
+        var chart = new google.visualization.PieChart(document.getElementById('purchase'));
+        chart.draw(data, options);
+      }
+</script>
+<style type="text/css">
+.bg-darkblue {
+	background-color:#09426A;
+}
+</style>
+<ul class="breadcrumb">
+  <li title="Dashboard"><a href='{#URL#}home/'>Dashboard</a></li>
+  <li title="Dashboard">Summary Purchase Donation Report</li>
+</ul>
+{include="common/message"}
+<div class="oh">
+  <div class="col col-6">
+    <h1 class="heading-1">Summary of Purchase & Donation Report</h1>
+  </div>
+</div>
+<form id="formSection" name="formSection" method="get" autocomplete="off" action=''>
+  <input type="hidden" name="itemCode" id="itemCode" value='{if="isset($itemCode)"}{$itemCode}{/if}' />
+  <div class="content-section">
+    <fieldset>
+      <div class="row">
+        <section class="col col-2 ">
+          <label class="label">Date - Form</label>
+          <div class="input-append date" id="StartDate" data-date="" data-date-format="mm/dd/yyyy">
+            <label class="input"> <i class="icon-append fa fa-calendar add-on"></i>
+              <input type="text" class="datepickerInput" name="FromDate" id="FromDate" value='{$fromDate}' readonly />
+            </label>
+          </div>
+        </section>
+        <section class="col col-2 ">
+          <label class="label">To</label>
+          <div class="input-append date" id="EndDate" data-date="" data-date-format="mm/dd/yyyy">
+            <label class="input"> <i class="icon-append fa fa-calendar add-on"></i>
+              <input type="text" class="datepickerInput" name="ToDate" id="ToDate" value='{$toDate}' readonly />
+            </label>
+          </div>
+        </section>
+        <section class="col col-8 mt-20">
+          <div class="form-footer">
+            <button type="submit" name="" value="" id="filter_donation" class="button-1"><i class="fa fa-search"></i>&nbsp;Show Result</button>
+            &nbsp; <a href='{#URL#}donation/index/summary-purchase-donation' class="button-2"><i class="fa fa-refresh"></i>&nbsp;Reset</a> &nbsp; </div>
+        </section>
+      </div>
+    </fieldset>
+  </div>
+</form>
+<div id="content-box">
+  <div class="section-heading">DONATION <a href='javascript://' class="form-toggle-icon"><i class="fa fa-minus-square-o"></i></a></div>
+  <div class="content-section">
+    <fieldset>
+      <div class="row">
+        <div class="col col-8">
+          <table border="0" id="igs-table">
+            <thead>
+              <tr>
+                <th width="50%">Type</th>
+                <th width="50%">Amount ($)</th>
+              </tr>
+            </thead>
+            <tbody>
+            {$totalSum=0}
+            {loop="$arrDonation"}
+            <tr> <span class="dn">{$totalSum += $value.totalDonation}</span>
+              <td class="title-link" data-title="type" ><a href='{#URL#}/donation?itemCode={$value.PDD_ItemCode|keyEncrypt}&FromDate={$fromDate}&ToDate={$toDate}' class="title-link">{$key}</a></td>
+              <td data-title="Amount" >{$value.totalDonation}</td>
+            </tr>
+            {/loop}
+            </tbody>
+          </table>
+          <hr>
+          <div class="col col-6 text-center f-16 text-bold"> Total </div>
+          <div class="col col-6 text-center f-16 text-bold"> {$totalSum} </div>
+          <hr>
+        </div>
+        <div class="col col-4 text-center">
+          <div class="p-10 text-center text-bold bg-darkblue t-white">Chart</div>
+          <div id="donation"></div>
+        </div>
+      </div>
+    </fieldset>
+  </div>
+</div>
+<div id="content-box">
+  <div class="section-heading">PURCHASE <a href='javascript://' class="form-toggle-icon"><i class="fa fa-minus-square-o"></i></a></div>
+  <div class="content-section">
+    <div class="row">
+      <div class="col col-8">
+        <table border="0" id="igs-table" class="pull-left">
+          <tr>
+            <th width="50%" >Level</th>
+            <th width="50%">Amount ($)</th>
+          </tr>
+          {$totalSum=0}
+          {loop="$arrLevel"}
+          <tr> <span class="dn">{$totalSum += $value.totalDonation}</span>
+            <td width="50%"><a href='{#URL#}/donation?itemCode={$value.PDD_ItemCode|keyEncrypt}&FromDate={$fromDate}&ToDate={$toDate}'class="title-link">{$key}</a></td>
+            <td width="50%" >{$value.totalDonation}</td>
+          </tr>
+          {/loop}
+        </table>
+        <hr>
+        <div class="col col-6 text-center f-16 text-bold"> Total </div>
+        <div class="col col-6 text-center f-16 text-bold"> {$totalSum} </div>
+        <hr>
+      </div>
+      <div class="col col-4 text-center">
+        <div class="p-10 text-center text-bold bg-darkblue t-white">Chart</div>
+        <div id="purchase" ></div>
+      </div>
+    </div>
+  </div>
+</div>

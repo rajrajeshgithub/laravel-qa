@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+{include="top/head"}
+<link type="text/css" rel="stylesheet" href='{#RESOURCES#}css/popup.css' />
+<link type="text/css" rel="stylesheet" href='{#RESOURCES#}css/bootstrap-datepicker.css'>
+
+<link type="text/css" rel="stylesheet" href='{#RESOURCES#}css/setup-fundraiser.css' />
+<link type="text/css" rel="stylesheet" href='{#RESOURCES#}css/color-scheme-personalize.css'>
+<link type="text/css" rel="stylesheet" href='{#RESOURCES#}css/bootstrap-colorpicker.min.css'>
+<script type="text/javascript" src='{#RESOURCES#}js/bootstrap-datepicker.js'></script>
+<script type="text/javascript" src='{#RESOURCES#}js/jquery.simplyCountable.js'></script>
+<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=places"></script>
+<script type="text/javascript" src='{#RESOURCES#}js/edit-basic-detail.js'></script>
+<script type="text/javascript" src='{#RESOURCES#}js/bootstrap-colorpicker.min.js'></script>
+<script type="text/javascript">
+$(document).ready(function()
+{
+	SetBackgroundColor();
+	$('.color-control').colorpicker().on('changeColor', function(ev){
+	  var setbgcolor=ev.color.toHex();
+	  $(this).css("background-color",setbgcolor);
+	});
+	//-- select style popup
+	$('.style-modalBox').magnificPopup({
+		type: 'inline'
+	});
+});
+function SetBackgroundColor()
+{
+	$('.own-theme-section .own-theme-box').each(function()
+	{
+		var hexVal=$(this).find('.color-control').val();
+		$(this).find('.color-control').css('background',hexVal);
+	});
+}
+function SetColorSchemeValue($colortag1,$colortag2,$colortag3,$colortag4,$colortag5,$colortag6,$colortag7)
+{
+	
+	$("#ColorTag1").val($colortag1);
+	$("#ColorTag2").val($colortag2);
+	$("#ColorTag3").val($colortag3);
+	$("#ColorTag4").val($colortag4);
+	$("#ColorTag5").val($colortag5);
+	$("#ColorTag6").val($colortag6);
+	$("#ColorTag7").val($colortag7);
+	SetBackgroundColor();
+}
+</script>
+</head>
+<body id="body">
+<div class="gray-fix-nav">
+{include="top/top"}
+</div>
+<section class="fix-first-section fundraiser-page">
+</section>   
+
+<section class="section-padding setup-fundraiser edit-basic-detail">
+	<div class="container">
+    	{include="common/message"}
+    	<div class="row">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                <h2 class="heading-1">{#_EDIT_BASIC_DETAIL_#}</h2>
+            </div>
+        </div>
+        <div class="row">
+        	<div class="col-md-12 col-sm-12 col-xs-12">
+            	<form id="form-section" name="form-section" method="post" action='{#URL#}ut1myaccount/UpdateFundraiserBasicDetail' enctype="multipart/form-data">
+	               <input type="hidden" name="FR_id" value='{$FundraiserDetail['Camp_ID']}'>
+                   <input type="hidden" name="Camp_Code" id="Camp_Code" value="{$FundraiserDetail.Camp_Code}">
+                   <input type="hidden" name="Camp_Location_City" id="Camp_Location_City" value='{$FundraiserDetail['Camp_Location_City']}'>
+                   <input type="hidden" name="Camp_Location_State" id="Camp_Location_State" value='{$FundraiserDetail['Camp_Location_State']}'>
+                   <input type="hidden" name="Camp_Location_Country" id="Camp_Location_Country" value='{$FundraiserDetail['Camp_Location_Country']}'>
+                   <input type="hidden" name="Camp_Location_Logitude" value='{$FundraiserDetail['Camp_Location_Logitude']}'>
+                   <input type="hidden" name="Camp_Location_Latitude" value='{$FundraiserDetail['Camp_Location_Latitude']}'>
+                   <input type="hidden" name="Camp_Location_Zip" value='{$FundraiserDetail['Camp_Location_Zip']}'>
+                    <div class="step-section">
+                        <div class="step step-1"><span><a href='{#URL#}ut1myaccount/FundraiserEdit/{$FundraiserDetail.Camp_ID|keyEncrypt}' title="Return">&lt; Return to Fundraiser</a></span>
+                        	<h2 class="heading-2"><span class="mark-icon">1</span><span class="step-name">{#_SETUP1_GETTING_STARTED_#}</span></h2>
+                        	<div class="step-content">
+                        	<h2 class="heading-3">{#_CHOOSE_CATEGORY_#}</h2>
+                            <div class="row">
+                            	
+                                  <div class="form-group">
+                                  {loop="CategoryList"}
+                                            <div class="col-md-4 col-sm-4 col-xs-12 mb-5">
+                                                <label class="checkbox"><input type="radio" name="category" value='{$value.NPOCat_ID}'  {if="$FundraiserDetail['Camp_Cat_ID']==$value.NPOCat_ID"}checked{/if}><i></i>{$value.$categoryname}</label>
+                                            </div>
+                                  {/loop}
+                                </div>
+                            </div>
+                            <div class="mt-25">
+                                <div class="row">
+                                    <div class="col-md-8 col-sm-10 col-xs-12">
+                                        <label class="label" for="title">{#_TITLE_NAME_#}</label>
+                                        <div class="form-group">
+                                            <input type="text" class="form-control" name="title" id="title" value='{$FundraiserDetail['Camp_Title']}'>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-8 col-sm-10 col-xs-12">
+                                        <label class="label" for="subTitle">{#_SUB_TITLE_#}</label>
+                                        <div class="form-group">
+                                            <input type="text" class="form-control" name="subTitle" id="subTitle" value='{$FundraiserDetail['Camp_ShortDescription']}'>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-8 col-sm-10 col-xs-12">
+                                     <span >Select Your Campaign Image</span>
+                                        <div class="form-group">
+                                            <label for="file" class="input-file">
+                                                <div class="button t-white"><input type="file" name="uploadPhoto" class="form-control" id="uploadPhoto"   onchange="this.parentNode.nextSibling.value = this.value"><i class="fa fa-upload"></i></div><input name="uploadImg" id="uploadImg" type="text" class="form-control" readonly="">
+                                            </label>
+                                            <span class="note">Select Photo {#_IMAGE_TEXT_#}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                {if condition="$Camp_StylingTemplateName=='V2'"}
+                                        <div class="row">
+                                            <div class="col-md-8 col-sm-10 col-xs-12">
+                                            <label class="label" for="subTitle">{$caption_select_banner_image}</label>                                             
+                                                <div class="form-group">
+                                                    <label for="file" class="input-file">
+                                                        <div class="button t-white"><input type="file" name="camp_bgImage" class="form-control" id="camp_bgImage"   onchange="this.parentNode.nextSibling.value = this.value"><i class="fa fa-upload"></i></div><input name="uploadImg" id="uploadImg" type="text" class="form-control" readonly="">
+                                                    </label>
+                                                    <span class="note">{$note_photo}</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                              {/if}
+                                
+                                <div class="row">
+                                    <div class="col-md-4 col-sm-5 col-xs-12">
+                                        <label class="label" for="donation">{#_HOW_MUCH_DONATION_#}</label>
+                                        <div class="form-group">
+                                            <i class="icon-prepend fa fa-usd"></i>
+                                            <input type="text" class="form-control" name="donation" id="donation" placeholder="Enter goal amount" value='{function="round($FundraiserDetail['Camp_DonationGoal'])"}'>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-8 col-sm-10 col-xs-12">
+                                        <label class="label text-bold" for="location">Location:{$FundraiserDetail['Camp_Location']}</label>
+                                        <label class="label" for="location">{#_CHANGE_LOCATION_#}</label>
+                                        <div class="form-group">
+                                       
+                                           <input type="text" class="form-control" name="location" id="location" value='' >
+                                            <span class="note">{#_DONOR_WILL_USE_THIS_#}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-8 col-sm-10 colxs-12">
+                                    	<div class="row">
+                                        	<div class="col-md-12 col-sm-6 col-xs-12">
+	                                            <label class="label text-bold">{#_DURATION_#}</label>
+											</div>
+                                            <div class="col-md-12 col-sm-6 col-xs-12">
+                                            <label class="label">{#_STARTING_#} : {$FundraiserDetail['Camp_StartDate']}</label>
+                                            <label class="label">{#_ENDS_#} : {if="$FundraiserDetail['Camp_EndDate']=='0000-00-00'"}Not Available{else}{$FundraiserDetail['Camp_EndDate']}{/if}</label>
+                                        </div>
+                                            
+										</div>
+                                    </div>
+                                </div>
+                                <div class="row mt-10">
+                                    <div class="col-md-8 col-sm-10 col-xs-12">
+										<div class="form-group">
+                                            <label class="label text-bold">{#_FUNDRAISER_PRIVATE_#}</label>
+                                          
+                                            <label class="checkbox"><input type="checkbox" name="checkbox" value="1"  {if="$FundraiserDetail['Camp_IsPrivate']=='1'"} checked{/if}><i></i>{#_YES_THIS_IS_PRIVATE_#}</label>
+										</div>
+                                	</div>
+                                </div>
+                                
+							</div>
+                        </div>	
+                        </div>
+                        <div class="step step-2">
+                            <h2 class="heading-2"><span class="mark-icon">2</span><span class="step-name">{#_TELL_THE_STORY_#}</span></h2>
+                            <div class="step-content">
+                                <h2 class="heading-3">{#_ABOUT_FUNDRAISER_#}</h2>
+                                <div class="row">
+                                    <div class="col-md-8 col-sm-10 col-xs-12">
+                                        <p>{#_BRIEF_STORY_#}</p>
+                                        <div class="form-group">
+                                            <textarea class="form-control" name="aboutFundraiser" id="aboutFundraiser" rows="6">{$FundraiserDetail['Camp_DescriptionHTML']}</textarea>
+                                            <div class="oh mt-5 f-12 text-bold">{#_REMAINING_CHARACTERS_#}&nbsp;<span id="wordCounter"></span></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                            <div class="col-md-8 col-sm-10 col-xs-12">
+                                                <label class="label" for="title">{#_SALES_FORCE_ID_#}</label>
+                                                <div class="form-group">
+                                                    <input type="text" class="form-control" name="Camp_SalesForceID" id="Camp_SalesForceID" value='{$FundraiserDetail['Camp_SalesForceID']}'>
+                                                </div>
+                                            </div>
+                                        </div>
+                                <div class="row mt-25">
+                                    <div class="col-md-8 col-sm-10 col-xs-12">
+                                        <p>{#_PROFILE_URL_#}</p>
+                                        <div class="row">
+                                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                                <div class="form-group">
+                                                    <i class="icon-prepend fa fa-facebook"></i>
+                                                    <input type="text" class="form-control" name="facebookURL" id="facebookURL" placeholder="{#_FACEBOOK_URL_#}" value='{$FundraiserDetail['Camp_SocialMediaUrl']['facebook']}'>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                                <div class="form-group">
+                                                    <i class="icon-prepend fa fa-youtube"></i>
+                                                    <input type="text" class="form-control" name="youtubeURL" id="youtubeURL" placeholder="{#_YOUTUBE_URL_#}"  value='{$FundraiserDetail['Camp_SocialMediaUrl']['youtube']}'>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                                <div class="form-group">
+                                                    <i class="icon-prepend fa fa-instagram"></i>
+                                                    <input type="text" class="form-control" name="instagramURL" id="instagramURL" placeholder="{#_INSTAGRAM_URL_#}"  value='{$FundraiserDetail['Camp_SocialMediaUrl']['instagram']}'>
+                                                </div>
+                                            </div>                                              
+                                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                                <div class="form-group">
+                                                    <i class="icon-prepend fa fa-twitter"></i>
+                                                    <input type="text" class="form-control" name="twitterURL" id="twitterURL" placeholder="{#_TWITTER_URL_#}"  value='{$FundraiserDetail['Camp_SocialMediaUrl']['twitter']}'>
+                                                </div>
+                                            </div>                                    
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                            </div>
+                        </div>
+                        <div class="step step-3">
+                            <h2 class="heading-2"><span class="mark-icon">3</span><span class="step-name">{#_SETUP4_DONATION_DETAILS_#}</span></h2>
+                            <div class="step-content">
+                               {if="$FundraiserDetail['Camp_PaymentMode']=='INDIVIDUAL-STRIPE-ACCOUNT'"}
+                                <h2 class="heading-3">Donation Transfer to Individual Stripe Account {$FundraiserDetail['Camp_Stripe_ConnectedID']}</h2>
+                                {elseif="$FundraiserDetail['Camp_PaymentMode']=='NPO-STRIPE-ACCOUNT'"}
+                                <h2 class="heading-3">Donation Transfer to NPO whose EIN {$FundraiserDetail['Camp_NPO_EIN']}</h2>
+                                {/if}
+                            </div>
+                        </div>
+                       	<!-- LEVEL not=1 and Cout($CampaignStyleColor) >1 -->
+                       	{if condition="$FundraiserDetail['Camp_Level_ID']!='1' && $CampaignStyleColor!=''"}
+                       	<div class="step step-4">
+							<h2 class="heading-2"><span class="mark-icon">4</span><span class="step-name">Color scheme personalization</span></h2>
+							<div class="step-content">
+								<div class="row">
+									<div class="col-md-8 col-sm-10 col-xs-12">
+										{$StyleNumber=2}
+										{if condition="$Camp_StylingTemplateName=='V1'"}
+											{$StyleNumber=1}
+										{/if}
+										{if condition="$Camp_Level_ID==3"}
+											<p>You have selected selected STYLE{$StyleNumber}. <a href='#style-modalBox' class="t-green style-modalBox" title="Click here view alternate style">Click here view alternate style options.</a></p>
+										{/if}	
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-md-12 col-sm-12 col-xs-12">
+										<div class="row">
+											<div class="col-md-8 col-sm-8 col-xs-12">
+                	<p class="mb-0 text-bold t-blue">Choose from preset options</p>
+					<p>Click on thumbnail to view sample</p>
+                    <div class="color-scheme-section">
+                    	<div class="row color-scheme-row">
+							
+							{if condition="$CampaignStyleColor!=''"}
+							 <input type="hidden" name="CSS_Template" id="CSS_Template" value='{$CampaignStyleColor[0][CCS_CSS_template]|keyEncrypt}'>
+								{loop="$CampaignStyleColor"}
+								{$checked=''}
+								{if condition="$CampStyleTemplateColor['ColorScheme']==$value.CCS_Name"}
+									{$checked='checked'}
+								{/if}
+									<div class="col-md-2 col-sm-3 col-xs-6">
+			                        	<div class="color-scheme-box">
+		                                    <div class="left-side-col">
+		                                        <div class="inner-col" style="background:{$value.CCS_ColorTag1};"></div>
+		                                        <div class="inner-col" style="background:{$value.CCS_ColorTag2};"></div>
+		                                        <div class="inner-col" style="background:{$value.CCS_ColorTag3};"></div>
+		                                    </div>
+		                                    <div class="right-side-col">
+		                                        <div class="inner-col" style="background:{$value.CCS_ColorTag4};"></div>
+		                                        <div class="inner-col" style="background:{$value.CCS_ColorTag6};"></div>
+                                                <div class="inner-col" style="background:{$value.CCS_ColorTag7};"></div>
+		                                    </div>
+		                                    <div class="oh cb"><label class="checkbox"><input type="radio" name="ColorScheme" {$checked} value='{$value.CCS_Name}' onclick="SetColorSchemeValue('{$value.CCS_ColorTag1}','{$value.CCS_ColorTag2}','{$value.CCS_ColorTag3}','{$value.CCS_ColorTag4}','{$value.CCS_ColorTag5}','{$value.CCS_ColorTag6}','{$value.CCS_ColorTag7}');"><i></i>{$value.CCS_Name}</label></div>
+		                                </div>
+                           			</div>
+								{/loop}
+							{/if}
+						</div>
+    				</div>
+                </div>
+											<div class="col-md-4 col-sm-4 col-xs-12 own-theme-section">
+                	<p class="text-bold t-blue">Make your own color theme</p>
+                    <div class="row">
+                		<div class="col-lg-6 col-md-8 col-sm-10 col-xs-12">
+                            <div class="own-theme-box">
+                                <label class="label" for="headerText">Header Text</label>
+                                <div class="form-group">                   	
+                                    <input type="text" class="form-control color-control" name="ColorTag1" id="ColorTag1" value='{if condition="$CampStyleTemplateColor[ColorTag1]!=''"}{$CampStyleTemplateColor[ColorTag1]}{else}#4BACC6{/if}'>
+                                </div>
+                            </div>
+                            <div class="own-theme-box">
+                                <label class="label" for="subheadText">Subhead Text</label>
+                                <div class="form-group">                        	
+                                    <input type="text" class="form-control color-control"  name="ColorTag2" id="ColorTag2" value='{if condition="$CampStyleTemplateColor[ColorTag2]!=''"}{$CampStyleTemplateColor[ColorTag2]}{else}#F79646{/if}'>
+                                </div>
+                            </div>
+                            <div class="own-theme-box">
+                                <label class="label" for="bodyText">Body Text</label>
+                                <div class="form-group">                        	
+                                    <input type="text" class="form-control color-control" name="ColorTag3" id="ColorTag3" value='{if condition="$CampStyleTemplateColor[ColorTag3]!=''"}{$CampStyleTemplateColor[ColorTag3]}{else}#4D4D4D{/if}'>
+                                </div>
+                            </div>
+                            <div class="own-theme-box">
+                                <label class="label" for="button">Button</label>
+                                <div class="form-group">                        	
+                                    <input type="text" class="form-control color-control" name="ColorTag4" id="ColorTag4" value='{if condition="$CampStyleTemplateColor[ColorTag4]!=''"}{$CampStyleTemplateColor[ColorTag4]}{else}#C0504D{/if}'>
+                                </div>
+                            </div>
+							<div class="own-theme-box">
+                                <label class="label" for="buttonHover">Button Hover</label>
+                                <div class="form-group">                        	
+                                    <input type="text" class="form-control color-control" name="ColorTag5" id="ColorTag5" value='{if condition="$CampStyleTemplateColor[ColorTag5]!=''"}{$CampStyleTemplateColor[ColorTag5]}{else}#C2423F{/if}'>
+                                </div>
+                            </div>
+							<div class="own-theme-box">
+                                <label class="label" for="sectionHead">Section Head</label>
+                                <div class="form-group">                        	
+                                    <input type="text" class="form-control color-control" name="ColorTag6" id="ColorTag6" value='{if condition="$CampStyleTemplateColor[ColorTag6]!=''"}{$CampStyleTemplateColor[ColorTag6]}{else}#1F497D{/if}'>
+                                </div>
+                            </div>
+                            <div class="own-theme-box">
+                                <label class="label" for="fields">Fields</label>
+                                <div class="form-group">                        	
+                                    <input type="text" class="form-control color-control" name="ColorTag7" id="ColorTag7" value='{if condition="$CampStyleTemplateColor[ColorTag7]!=''"}{$CampStyleTemplateColor[ColorTag7]}{else}#8064A2{/if}'>
+                                </div>
+                            </div>
+                                                       
+                    	</div>
+                    </div>
+                </div>
+										</div>
+									</div>
+								</div>
+								
+								
+							</div>
+							{/if}
+							<div class="row">
+                                    <div class="col-md-8 col-sm-10 col-xs-12 text-center mt-25">
+                                        <input type="submit" class="button-1 large-btn" value="{#_SAVE_AND_CONTINUE_#}">
+                                    </div>
+							</div>
+						</div>
+						
+                    </div>
+    			</form>
+            </div>
+        </div>
+    </div>	
+</section>
+<div id="style-modalBox" class="mfp-hide white-popup-block color-scheme-modal">
+	<div class="popup-section">
+		<div class="row">
+            <div class="col-md-12 col-sm-12 col-xs-12 cms-section">
+                <h2 class="heading-1">Select Style of fundraiser</h2>
+                <form name="select-style" id="select-style" method="post" action='{#URL#}ut1myaccount/updatestyletemplate'>
+                <input type="hidden" name="Camp_ID" id="Camp_ID" value='{function="keyEncrypt($FundraiserDetail[Camp_ID])"}'>
+                    <div class="row pt-10">
+                        <div class="col-xs-5">
+                            <div class="mb-10">
+                                <img src='{#RESOURCES#}images/style1-thumb.jpg' width="200" class="border-grey img-responsive" alt="image" />
+                            </div>
+                            {$checked=''}
+                            {if condition="$Camp_StylingTemplateName=='V1'"}
+                            	{$checked='checked'}
+                            {/if}
+                            <label class="checkbox"><input type="radio" name="StyleTemplateName" id="style1" value="V1" {$checked}><i></i>Style-1</label>
+                        </div>
+                        <div class="col-xs-5">
+                            <div class="mb-10">
+                                <img src='{#RESOURCES#}images/style2-thumb.jpg' width="200" class="border-grey img-responsive" alt="image" />
+                            </div>
+                            {$checked=''}
+                            {if condition="$Camp_StylingTemplateName=='V2'"}
+                            	{$checked='checked'}
+                            {/if}
+                            <label class="checkbox"><input type="radio" name="StyleTemplateName" id="style2" value="V2" {$checked}><i></i>Style-2</label>                    
+                        </div>
+                    </div>
+                    <div class="form-group">
+                    	<button type="submit" class="button-1">Continue</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{include="bottom/bottom"}
+<script type="text/javascript" charset="utf-8">
+$(document).ready(function()
+{
+	var input = document.getElementById('location');
+	var autocomplete = new google.maps.places.Autocomplete(input);
+
+	$('#aboutFundraiser').simplyCountable(
+	{
+    counter:            '#wordCounter',
+    countType:          'characters',
+    maxCount:           1000,
+    strictMax:          true,
+    countDirection:     'down'
+	});
+});
+</script>
+
+</body>
+</html>

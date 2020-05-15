@@ -1,0 +1,237 @@
+<script type="text/javascript" language="javascript" src='{#URL#}app/tinymce/tinymce.min.js'></script>
+<script type="text/javascript" src='{#RESOURCES#}js/includeEditor.js'></script>
+
+<script>
+$(document).ready(function(){
+	$('input[type=checkbox][name=externalpageLink]').change(function()
+	{
+		var parentdiv = $(this).parent().parent().parent();
+		if($(this).is(':checked'))
+		{
+			$('#externalid').removeClass('display-none');
+			$('#internalid').addClass('display-none');
+			$('#internalpageLink').prop('checked',false);
+			
+		}
+		else
+		  $('#externalid').addClass('display-none');
+	});
+	
+	
+	$('input[type=checkbox][name=internalpageLink]').change(function()
+	{
+		var parentdiv = $(this).parent().parent().parent();
+		if($(this).is(':checked'))
+		{
+			$('#internalid').removeClass('display-none');
+			$('#externalid').addClass('display-none');
+			$('#externalpageLink').prop('checked',false);
+		}
+		else
+		  $('#internalid').addClass('display-none');
+	});	
+	
+	$('input[type=checkbox][name=internalpageLink],input[type=checkbox][name=externalpageLink]').trigger('change');
+});
+</script>
+<style>
+	.cmxform fieldset p.error label {
+		color: red;
+	}
+	div.container {
+		background-color: #f4f4f4;
+		border: 1px solid red;
+		margin: 5px;
+		padding: 5px;
+	}
+	div.container ol li {
+		list-style-type: disc;
+		margin-left: 20px;
+		color:red;
+		line-height:1.5em;
+	}
+	div.container {
+		display: none
+	}
+	.container label.error {
+		display: inline;
+	}
+	/*form.cmxform {
+		width: 30em;
+	}*/
+	form.cmxform label.error {
+		display: block;
+		margin-left: 1em;
+		width: auto;
+	}
+	</style>
+<script type="text/javascript" src='{#RESOURCES#}js/validateProductDetail.js'></script>
+<script type="text/javascript">
+
+	$(document).ready(function()
+	{
+		$('.viewmoreBtn i').click(function()
+	{
+		 $(this).toggleClass("fa-plus fa-minus");
+		 $(this).closest('.row').find('.viewmorSection').slideToggle();
+		
+	});
+	})
+	
+	// only for demo purposes
+	$.validator.setDefaults({
+		submitHandler: function() {
+			alert("submitted! (skipping validation for cancel button)");
+		}
+	});
+
+	/*$().ready(function() {
+		var container = $('div.container');
+		// validate the form when it is submitted
+		var validator = $("#cmspageform").validate({
+			errorContainer: container,
+			errorLabelContainer: $("ol", container),
+			wrapper: 'li'
+		});
+	});*/
+	</script>
+<div id="rightSection">
+  <div class="rightPannel">
+    <div class="breadcrumb">
+      <ul>
+        <li title="Dashboard"><a href='{#URL#}home/'><img src='{#RESOURCES#}img/dashboard_thumb.png'/>Dashboard</a></li>
+        <li>&nbsp;»&nbsp;</li>
+        <li title="Products"><a href='{#URL#}cms'>Static Page</a></li>
+        <li>&nbsp;»&nbsp;</li>
+        <li title="Product - Add">Static Page - {if="$case=='editpage'"}Edit {else} Add {/if}</li>
+      </ul>
+    </div>
+    <div class="contentSection">
+      <div class="pageHeader text-left"><li class="fa fa-fw fa-file-text iColor"></li>&nbsp;Static Page - {if="$case=='editpage'"}Edit {else}Add{/if}</div>
+       <div id="msgSection">
+                {if condition="$msgValues!=null"}
+            {if condition="$msgValues.msgType==1"}
+        	<div class="alert alert-error">
+            	<p>{$msgValues.ErrorMsg}</p>
+        	</div>                            
+        	{elseif condition="$msgValues.msgType==2"}
+        	<div class="alert alert-success">
+            	<p>{$msgValues.ConfirmationMsg}</p>
+        	</div>                             
+        	{/if}
+    		{/if}
+       </div>
+       
+       <!--new code from here-->
+       	<div class="container">
+			<h2>There are some errors in your form submission, please see below for details.</h2>
+			<ol>
+				<li>
+					<label for="pagename" class="error">Please enter page name</label>
+				</li>
+				<li>
+					<label for="friendlyurl" class="error">Please enter friendlyurl</label>
+				</li>
+                <li>
+					<label for="pagetitle" class="error">Please enter page title</label>
+				</li>
+                <li>
+					<label for="sortorder" class="error">Please enter sort order</label>
+				</li>
+			</ol>
+		</div>
+       <!--end of code here -->
+       
+       
+      <div class="">
+         <form action="" id="sky-form" class="sky-form">
+		 	<fieldset>
+				<div class="row">
+					<section class="col col-4">
+						<label class="select">
+							<select name="cmsgroup" id="cmsgroup">
+								<option value="">-Select Group-</option>
+                                    <optgroup label="English">
+                                    {loop="engroup"}
+                                    <option value="{$value.CMSPageGroupID}|{$value.Language}" {if="$selectedgroup==$value.CMSPageGroupID"}selected='selected'{/if}>
+                                    	{$value.Title}
+                                    </option>
+                                    {/loop}
+                                    </optgroup>
+                                    <optgroup label="Spanish">
+                                    {loop="esgroup"}
+                                    <option value="{$value.CMSPageGroupID}|{$value.Language}" {if="$selectedgroup==$value.CMSPageGroupID"}selected='selected'{/if}>
+                                    	{$value.Title}
+                                    </option>
+                                    {/loop}
+                                    </optgroup>
+							</select>
+							<i></i>
+						</label>
+					</section>
+				</div>
+				</fieldset>
+				<fieldset>
+				<div class="row">
+					<div class="sky-form-headingsection">
+						<div class="sky-form-heading pull-left">Basic Page Details</div>
+						<div class="viewmoreBtn pull-right">
+							<i class="fa fa-plus"></i>
+						 </div>
+					</div>
+					<div class="viewmorSection" style="display:none;">
+					<!--<div class="sky-form-subheading">Sub Heading</div>-->
+					<section class="col col-6">
+						<label class="label">Page Name:</label>
+						<label class="input">
+							<input type="text" id="pagename" name="pagename" placeholder="Enter page name "  value="{$pagedetail.CMSPagesName}">
+						</label>
+					</section>
+					<section class="col col-6">
+						<label class="label">URL Friendly Page Name:</label>
+						<label class="input">
+							<input type="text" id="friendlyurl" name="friendlyurl"    placeholder="Enter page friendly url "
+                             value="{$pagedetail.CMSPagesNameINURL}">
+						</label>
+					</section>
+					<section class="col col-6">
+						<label class="label">Page Title:</label>
+						<label class="input">
+							<input type="text" id="pagetitle" name="pagetitle" placeholder="Enter page title "   value="{$pagedetail.CMSPagesTitle}">
+						</label>
+					</section>
+					<section class="col col-6">
+						<label class="label">Sort Order</label>
+						<label class="input">
+							<input type="text" id="sortorder" placeholder="Enter sort order" name="sortorder"   value="{$pagedetail.SortBy}">
+						</label>
+					</section>
+				</div>
+				</div>
+				
+				</fieldset>
+				<fieldset>
+				<div class="row">
+					<section class="col col-4">
+                    <label class="checkbox"><input type="checkbox" id="requiredlogintoBrowse" name="requiredlogintoBrowse" value="1"  {if="$pagedetail.LoginRequired=='1'"}checked='checked'{/if}><i></i>Login Required to browse this page</label>
+                    </section>
+					<section class="col col-4"><label class="checkbox"><input type="checkbox" name="checkbox"><i></i>Yes, Display on website</label></section>
+					<section class="col col-4"><label class="checkbox"><input type="checkbox" name="checkbox"><i></i>Yes, Display on bottom</label></section>
+				</div>
+				</fieldset>
+				<fieldset>
+				<div class="row">
+					<section class="col col-6"><label class="checkbox"><input type="checkbox" name="checkbox"><i></i>If this is To mark this page as external link checked it and fill its url</label></section>
+					<section class="col col-6"><label class="checkbox"><input type="checkbox" name="checkbox"><i></i>If this is To mark this page as internal link checked it and fill its url</label></section>
+				</div>
+				<section>
+						<label class="textarea">
+							<textarea rows="3" name="info" placeholder="Additional info" id="LandingPageHTML"></textarea>
+						</label>
+				</section>
+				</fieldset>
+		 </form>
+      </div>
+    </div>
+  </div>
+</div>

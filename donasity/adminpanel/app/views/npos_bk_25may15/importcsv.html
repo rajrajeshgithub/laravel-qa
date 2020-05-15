@@ -1,0 +1,46 @@
+<link rel="stylesheet" type="text/css" href='{#RESOURCES#}css/style.css'>
+<script type="text/javascript" src='{#RESOURCES#}js/validateimportcsv.js'></script>
+<div id="rightSection">
+  <div class="rightPannel">
+    <div class="breadcrumb">
+      <ul>
+        <li title="Dashboard"><a href='{#URL#}home/'><img src='{#RESOURCES#}img/dashboard_thumb.png'/>Dashboard</a></li>
+        <li>&nbsp;»&nbsp;</li>
+        <li title="NPOs List"><a href='{#URL#}npos/'>Non-Profit organization</a></li>           
+        <li>&nbsp;»&nbsp;</li>
+        <li title="NPO Import / Export"><a href='{#URL#}npos/index/npo-manage'>Manage - Import / Export</a></li>           
+        <li>&nbsp;»&nbsp;</li>
+        <li title="NPO Import / Export">Manage - Import</li>
+      </ul>
+    </div>
+    <div class="contentSection">
+     {include="common/message"}     
+     <form name="uploadcsv" id="uploadcsv" class="sky-form" method="post" action="{#URL#}nposprocess/index/upload-nposcsv" enctype="multipart/form-data" >
+     <fieldset>  
+     	<div class="row">
+            <div class="sky-form-headingsection psTitle">
+                <div class="sky-form-heading pull-left">Import NPOs Detail</div>                
+                <div class="pull-right margin-right-20">
+                	<a href="nposprocess/downloadsamplecsv" class="btn btn-secondary" title="download sample csv file"><i class="fa fa-download"></i>&nbsp;Sample CSV File</a>
+                </div>  
+            </div>             	
+            <section class="">
+                <label for="file" class="input input-file">
+                    <div class="button"><input type="file" name="csvFile" id="csvFile" multiple="" onchange="filePath.value = this.value">
+                        Browse
+                    </div>
+                    <input type="text" id="filePath" name="filePath" placeholder="Include .csv file" readonly="" value="">
+                </label>            
+            </section>
+       </div>
+         </fieldset>  
+         <fieldset>
+            <section>
+                <button type="submit" class="btn btn-primary" title="Add Static Page" value="Save">
+                <i class="fa fa-upload"></i>&nbsp;Upload</button>
+            </section>
+     </fieldset>               
+	</form>  
+    </div>
+  </div>
+</div>
