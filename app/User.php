@@ -41,11 +41,21 @@ class User extends Authenticatable
     public function questions(){
         return $this->hasMany(Question::class);
     }
+
+    public function answers(){
+        return $this->hasMany(Answer::class);
+    }
     public function getUrlAttribute()
     {
         //return view("question.show", $this->id);
         return '#';
     }
 
+    public function getAvatarAttribute()
+    {
+        $email = $this->email;
+        $size = 32;
+       return "https://www.gravatar.com/avatar/" . md5( strtolower( trim( $email ) ) ) . "?s=" . $size;
+    }
 
 }
