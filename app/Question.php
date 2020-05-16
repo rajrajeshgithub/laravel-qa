@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
-use Psy\Command\ParseCommand;
+
 
 class Question extends Model
 {
@@ -43,6 +43,6 @@ class Question extends Model
 
     public function getBodyHtmlAttribute()
     {
-
+        return \Parsedown::instance()->text($this->body);
     }
 }
