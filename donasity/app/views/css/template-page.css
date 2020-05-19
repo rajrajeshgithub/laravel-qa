@@ -1,7 +1,0 @@
-/* CSS Document */
-section.static-page{background:url(../images/static-banner.jpg) no-repeat;background-size:cover;background-position:center bottom;}
-.section-padding.static-page-section{padding-top:55px; padding-bottom:200px;}
-.static-page-section .heading-1{margin-bottom:0px;}
-.static-page-section .heading-2{margin-top:35px; margin-bottom:5px;}
-.learn-more .heading-2{margin-top:10px; margin-bottom:20px;}
-.static-blue-content{font-family: 'quicksandregular',sans-serif !important; font-size:40px !important; color:#0d2946 !important; line-height:45px;}
