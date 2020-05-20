@@ -79,7 +79,7 @@ form.form-delete{
 
         &.favorite{
             &.favorited, &.favorited:hover{
-                color:$warning;
+                color:$primary;
             }
         }
         &.vote-accepted{
