@@ -16,10 +16,22 @@
                                 <i class="fas fa-caret-down fa-2x"></i>
                                 <span class="vote-count">12</span>
                             </a>
-                            <a title="Mark this answer as best answer" class="{{ $answer->status }} favorited">
-                                <i class="fa fa-check fa-1x"></i>
-                                <span class="favorite-count">123</span>
-                            </a>
+                            @can('accept',$answer)
+                                <a title="Mark this answer as best answer"
+                                   class="{{ $answer->status }} favorited"
+                                    onclick="event.preventDefault(); document.getElementById('accept-answer-{{ $answer->id }}').submit();"
+                                >
+                                    <i class="fa fa-check fa-1x"></i>
+                                    <span class="favorite-count">123</span>
+                                </a>
+                                <form id="accept-answer-{{ $answer->id }}" action="{{ route('answers.accept', $answer->id) }}" method="POST" style="display: none;">
+                                    @csrf
+                                </form>
+                            @elseif($answer->isBest)
+                                <a  class="{{ $answer->status }} favorited">
+                                    <i class="fa fa-check fa-1x"></i>
+                                </a>
+                            @endcan
                         </div>
                         <div class="media-body">
                             {{ $answer->body }}

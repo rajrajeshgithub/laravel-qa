@@ -48,4 +48,9 @@ class Answer extends Model
             echo "answer saved";
         });
     }
+
+    public function getIsBestAttribute()
+    {
+        return $this->id == $this->question->best_answer_id;
+    }
 }
