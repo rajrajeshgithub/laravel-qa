@@ -40,12 +40,8 @@ class Answer extends Model
         });
 
         static::deleted(function($answer){
-            $question = $answer->question;
             $answer->question->decrement('answers_count');
-            if($question->best_answer_id == $answer->id){
-                $question->best_answer_id = null;
-                $answer->question->save();
-            }
+            $answer->question->save();
         });
 
         static::saved(function(){
