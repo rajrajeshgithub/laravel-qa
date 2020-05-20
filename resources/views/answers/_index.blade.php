@@ -16,7 +16,7 @@
                                 <i class="fas fa-caret-down fa-2x"></i>
                                 <span class="vote-count">12</span>
                             </a>
-                            <a title="Mark this answer as best answer" class="vote-accepted favorited">
+                            <a title="Mark this answer as best answer" class="{{ $answer->status }} favorited">
                                 <i class="fa fa-check fa-1x"></i>
                                 <span class="favorite-count">123</span>
                             </a>
