@@ -48,11 +48,11 @@
                 </div>
             </div>
         </div>
+        @include('inc.messages')
         @include('answers._index', [
         'answers' => $question->answers,
         'answersCount' => $question->answers_count
 ])
-        @include('inc.messages')
         @include('answers._create')
     </div>
 @endsection

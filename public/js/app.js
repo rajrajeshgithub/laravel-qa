@@ -49926,15 +49926,7 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-/*
-import { library, icon } from '@fortawesome/fontawesome-svg-core'
-import { faCaretUp } from '@fortawesome/free-solid-svg-icons/faCaretUp'
-import { faCaretDown } from '@fortawesome/free-solid-svg-icons/faCaretDown'
-import { faStar } from '@fortawesome/free-solid-svg-icons/faStar'
-import { faCheck } from '@fortawesome/free-solid-svg-icons/faCheck'
-
-library.add([faCaretUp,faCaretDown,faStar,faCheck])
-*/
+throw new Error("Module build failed (from ./node_modules/babel-loader/lib/index.js):\nError: ENOENT: no such file or directory, open '/home/rajesh/public_html/laravel-qa/resources/js/fontawesome.js'");
 
 /***/ }),
 
