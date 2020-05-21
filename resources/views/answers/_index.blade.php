@@ -9,20 +9,31 @@
                 @foreach($answers as $answer)
                     <div class="media">
                         <div class="d-flex flex-column vote-controls">
-                            <a title="This question is useful" class="vote-up">
+                            <a title="This question is useful" class="vote-up {{ \Auth::guest() ? 'off' : ''}}"
+                            onclick="event.preventDefault(); document.getElementById('up-vote-answer-{{ $answer->id }}').submit();"
+                            >
                                 <i class="fas fa-caret-up fa-2x"></i>
-                                <span class="vote-count">1230</span></a>
-                            <a title="This question is not useful" class="vote-down off">
-                                <i class="fas fa-caret-down fa-2x"></i>
-                                <span class="vote-count">12</span>
                             </a>
+                            <form name="" id="up-vote-answer-{{ $answer->id }}" method="post" action="/answers/{{ $answer->id }}/vote">
+                                @csrf
+                                <input type="hidden" name="vote" value="1">
+                            </form>
+                                <span class="vote-count">{{ $answer->votes_count }}</span>
+                            <a title="This question is not useful" class="vote-down {{ \Auth::guest() ? 'off' : '' }}"
+                                onclick="event.preventDefault(); document.getElementById('down-vote-answer-{{ $answer->id }}').submit();"
+                            >
+                                <i class="fas fa-caret-down fa-2x"></i>
+                            </a>
+                            <form name="" id="down-vote-answer-{{ $answer->id }}" method="post" action="/answers/{{ $answer->id }}/vote">
+                                @csrf
+                                <input type="hidden" name="vote" value="-1">
+                            </form>
                             @can('accept',$answer)
                                 <a title="Mark this answer as best answer"
                                    class="{{ $answer->status }} favorited"
                                     onclick="event.preventDefault(); document.getElementById('accept-answer-{{ $answer->id }}').submit();"
                                 >
                                     <i class="fa fa-check fa-1x"></i>
-                                    <span class="favorite-count">123</span>
                                 </a>
                                 <form id="accept-answer-{{ $answer->id }}" action="{{ route('answers.accept', $answer->id) }}" method="POST" style="display: none;">
                                     @csrf
