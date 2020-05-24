@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-        <div class="row justify-content-center">
+    <div class="row justify-content-center" xmlns="http://www.w3.org/1999/html">
             @include('inc.messages')
             <div class="col-md-12">
                 <div class="card">
@@ -14,7 +14,7 @@
                         </div>
                     </div>
                     <div class="card-body">
-                        @foreach($questions as $question)
+                        @forelse($questions as $question)
                             <div class="media">
                                 <div class="d-flex flex-column counters">
                                     <div class="vote">
@@ -57,7 +57,9 @@
                                 </div>
                             </div>
                             <hr>
-                            @endforeach
+                            @empty
+                            <div class="alert alert-warning"><strong>Sorry</strong> There are no questions available</div>
+                            @endforelse
 
                         {{ $questions->links() }}
 
