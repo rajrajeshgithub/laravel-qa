@@ -8,42 +8,7 @@
                 <hr>
                 @foreach($answers as $answer)
                     <div class="media">
-                        <div class="d-flex flex-column vote-controls">
-                            <a title="This question is useful" class="vote-up {{ \Auth::guest() ? 'off' : ''}}"
-                            onclick="event.preventDefault(); document.getElementById('up-vote-answer-{{ $answer->id }}').submit();"
-                            >
-                                <i class="fas fa-caret-up fa-2x"></i>
-                            </a>
-                            <form name="" id="up-vote-answer-{{ $answer->id }}" method="post" action="/answers/{{ $answer->id }}/vote">
-                                @csrf
-                                <input type="hidden" name="vote" value="1">
-                            </form>
-                                <span class="vote-count">{{ $answer->votes_count }}</span>
-                            <a title="This question is not useful" class="vote-down {{ \Auth::guest() ? 'off' : '' }}"
-                                onclick="event.preventDefault(); document.getElementById('down-vote-answer-{{ $answer->id }}').submit();"
-                            >
-                                <i class="fas fa-caret-down fa-2x"></i>
-                            </a>
-                            <form name="" id="down-vote-answer-{{ $answer->id }}" method="post" action="/answers/{{ $answer->id }}/vote">
-                                @csrf
-                                <input type="hidden" name="vote" value="-1">
-                            </form>
-                            @can('accept',$answer)
-                                <a title="Mark this answer as best answer"
-                                   class="{{ $answer->status }} favorited"
-                                    onclick="event.preventDefault(); document.getElementById('accept-answer-{{ $answer->id }}').submit();"
-                                >
-                                    <i class="fa fa-check fa-1x"></i>
-                                </a>
-                                <form id="accept-answer-{{ $answer->id }}" action="{{ route('answers.accept', $answer->id) }}" method="POST" style="display: none;">
-                                    @csrf
-                                </form>
-                            @elseif($answer->isBest)
-                                <a  class="{{ $answer->status }} favorited">
-                                    <i class="fa fa-check fa-1x"></i>
-                                </a>
-                            @endcan
-                        </div>
+                        @include('shared._vote',['model' => $answer])
                         <div class="media-body">
                             {{ $answer->body }}
                             <div class="row">
@@ -66,15 +31,10 @@
                                 <div class="col-4">
                                 </div>
                                 <div class="col-4 float-right">
-                                    <span class="text-muted">Answered {{ $answer->created_date }}</span>
-                                    <div class="media mt-2">
-                                        <a href="{{ $answer->user->url }}" class="pr-2">
-                                            <img src="{{ $answer->user->avatar }} ">
-                                        </a>
-                                        <div class="media-body mt-1">
-                                            <a href="{{ $answer->user->url }}">{{ $answer->user->name }}</a>
-                                        </div>
-                                    </div>
+                                    @include('shared._author',[
+                                    'model'=> $answer,
+                                    'label'=> 'Answered'
+                                    ])
                                 </div>
                             </div>
                         </div>
