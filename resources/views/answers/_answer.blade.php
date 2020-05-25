@@ -22,10 +22,11 @@
             <div class="col-4">
             </div>
             <div class="col-4 float-right">
-                @include('shared._author',[
+                {{--@include('shared._author',[
                 'model'=> $answer,
                 'label'=> 'Answered'
-                ])
+                ])--}}
+                <user-info v-bind:model="{{ $answer }}" label="Answered"></user-info>
             </div>
         </div>
     </div>
