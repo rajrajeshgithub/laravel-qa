@@ -27,22 +27,43 @@
                   .then(res => {
                   this.editing = false;
                   this.bodyHtml = res.data.body_html;
-                  alert(res.data.message);
+                      this.$toast.success(res.data.message,"Success",{ timeout:3000 });
               })
                 .catch(err => {
-                    alert(err.response.data.message);
+                    this.$toast.error(err.response.data.message,"Error", { timeout:3000 });
                     //console.log(err)
               });
           },
             destroy(){
-                if(confirm("Are you sure to delete")){
-                    axios.delete(this.endpoint)
-                    .then(res => {
-                        $(this.$el).fadeOut(500,() => {
-                            alert(res.data.message);
-                        })
-                    })
-                }
+                this.$toast.question("Are you sure about that?", "Success",{
+                    timeout: 20000,
+                    close: false,
+                    overlay: true,
+                    displayMode: 'once',
+                    id: 'question',
+                    zindex: 999,
+                    title: 'Hey',
+                    position: 'center',
+                    buttons: [
+                        ['<button><b>YES</b></button>', (instance, toast) => {
+
+                            axios.delete(this.endpoint)
+                                .then(res => {
+                                    $(this.$el).fadeOut(500,() => {
+                                        this.$toast.success(res.data.message,"Success",{ timeout:3000 });
+                                    })
+                                })
+                            instance.hide({ transitionOut: 'fadeOut' }, toast, 'button');
+
+                        }, true],
+                        ['<button>NO</button>', function (instance, toast) {
+
+                            instance.hide({ transitionOut: 'fadeOut' }, toast, 'button');
+
+                        }],
+                    ]
+                });
+
             }
 
         },
