@@ -8,7 +8,7 @@ class Answer extends Model
 {
     use VotableTrait;
     protected $fillable = ['body', 'user_id'];
-    protected $appends = ['created_date'];
+    protected $appends = ['created_date', 'body_html'];
 
     public function question(){
         return $this->belongsTo(Question::class);
@@ -47,9 +47,9 @@ class Answer extends Model
             $answer->question->save();
         });
 
-        static::saved(function(){
+        /*static::saved(function(){
             echo "answer saved";
-        });
+        });*/
     }
 
     public function getIsBestAttribute()

@@ -9,6 +9,10 @@ use Auth;
 
 class AnswersController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth', ['except'=>['index','show']]);
+    }
     /**
      * Display a listing of the resource.
      *
@@ -79,6 +83,12 @@ class AnswersController extends Controller
         $answer->update($request->validate([
             "body" => 'required',
         ]));
+        if($request->expectsJson()) {
+            return response()->json([
+                'message' => "Your answer has been updated",
+                'body_html' => $answer->body,
+            ]);
+        }
         return redirect()->route('questions.show', $question->slug)->with('success', 'Your answer has been updated');
     }
 
