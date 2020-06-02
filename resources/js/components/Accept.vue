@@ -38,7 +38,7 @@
 
         computed:{
             canAccept(){
-                return true;
+                return this.authorize('accept',this.answer);
             },
 
             accepted(){
@@ -49,7 +49,6 @@
                 return ['mt-2',
                 this.isBest ? 'vote-accepted':'']
             }
-
         }
     }
 </script>
