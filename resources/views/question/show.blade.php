@@ -33,7 +33,7 @@
             </div>
         </div>
         @include('inc.messages')
-        <answers :answers="{{ $question->answers }}" :count="{{ $question->answers_count }}"></answers>
+        <answers :question="{{ $question }}"></answers>
         @include('answers._create')
     </div>
 @endsection
