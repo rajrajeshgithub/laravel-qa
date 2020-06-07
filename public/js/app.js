@@ -1981,6 +1981,7 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Vote__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Vote */ "./resources/js/components/Vote.vue");
 /* harmony import */ var _UserInfo__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./UserInfo */ "./resources/js/components/UserInfo.vue");
+/* harmony import */ var _mixins_modification__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../mixins/modification */ "./resources/js/mixins/modification.js");
 //
 //
 //
@@ -2014,6 +2015,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -2022,9 +2024,9 @@ __webpack_require__.r(__webpack_exports__);
     Vote: _Vote__WEBPACK_IMPORTED_MODULE_0__["default"],
     UserInfo: _UserInfo__WEBPACK_IMPORTED_MODULE_1__["default"]
   },
+  mixins: [_mixins_modification__WEBPACK_IMPORTED_MODULE_2__["default"]],
   data: function data() {
     return {
-      editing: false,
       body: this.answer.body,
       bodyHtml: this.answer.body_html,
       id: this.answer.id,
@@ -2033,57 +2035,27 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   methods: {
-    edit: function edit() {
+    setEditCache: function setEditCache() {
       this.beforeEditCache = this.body;
-      this.editing = true;
     },
-    cancel: function cancel() {
+    restoreFromCache: function restoreFromCache() {
       this.body = this.beforeEditCache;
-      this.editing = false;
     },
-    update: function update() {
+    payload: function payload() {
+      return {
+        body: this.body
+      };
+    },
+    "delete": function _delete() {
       var _this = this;
 
-      axios.patch(this.endpoint, {
-        body: this.body
-      }).then(function (res) {
-        _this.editing = false;
-        _this.bodyHtml = res.data.body_html;
-
+      axios["delete"](this.endpoint).then(function (res) {
         _this.$toast.success(res.data.message, "Success", {
-          timeout: 3000
+          timeout: 2000,
+          position: 'bottomLeft'
         });
-      })["catch"](function (err) {
-        _this.$toast.error(err.response.data.message, "Error", {
-          timeout: 3000
-        }); //console.log(err)
 
-      });
-    },
-    destroy: function destroy() {
-      var _this2 = this;
-
-      this.$toast.question("Are you sure about that?", "Success", {
-        timeout: 20000,
-        close: false,
-        overlay: true,
-        displayMode: 'once',
-        id: 'question',
-        zindex: 999,
-        title: 'Hey',
-        position: 'center',
-        buttons: [['<button><b>YES</b></button>', function (instance, toast) {
-          axios["delete"](_this2.endpoint).then(function (res) {
-            _this2.$emit('deleted');
-          });
-          instance.hide({
-            transitionOut: 'fadeOut'
-          }, toast, 'button');
-        }, true], ['<button>NO</button>', function (instance, toast) {
-          instance.hide({
-            transitionOut: 'fadeOut'
-          }, toast, 'button');
-        }]]
+        _this.$emit('deleted');
       });
     }
   },
@@ -2342,6 +2314,8 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Vote__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Vote */ "./resources/js/components/Vote.vue");
 /* harmony import */ var _UserInfo__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./UserInfo */ "./resources/js/components/UserInfo.vue");
+/* harmony import */ var _REditor__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./REditor */ "./resources/js/components/REditor.vue");
+/* harmony import */ var _mixins_modification__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../mixins/modification */ "./resources/js/mixins/modification.js");
 //
 //
 //
@@ -2394,20 +2368,25 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+
+
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['question'],
+  mixins: [_mixins_modification__WEBPACK_IMPORTED_MODULE_3__["default"]],
   components: {
     Vote: _Vote__WEBPACK_IMPORTED_MODULE_0__["default"],
-    UserInfo: _UserInfo__WEBPACK_IMPORTED_MODULE_1__["default"]
+    UserInfo: _UserInfo__WEBPACK_IMPORTED_MODULE_1__["default"],
+    REditor: _REditor__WEBPACK_IMPORTED_MODULE_2__["default"]
   },
   data: function data() {
     return {
       title: this.question.title,
       body: this.question.body,
       bodyHtml: this.question.body_html,
-      editing: false,
       id: this.question.id,
       beforeEditCache: {}
     };
@@ -2421,77 +2400,36 @@ __webpack_require__.r(__webpack_exports__);
     }
   },
   methods: {
-    edit: function edit() {
+    setEditCache: function setEditCache() {
       this.beforeEditCache = {
         body: this.body,
         title: this.title
       };
-      this.editing = true;
     },
-    cancel: function cancel() {
+    restoreFromCache: function restoreFromCache() {
       this.title = this.beforeEditCache.title;
       this.body = this.beforeEditCache.body;
-      this.editing = false;
     },
-    update: function update() {
-      var _this = this;
-
-      axios.put(this.endpoint, {
+    payload: function payload() {
+      return {
         title: this.title,
         body: this.body
-      })["catch"](function (_ref) {
-        var response = _ref.response;
+      };
+    },
+    "delete": function _delete() {
+      var _this = this;
 
-        _this.$toast.error(response.data.message, "Error", {
-          timeout: 3000,
-          position: 'bottomLeft'
-        });
-      }).then(function (_ref2) {
-        var data = _ref2.data;
-        _this.bodyHtml = data.body_html;
-        _this.title = data.title;
+      axios["delete"](this.endpoint).then(function (_ref) {
+        var data = _ref.data;
 
         _this.$toast.success(data.message, "Success", {
-          timeout: 3000,
-          position: "bottomLeft"
+          timeout: 2000,
+          position: 'bottomLeft'
         });
-
-        _this.editing = false;
       });
-    },
-    destroy: function destroy() {
-      var _this2 = this;
-
-      this.$toast.question("Are you sure about that?", "Success", {
-        timeout: 20000,
-        close: false,
-        overlay: true,
-        displayMode: 'once',
-        id: 'question',
-        zindex: 999,
-        title: 'Hey',
-        position: 'center',
-        buttons: [['<button><b>YES</b></button>', function (instance, toast) {
-          axios["delete"](_this2.endpoint).then(function (_ref3) {
-            var data = _ref3.data;
-
-            _this2.$toast.success(data.message, "Success", {
-              timeout: 2000,
-              position: 'bottomLeft'
-            });
-          });
-          setTimeout(function () {
-            window.location.href = "/questions";
-          }, 3000);
-          instance.hide({
-            transitionOut: 'fadeOut'
-          }, toast, 'button');
-        }, true], ['<button>NO</button>', function (instance, toast) {
-          instance.hide({
-            transitionOut: 'fadeOut'
-          }, toast, 'button');
-        }]]
-      });
+      setTimeout(function () {
+        window.location.href = "/questions";
+      }, 3000);
     }
   }
 });
@@ -39405,29 +39343,36 @@ var render = function() {
                 _vm._v(" "),
                 _c("div", { staticClass: "media" }, [
                   _c("div", { staticClass: "media-body" }, [
-                    _c("div", { staticClass: "form-group" }, [
-                      _c("textarea", {
-                        directives: [
-                          {
-                            name: "model",
-                            rawName: "v-model",
-                            value: _vm.body,
-                            expression: "body"
-                          }
-                        ],
-                        staticClass: "form-control",
-                        attrs: { rows: "10", required: "" },
-                        domProps: { value: _vm.body },
-                        on: {
-                          input: function($event) {
-                            if ($event.target.composing) {
-                              return
+                    _c(
+                      "div",
+                      { staticClass: "form-group" },
+                      [
+                        _c("r-editor", { attrs: { body: _vm.body } }, [
+                          _c("textarea", {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.body,
+                                expression: "body"
+                              }
+                            ],
+                            staticClass: "form-control",
+                            attrs: { rows: "10", required: "" },
+                            domProps: { value: _vm.body },
+                            on: {
+                              input: function($event) {
+                                if ($event.target.composing) {
+                                  return
+                                }
+                                _vm.body = $event.target.value
+                              }
                             }
-                            _vm.body = $event.target.value
-                          }
-                        }
-                      })
-                    ]),
+                          })
+                        ])
+                      ],
+                      1
+                    ),
                     _vm._v(" "),
                     _c(
                       "button",
@@ -39542,6 +39487,76 @@ var staticRenderFns = [
         },
         [_vm._v("Back to All Questions")]
       )
+    ])
+  }
+]
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/REditor.vue?vue&type=template&id=3f624264&":
+/*!**********************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/REditor.vue?vue&type=template&id=3f624264& ***!
+  \**********************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticClass: "card" }, [
+    _vm._m(0),
+    _vm._v(" "),
+    _c("div", { staticClass: "card-body tab-content" }, [
+      _c(
+        "div",
+        { staticClass: "tab-pane active", attrs: { id: "write" } },
+        [_vm._t("default")],
+        2
+      ),
+      _vm._v(" "),
+      _c("div", { staticClass: "tab-pane ", attrs: { id: "preview" } }, [
+        _vm._v("Preview...")
+      ])
+    ])
+  ])
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "card-header" }, [
+      _c("ul", { staticClass: "nav nav-tabs card-header-tabs" }, [
+        _c("li", { staticClass: "nav-item" }, [
+          _c(
+            "a",
+            {
+              staticClass: "nav-link active",
+              attrs: { "data-toggle": "tab", href: "#write" }
+            },
+            [_vm._v("Write")]
+          )
+        ]),
+        _vm._v(" "),
+        _c("li", { staticClass: "nav-item" }, [
+          _c(
+            "a",
+            {
+              staticClass: "nav-link",
+              attrs: { "data-toggle": "tab", href: "#preview" }
+            },
+            [_vm._v("Preview")]
+          )
+        ])
+      ])
     ])
   }
 ]
@@ -52410,6 +52425,59 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/components/REditor.vue":
+/*!*********************************************!*\
+  !*** ./resources/js/components/REditor.vue ***!
+  \*********************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _REditor_vue_vue_type_template_id_3f624264___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./REditor.vue?vue&type=template&id=3f624264& */ "./resources/js/components/REditor.vue?vue&type=template&id=3f624264&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+var script = {}
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_1__["default"])(
+  script,
+  _REditor_vue_vue_type_template_id_3f624264___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _REditor_vue_vue_type_template_id_3f624264___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/REditor.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/REditor.vue?vue&type=template&id=3f624264&":
+/*!****************************************************************************!*\
+  !*** ./resources/js/components/REditor.vue?vue&type=template&id=3f624264& ***!
+  \****************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_REditor_vue_vue_type_template_id_3f624264___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib??vue-loader-options!./REditor.vue?vue&type=template&id=3f624264& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/REditor.vue?vue&type=template&id=3f624264&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_REditor_vue_vue_type_template_id_3f624264___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_REditor_vue_vue_type_template_id_3f624264___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
 /***/ "./resources/js/components/UserInfo.vue":
 /*!**********************************************!*\
   !*** ./resources/js/components/UserInfo.vue ***!
@@ -52562,6 +52630,87 @@ __webpack_require__.r(__webpack_exports__);
 
 var eventBus = new vue__WEBPACK_IMPORTED_MODULE_0___default.a();
 /* harmony default export */ __webpack_exports__["default"] = (eventBus);
+
+/***/ }),
+
+/***/ "./resources/js/mixins/modification.js":
+/*!*********************************************!*\
+  !*** ./resources/js/mixins/modification.js ***!
+  \*********************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = ({
+  data: function data() {
+    return {
+      editing: false
+    };
+  },
+  methods: {
+    edit: function edit() {
+      this.setEditCache();
+      this.editing = true;
+    },
+    cancel: function cancel() {
+      this.restoreFromCache();
+      this.editing = false;
+    },
+    setEditCache: function setEditCache() {},
+    restoreFromCache: function restoreFromCache() {},
+    update: function update() {
+      var _this = this;
+
+      axios.put(this.endpoint, this.payload())["catch"](function (_ref) {
+        var response = _ref.response;
+
+        _this.$toast.error(response.data.message, "Error", {
+          timeout: 3000,
+          position: 'bottomLeft'
+        });
+      }).then(function (_ref2) {
+        var data = _ref2.data;
+        _this.bodyHtml = data.body_html;
+        _this.title = data.title;
+
+        _this.$toast.success(data.message, "Success", {
+          timeout: 3000,
+          position: "bottomLeft"
+        });
+
+        _this.editing = false;
+      });
+    },
+    payload: function payload() {},
+    destroy: function destroy() {
+      var _this2 = this;
+
+      this.$toast.question("Are you sure about that?", "Success", {
+        timeout: 20000,
+        close: false,
+        overlay: true,
+        displayMode: 'once',
+        id: 'question',
+        zindex: 999,
+        title: 'Hey',
+        position: 'center',
+        buttons: [['<button><b>YES</b></button>', function (instance, toast) {
+          _this2["delete"]();
+
+          instance.hide({
+            transitionOut: 'fadeOut'
+          }, toast, 'button');
+        }, true], ['<button>NO</button>', function (instance, toast) {
+          instance.hide({
+            transitionOut: 'fadeOut'
+          }, toast, 'button');
+        }]]
+      });
+    },
+    "delete": function _delete() {}
+  }
+});
 
 /***/ }),
 

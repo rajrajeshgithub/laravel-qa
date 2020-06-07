@@ -16,6 +16,10 @@ $fa-font-path: "../webfonts";
 //custom
 @import "custom";
 
+body{
+    background: #f5f8fa;
+}
+
 .counters{
     margin-right:30px;
     font-size:10px;
