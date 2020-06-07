@@ -99,6 +99,14 @@ class QuestionController extends Controller
 //        }
         $this->authorize('update',$question);
         $question->update($request->only('title','body'));
+
+        if($request->expectsJson()){
+            return response()->json([
+                'message' => "Question updated successfully",
+                'body_html' => $question->body_html,
+                'title' => $question->title,
+            ]);
+        }
         return redirect()->route('questions.index')->with('success','Question updated successfully');
     }
 
@@ -115,6 +123,12 @@ class QuestionController extends Controller
 //        }
         $this->authorize('delete',$question);
         $question->delete();
+
+        if(request()->expectsJson()){
+            return response()->json([
+                'message' => 'question has been removed'
+            ]);
+        }
         return redirect()->route('questions.index')->with('success','question has been removed');
     }
 }

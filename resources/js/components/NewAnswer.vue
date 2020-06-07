@@ -37,8 +37,8 @@
                 axios.post(this.endpoint(),{
                     body : this.body
                 })
-                .catch(error => {
-                    this.$toast.error(error.response.data.message,"Error");
+                .catch(response => {
+                    this.$toast.error(response.data.message,"Error");
                 })
                 .then(({data}) => {
                     this.$toast.success(data.message,"Success");
