@@ -15,14 +15,6 @@ export default {
             this.editing = false;
         },
 
-        setEditCache(){
-
-        },
-
-        restoreFromCache(){
-
-        },
-
         update(){
             axios.put(this.endpoint,this.payload())
                 .catch(({response}) => {
@@ -34,10 +26,6 @@ export default {
                     this.$toast.success(data.message, "Success",{ timeout:3000, position:"bottomLeft" });
                     this.editing = false;
                 })
-        },
-
-        payload(){
-
         },
 
         destroy(){
@@ -67,7 +55,5 @@ export default {
             });
 
         },
-
-        delete(){},
     },
 }

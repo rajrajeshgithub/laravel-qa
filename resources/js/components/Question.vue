@@ -2,7 +2,7 @@
     <div class="row justify-content-center">
         <div class="col-md-12">
             <div class="card">
-                <form class="card-body" v-if="editing" @submit.prevent="update">
+                <form class="card-body" v-show="authorize('modify', question) && editing" @submit.prevent="update">
                     <div class="card-title">
                         <input type="text" class="form-control form-control-lg" v-model="title">
                     </div>
@@ -15,11 +15,11 @@
                                 </r-editor>
                             </div>
                             <button class="btn btn-primary" :disabled="isInvalid">Update</button>
-                            <button class="btn btn-outline-primary" @click="cancel">Cancel</button>
+                            <button class="btn btn-outline-primary" @click.prevent="cancel">Cancel</button>
                         </div>
                     </div>
                 </form>
-                <div class="card-body" v-else>
+                <div class="card-body" v-show="!editing">
                     <div class="card-title">
                         <div class="d-flex align-items-center">
                             <h1>{{ title }}</h1>
@@ -32,7 +32,7 @@
                     <div class="media">
                         <vote :model="question" name="question"></vote>
                         <div class="media-body">
-                            <div v-html="bodyHtml"></div>
+                            <div v-html="bodyHtml" ref="bodyHtml"></div>
                             <div class="row">
                                 <div class="col-4">
                                     <div class="ml-auto">
@@ -56,6 +56,7 @@
     import Vote from "./Vote";
     import UserInfo from "./UserInfo";
     import REditor from "./REditor";
+    import Prism from "prismjs";
     import modification from "../mixins/modification";
 
     export default {
@@ -64,6 +65,7 @@
         mixins:[modification],
 
         components:{Vote, UserInfo, REditor},
+
 
         data(){
             return {
@@ -88,13 +90,15 @@
             setEditCache(){
                 this.beforeEditCache = {
                     body:this.body,
-                        title : this.title
+                    title : this.title
                 };
             },
 
             restoreFromCache(){
                 this.title = this.beforeEditCache.title;
                 this.body = this.beforeEditCache.body;
+                const el = this.$refs.bodyHtml;
+                if(el) Prism.highlightAllUser(el);
             },
 
             payload(){
