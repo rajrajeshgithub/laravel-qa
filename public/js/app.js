@@ -2441,9 +2441,13 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
       this.count--;
     },
     add: function add(answer) {
+      var _this2 = this;
+
       this.answers.push(answer);
       this.count++;
-      this.highlight();
+      this.$nextTick(function () {
+        _this2.highlight("answer-".concat(answer.id));
+      });
     }
   },
   computed: {
@@ -55470,6 +55474,7 @@ var render = function() {
           [
             _c("div", {
               ref: "bodyHtml",
+              attrs: { id: _vm.uniqueName },
               domProps: { innerHTML: _vm._s(_vm.bodyHtml) }
             }),
             _vm._v(" "),
@@ -69168,8 +69173,17 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ({
   methods: {
     highlight: function highlight() {
-      var el = this.$refs.bodyHtml;
-      prismjs__WEBPACK_IMPORTED_MODULE_0___default.a.highlightAllUnder(el);
+      var id = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '';
+      var el;
+
+      if (!id) {
+        el = this.$refs.bodyHtml;
+      } else {
+        el = document.getElementById(id);
+      }
+
+      console.log('el', el);
+      if (el) prismjs__WEBPACK_IMPORTED_MODULE_0___default.a.highlightAllUnder(el);
     }
   }
 });
