@@ -9,7 +9,7 @@
                     </r-editor>
                 </div>
                 <button class="btn btn-primary" :disabled="isInvalid">Update</button>
-                <button class="btn btn-outline-primary" @click="cancel">Cancel</button>
+                <button class="btn btn-outline-primary" @click.prevent="cancel">Cancel</button>
             </form>
             <div v-show="!editing">
                 <div v-html="bodyHtml" ref="bodyHtml"></div>

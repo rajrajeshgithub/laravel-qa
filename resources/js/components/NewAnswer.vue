@@ -9,7 +9,9 @@
                     <hr>
                     <form @submit.prevent="create">
                         <div class="form-group">
-                            <textarea class="form-control" required v-model="body" rows="7" name="body" ></textarea>
+                            <r-editor :body="body" name="new-answer">
+                                <textarea class="form-control" required v-model="body" rows="7" name="body" ></textarea>
+                            </r-editor>
                         </div>
                         <div class="form-group">
                             <button type="submit" :disabled="isInvalid" class="btn btn-lg btn-outline-primary">Post your answer</button>
@@ -21,8 +23,12 @@
     </div>
 </template>
 <script>
+    import REditor from "./REditor";
     export default {
         props:['questionId'],
+
+        components:{ REditor },
+
         data(){
             return {
                 body: '',
