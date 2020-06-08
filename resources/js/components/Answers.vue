@@ -32,7 +32,7 @@
               nextUrl: null
           }
         },
-
+            
         created() {
             this.fetch(`/questions/${this.questionId}/answers`);
         },

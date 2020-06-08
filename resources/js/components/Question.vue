@@ -53,18 +53,13 @@
     </div>
 </template>
 <script>
-    import Vote from "./Vote";
-    import UserInfo from "./UserInfo";
-    import REditor from "./REditor";
+
     import modification from "../mixins/modification";
 
     export default {
         props:['question'],
 
         mixins:[modification],
-
-        components:{Vote, UserInfo, REditor},
-
 
         data(){
             return {
@@ -83,6 +78,9 @@
 
             endpoint(){
                 return `/questions/${this.id}`;
+            },
+            uniqueName(){
+                return `question-${this.id}`;
             }
         },
         methods:{

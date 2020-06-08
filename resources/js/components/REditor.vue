@@ -3,18 +3,18 @@
         <div class="card-header">
             <ul class="nav nav-tabs card-header-tabs">
                 <li class="nav-item">
-                    <a class="nav-link active" data-toggle="tab" href="#write">Write</a>
+                    <a class="nav-link active" data-toggle="tab" :href="tabId('write','#')">Write</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" data-toggle="tab" href="#preview">Preview</a>
+                    <a class="nav-link" data-toggle="tab" :href="tabId('preview','#')">Preview</a>
                 </li>
             </ul>
         </div>
         <div class="card-body tab-content">
-            <div class="tab-pane active" id="write">
+            <div class="tab-pane active" :id="tabId('write')">
                 <slot></slot>
             </div>
-            <div class="tab-pane " id="preview" v-html="preview">Preview...</div>
+            <div class="tab-pane " :id="tabId('preview')" v-html="preview">Preview...</div>
         </div>
     </div>
 </template>
@@ -26,11 +26,17 @@ import autosize from "autosize";
 const md = new MarkdownIt();
 md.use(prism);
 export default {
-    props:['body'],
+    props:['body','name'],
 
     computed:{
         preview(){
             return md.render(this.body);
+        }
+    },
+
+    methods:{
+        tabId(tabName, hash=""){
+            return `${hash}${tabName}${this.name}`;
         }
     },
 
@@ -40,7 +46,7 @@ export default {
         }
     },*/
 
-    
+
     updated() {
         autosize(this.$el.querySelector('textarea'))
     }
