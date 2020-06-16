@@ -45,7 +45,11 @@ class QuestionsController extends Controller
      */
     public function show(Question $question)
     {
-        //
+        return response()->json([
+            'title'=> $question->title,
+            'body'=> $question->body,
+            'body_html' => $question->body_html
+        ]);
     }
 
     /**
@@ -55,9 +59,17 @@ class QuestionsController extends Controller
      * @param  \App\Question  $question
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Question $question)
+    public function update(AskQuestionRequest $request, Question $question)
     {
-        //
+        $this->authorize('update',$question);
+
+        $question->update($request->only('title','body'));
+
+        return response()->json([
+            'message' => "Question updated successfully",
+            'body_html' => $question->body_html,
+        ]);
+
     }
 
     /**
@@ -68,6 +80,11 @@ class QuestionsController extends Controller
      */
     public function destroy(Question $question)
     {
-        //
+        $this->authorize('delete',$question);
+        $question->delete();
+
+        return response()->json([
+            'message' => 'question has been removed'
+        ]);
     }
 }
